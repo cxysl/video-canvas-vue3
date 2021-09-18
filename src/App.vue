@@ -41,5 +41,6 @@ export default {
 }
 </script>
 <style lang="scss">
+@import './assets/css/reset.css';
 @import './assets/scss/app';
 </style>
