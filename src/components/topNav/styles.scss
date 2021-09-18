@@ -1,3 +1,41 @@
 .top-nav {
-  box-shadow: 0 4px 6px 0 rgba(232, 237, 250, 0.9);
+  // box-shadow: 0 4px 6px 0 rgba(232, 237, 250, 0.9);
+  .logo-wrap {
+    cursor: pointer;
+    .logo {
+      float: left;
+      width: 40px;
+      height: 40px;
+      margin-top: 10px;
+      overflow: hidden;
+      background: url(../../assets/images/laocheng/dsxs.jpg);
+      background-size: 40px 40px;
+      margin-right: 8px;
+      // no-repeat 50% 50%;
+    }
+    .production-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1677ff;
+      float: left;
+      // margin-top: 12px;
+    }
+  }
+  .user-info {
+    cursor: pointer;
+    .head-portrait {
+      float: left;
+      width: 30px;
+      height: 30px;
+      margin-top: 15px;
+      overflow: hidden;
+      background: url(../../assets/images/laocheng/hg.jpg);
+      background-size: 30px 30px;
+      margin-right: 8px;
+      border-radius: 50%;
+      // no-repeat 50% 50%;
+    }
+    .user-name {
+    }
+  }
 }
