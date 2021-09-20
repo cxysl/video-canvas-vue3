@@ -9,7 +9,8 @@
       margin-top: 10px;
       overflow: hidden;
       background: url(../../assets/images/laocheng/dsxs.jpg);
-      background-size: 40px 40px;
+      background-size: 94px 40px;
+      background-position: 56% center;
       margin-right: 8px;
       // no-repeat 50% 50%;
     }
@@ -21,8 +22,35 @@
       // margin-top: 12px;
     }
   }
+  .nav-list {
+    cursor: pointer;
+    .nav-item {
+      text-align: center;
+      position: relative;
+      p {
+        display: inline-block;
+        line-height: 60px;
+      }
+      &::after {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        content: '';
+        height: 5px;
+        background-color: #1677ff;
+        width: 100%;
+        opacity: 0;
+        transition: opacity 0.3s ease-in 0s;
+      }
+    }
+    .hover::after {
+      opacity: 1;
+    }
+  }
   .user-info {
     cursor: pointer;
+    // display: flex;
     .head-portrait {
       float: left;
       width: 30px;

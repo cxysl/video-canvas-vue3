@@ -19,7 +19,7 @@
       <top-nav></top-nav>
     </div>
     <div class="main">
-      <div width="200px" class="left-nav">Aside</div>
+      <div width="200px" class="left-nav">左侧栏</div>
       <div class="content">
         <router-view />
       </div>
@@ -29,6 +29,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
+import initAxios from './assets/js/axios'
 import topNav from '@/components/topNav'
 export default {
   name: 'app',
@@ -40,7 +41,26 @@ export default {
   components: {
     topNav
   },
-  created() {},
+  created() {
+    window.axios = initAxios(this)
+    window.VM = this
+    // eslint-disable-next-line no-unused-vars
+    this.$router.beforeEach((to, from, next) => {
+      // console.log(to, from, next)
+      let pathArr = to.path.split('/')
+      if (pathArr[1] == 'subpage') {
+        //编辑操作页 -- 需要单独新开一个完整页面
+        this.$nextTick(() => {
+          this.$store.commit('setIsOperationPage', { isOperationPage: true })
+        })
+      } else {
+        this.$nextTick(() => {
+          this.$store.commit('setIsOperationPage', { isOperationPage: false })
+        })
+      }
+      next()
+    })
+  },
   mounted() {
     setTimeout(() => {
       this.showMain = true
@@ -48,7 +68,8 @@ export default {
   },
   computed: {
     ...mapState(['isOperationPage'])
-  }
+  },
+  methods: {}
 }
 </script>
 <style lang="scss">

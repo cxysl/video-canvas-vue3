@@ -1,0 +1,187 @@
+@import '@/assets/scss/common';
+.video-editor {
+  .video-header {
+    padding-left: 15px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 60px;
+    background-color: #34373e;
+    .logo {
+      cursor: pointer;
+      float: left;
+      width: 40px;
+      height: 40px;
+      margin: 10px;
+      background: url(../../../assets/images/laocheng/dsxs.jpg) no-repeat;
+      display: inline-block;
+      background-size: 94px 40px;
+      background-position: 56% center;
+      // background-image: url(https://img.alicdn.com/imgextra/i1/17157061/TB2v4DCdHJmpuFjSZFBXXXaZXXa-17157061.png_70x70.jpg);
+    }
+    .title {
+      float: left;
+      color: #fff;
+      line-height: 60px;
+      font-size: 18px;
+    }
+    .create-btn {
+      float: right;
+      height: 70px;
+      width: 160px;
+      text-align: center;
+      line-height: 70px;
+      font-size: 18px;
+      border-radius: 0;
+      padding: 0;
+    }
+  }
+  .player-loading {
+    width: 100%;
+    height: 100%;
+  }
+  .controler {
+    position: relative;
+    background-color: #2c2c30;
+    .material {
+      height: 400px;
+      margin-right: 400px;
+      .el-tabs--border-card {
+        box-sizing: border-box;
+        height: 100%;
+        background-color: #42464f;
+        border-color: #34373e;
+        box-shadow: none;
+        & > .el-tabs__header {
+          background-color: #d2d2d2;
+        }
+        .el-tabs__header {
+          border-bottom: 1px solid #d2d2d2;
+        }
+        .el-tabs__item {
+          color: #666;
+          &:hover {
+            color: #2c2c30;
+          }
+          &.is-active {
+            background-color: #ededed;
+            border-right-color: #ababab;
+            border-left-color: #ababab;
+            &:last-child {
+              border-right-color: #ababab;
+            }
+            &:first-child {
+              border-left-color: #ababab;
+            }
+            &:hover {
+              color: #2c2c30;
+            }
+          }
+        }
+        .el-tabs__content {
+          height: 350px;
+          box-sizing: border-box;
+          overflow-y: auto;
+        }
+      }
+      .el-tabs__item {
+        height: 50px;
+        line-height: 50px;
+        &.is-active {
+          color: #2c2c30;
+        }
+      }
+    }
+    .player-wrap {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      right: 0;
+      top: 0;
+      .canvas-control-btn {
+        cursor: pointer;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 91px;
+        height: 91px;
+        margin: -45px 0 0 -45px;
+      }
+      &:hover {
+        .stop {
+          background: transparent url('../../../assets/images/stop-btn-bbt.png');
+          opacity: 0.7;
+          &:hover {
+            opacity: 0.8;
+          }
+        }
+      }
+      .play {
+        background: transparent url('../../../assets/images/play-btn-bbt.png');
+      }
+    }
+  }
+  .current-duration {
+    float: right;
+    height: 70px;
+    line-height: 70px;
+    color: #d2d2d2;
+    margin-right: 20px;
+  }
+  .video-editor-tips {
+    background-color: #7e828c;
+    color: #fff;
+    line-height: 26px;
+    padding: 10px 20px;
+  }
+  .video-image-bar {
+    .title {
+      box-sizing: border-box;
+      line-height: 24px;
+      padding: 40px 0;
+    }
+  }
+  .time-line {
+    .title {
+      float: left;
+      width: 100px;
+      height: 100%;
+      text-align: center;
+      color: #d2d2d2;
+      border-right: 1px solid #4c515b;
+    }
+    .content {
+      box-sizing: border-box;
+      position: relative;
+      height: 100%;
+      margin: 0 50px 0 120px;
+    }
+  }
+  #player {
+    float: left;
+    // width: 300px;
+    // padding: 0px 50px;
+  }
+  .left,
+  .right {
+    background-color: #ffffff;
+    width: 50px;
+    height: 400px;
+    margin: 0px;
+    float: left;
+  }
+  .center {
+    width: 300px;
+    height: 400px;
+    margin: 0px;
+    float: left;
+  }
+  .type1 {
+    position: absolute;
+    display: none;
+    pointer-events: none; //让鼠标事件穿透这个绝对定位层，使之能点击到后面的元素，从而触发下方元素的点击事件
+  }
+  .type3 {
+    position: absolute;
+    pointer-events: none; //让鼠标事件穿透这个绝对定位层，使之能点击到后面的元素，从而触发下方元素的点击事件
+  }
+}

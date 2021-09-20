@@ -9,12 +9,30 @@ const routes = [
   },
   {
     path: '/subpage/template/video/editor',
-    name: 'videoEditor',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../pages/video/edit')
+    components: {
+      subpage: () =>
+        import(/* webpackChunkName: "videoEditor" */ '../pages/video/editor')
+    },
+    meta: {
+      title: '视频编辑器'
+    }
+  },
+  {
+    path: '/subpage/template/watermark/watermarkEditor',
+    components: {
+      subpage: () =>
+        import(
+          /* webpackChunkName: "watermarkEditor" */ '../pages/watermark/edit'
+        )
+    },
+    meta: {
+      title: '水印编辑器'
+    }
+  },
+  {
+    path: '/endStory',
+    name: 'endStory',
+    component: () => import(/* webpackChunkName: "endStory" */ '../pages/story')
   }
 ]
 

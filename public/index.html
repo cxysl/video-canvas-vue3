@@ -10,6 +10,15 @@
   </head>
 
   <body>
+    <script>
+      let iconURL = '//at.alicdn.com/t/font_1459005_zkigryicrf.js'
+      let scriptTag = document.createElement('script')
+      scriptTag.src = iconURL
+      scriptTag.crossorigin = true
+      scriptTag.async = true
+      document.body.appendChild(scriptTag)
+      console.log('加载远程图标资源完毕 ---laocheng')
+    </script>
     <div id="app"></div>
   </body>
 </html>

@@ -10,6 +10,7 @@ module.exports = {
   runtimeCompiler: true,
   chainWebpack: config => {
     config.resolve.alias
+      .set('@', resolve('src'))
       .set('src', resolve('src'))
       .set('assets', resolve('src/assets'))
       .set('pages', resolve('src/pages'))
@@ -57,8 +58,8 @@ module.exports = {
   configureWebpack: {
     plugins: [
       new webpack.ProvidePlugin({
-        // axios: 'axios',
-        axios: ['src/assets/js/axios.js', 'default'],
+        axios: 'axios',
+        // axios: ['./src/assets/js/axios.js', 'default'],
         Vue: ['vue/dist/vue.esm.js', 'default']
       })
     ]
@@ -66,6 +67,9 @@ module.exports = {
   devServer: {
     disableHostCheck: true,
     host: '0.0.0.0',
-    hot: true
+    https: false,
+    port: 8080,
+    hot: true,
+    public: '0.0.0.0'
   }
 }

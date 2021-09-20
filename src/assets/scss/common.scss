@@ -1,0 +1,40 @@
+//  表示失败的文案颜色（红色）
+$danger: #ff4949;
+
+//  主要的文案颜色（蓝色）
+$primary: #20a0ff;
+
+//  表示成功的文案颜色（绿色）
+$success: #13ce66;
+
+//  警告颜色
+$warning: #f7ba2a;
+
+//  次要的文案颜色，多用于提示文案（浅灰色）
+$secondary: #99a9bf;
+
+//  一般的边框颜色
+$bdc: #e0e6ed;
+
+//  次要的边框颜色（颜色浅点）
+$light-bdc: #eaeefb;
+
+//  重要的边框颜色（颜色深点）
+$dark-bdc: #bfcbd9;
+
+//  常用的背景颜色
+$darkWhite: #f9fafc;
+
+//  次要的背景颜色（颜色浅点）
+$gray: #eff2f7;
+
+// 文字超过n行溢出隐藏 @include line-clamp(行数)
+@mixin line-clamp($num) {
+  display: -webkit-box;
+  -webkit-line-clamp: $num;
+  /*! autoprefixer: ignore next */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  line-height: normal;
+}
