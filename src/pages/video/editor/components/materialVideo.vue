@@ -23,6 +23,7 @@
 <script>
 export default {
   name: 'materialVideo',
+  emits: ['change'],
   props: {
     items: {
       type: Array,

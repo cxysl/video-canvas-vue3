@@ -34,7 +34,7 @@
         <!-- 显示音乐图片还是特效图片 -->
         <span
           v-if="item.nick != 'admin'"
-          :class="hoverIndex == index ? 'shanchu' : ''"
+          :class="hoverIndex == index ? 'shanchu' : 'dis-none'"
           @click="del(index)"
         >
           <img
@@ -117,34 +117,37 @@ export default {
       this.hoverIndex = -1
     },
     showAddMusicDialog() {
+      console.log('???? you  click me')
       //   显示上传音乐界面
       this.isShowAddMusicDialog = true
     },
     del(index) {
+      this.musics.splice(index, 1) //  界面上删除这家伙
+      this.$message.success('删除成功,刷新后恢复')
       //  删除该音乐
-      axios
-        .get('/template/video/delMusic.get', {
-          params: {
-            id: this.musics[index].id
-          }
-        })
-        .then(res => {
-          if (res.data.data.resultBool == true) {
-            this.musics.splice(index, 1) //  界面上删除这家伙
-            this.$message('删除成功')
-          } else {
-            this.$message(res.data.data.message)
-          }
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      // axios
+      //   .get('/template/video/delMusic.get', {
+      //     params: {
+      //       id: this.musics[index].id
+      //     }
+      //   })
+      //   .then(res => {
+      //     if (res.data.data.resultBool == true) {
+      //       this.musics.splice(index, 1) //  界面上删除这家伙
+      //       this.$message('删除成功')
+      //     } else {
+      //       this.$message(res.data.data.message)
+      //     }
+      //   })
+      //   .catch(err => {
+      //     console.log(err)
+      //   })
     },
 
     //  监听添加图片弹窗的确定事件
     confirmAddMusics(newItems) {
       if (Array.isArray(newItems)) {
-        newItems.forEach(item => {
+        newItems.forEach((item) => {
           this.items.push(item)
         })
       }
@@ -164,7 +167,7 @@ export default {
     addMusicDialog
   },
   watch: {
-    musics: function(newVal) {
+    musics: function (newVal) {
       let count = 0
       if (newVal != null) {
         for (let i of newVal) {
@@ -215,8 +218,12 @@ export default {
       color: #fff;
       text-align: center;
     }
+    .dis-none {
+      display: none;
+    }
     .shanchu {
       position: relative;
+      display: inline;
       left: 50px;
       bottom: 95px;
     }

@@ -129,7 +129,7 @@ export default {
   },
   computed: {
     selectionIds() {
-      return this.selection.map(item => {
+      return this.selection.map((item) => {
         return item.pictureId
       })
     }
@@ -156,7 +156,7 @@ export default {
       this.expandCategories = []
       axios
         .get('/itemManage/pictureCategory.get')
-        .then(res => {
+        .then((res) => {
           this.categoryLoading = false
           let categories = [
             {
@@ -169,12 +169,12 @@ export default {
           this.expand(this.categories)
           this.handleNodeClick(this.categories[0])
         })
-        .catch(err => {
+        .catch((err) => {
           throw err
         })
     },
     expand(originalItems) {
-      originalItems.forEach(item => {
+      originalItems.forEach((item) => {
         if (item.children.length > 0) {
           this.expand(item.children)
         } else {
@@ -192,7 +192,7 @@ export default {
       this.loading = true
       axios
         .get('/itemManage/pictures.get', { params })
-        .then(res => {
+        .then((res) => {
           let items = res.data.data.items
           this.pageNo++
           this.images.push(...items)
@@ -201,7 +201,7 @@ export default {
           }
           this.loading = false
         })
-        .catch(err => {
+        .catch((err) => {
           this.loading = false
           throw err
         })
@@ -231,13 +231,13 @@ export default {
       console.log(item)
     },
     search(query, cb) {
-      let filterItems = this.expandCategories.filter(item => {
+      let filterItems = this.expandCategories.filter((item) => {
         return item.pictureCategoryName.indexOf(query) > -1
       })
       cb(filterItems)
     },
     confirm() {
-      let imgs = this.selection.map(item => {
+      let imgs = this.selection.map((item) => {
         return item.picturePath
       })
       this.$emit('confirm', imgs)

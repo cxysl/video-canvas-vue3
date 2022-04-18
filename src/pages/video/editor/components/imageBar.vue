@@ -66,6 +66,7 @@ import addImagesDialog from './addImagesDialog'
 export default {
   name: 'imageBar',
   inject: ['limitCount'],
+  emits: ['videoReset'],
   props: {
     items: {
       type: Array,
@@ -170,7 +171,7 @@ export default {
     //  监听添加图片弹窗的确定事件
     confirmAddImages(newItems) {
       if (Array.isArray(newItems)) {
-        newItems.forEach(item => {
+        newItems.forEach((item) => {
           this.items.push(item)
         })
       }

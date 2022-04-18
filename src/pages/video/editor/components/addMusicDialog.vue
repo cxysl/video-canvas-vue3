@@ -1,8 +1,8 @@
 <template>
   <el-dialog
     title="上传音乐"
-    v-model:visible="isShow"
-    @update:visible="val => $emit('update:visible', val)"
+    v-model="isShow"
+    @update:visible="(val) => $emit('update:visible', val)"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     custom-class="video-add-musics-dialog"
@@ -47,6 +47,7 @@
 // import imageSpace from 'components/imageSpace'
 export default {
   name: 'addMusicDialog',
+  emits: ['add-musics'],
 
   props: {
     visible: {
@@ -60,7 +61,7 @@ export default {
       }
     }
   },
-  components: {  },
+  components: {},
   data() {
     return {
       isShow: false,
@@ -136,11 +137,11 @@ export default {
             this.musicTitle,
           formData
         )
-        .then(res => {
+        .then((res) => {
           this.$message('上传成功')
           this.$emit('add-musics', this.musicTitle, res.data.data.subMsg) //通知父组件改变。
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err)
         })
     },
@@ -160,7 +161,7 @@ export default {
       },
       immediate: true
     },
-    playTime: function() {
+    playTime: function () {
       this.option(this.file2)
     }
   }

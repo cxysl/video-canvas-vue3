@@ -122,6 +122,7 @@ export default {
   provide: {
     limitCount: 26
   },
+  emits: ['musics'],
   data() {
     return {
       styles: video,
@@ -200,19 +201,19 @@ export default {
         this.$emit('musics', this.musics)
       } catch (error) {
         console.log('代码错误，', error)
-        axios
-          .post('/template/video/getMusicByNick.post', {
-            nick: this.nick
-          })
-          .then((res) => {
-            this.musics = res.data.data
-            this.$emit('musics', this.musics)
-          })
-          .catch((err) => {
-            this.musics = musics
-            this.$emit('musics', this.musics)
-            console.log(err)
-          })
+        // axios
+        //   .post('/template/video/getMusicByNick.post', {
+        //     nick: this.nick
+        //   })
+        //   .then((res) => {
+        //     this.musics = res.data.data
+        //     this.$emit('musics', this.musics)
+        //   })
+        //   .catch((err) => {
+        //     this.musics = musics
+        //     this.$emit('musics', this.musics)
+        //     console.log(err)
+        //   })
       }
     },
     addMusics(musicTitle, musicUrl) {
@@ -242,27 +243,35 @@ export default {
     },
     //  获取商品主图
     getImages() {
+      // eslint-disable-next-line no-unused-vars
       return new Promise((resolve, reject) => {
-        axios
-          .get('/template/video/getItemImages.get', {
-            params: {
-              itemId: this.$route.query.itemId || '589462069387',
-              mode: this.mode || '1'
-            }
-          })
-          .then((res) => {
-            resolve((this.images = res.data.data.images))
-          })
-          .catch((err) => {
-            this.images = [
-              'https://img.alicdn.com/bao/uploaded/i2/813529278/O1CN01Civq0P2IPNCmhRuKS_!!0-item_pic.jpg',
-              'https://img.alicdn.com/bao/uploaded/i2/813529278/O1CN01iCxNOs2IPNCn4jyLf_!!0-item_pic.jpg',
-              'https://img.alicdn.com/bao/uploaded/i4/813529278/O1CN01WvBYgD2IPNCqyAEWE_!!0-item_pic.jpg',
-              'https://img.alicdn.com/bao/uploaded/i4/813529278/O1CN019jRGzx2IPNCqPBmjA_!!0-item_pic.jpg'
-            ]
-            console.log(err)
-            reject(err)
-          })
+        this.images = [
+          'https://img.alicdn.com/bao/uploaded/i2/813529278/O1CN01Civq0P2IPNCmhRuKS_!!0-item_pic.jpg',
+          'https://img.alicdn.com/bao/uploaded/i2/813529278/O1CN01iCxNOs2IPNCn4jyLf_!!0-item_pic.jpg',
+          'https://img.alicdn.com/bao/uploaded/i4/813529278/O1CN01WvBYgD2IPNCqyAEWE_!!0-item_pic.jpg',
+          'https://img.alicdn.com/bao/uploaded/i4/813529278/O1CN019jRGzx2IPNCqPBmjA_!!0-item_pic.jpg'
+        ]
+        resolve()
+        // axios
+        //   .get('/template/video/getItemImages.get', {
+        //     params: {
+        //       itemId: this.$route.query.itemId || '589462069387',
+        //       mode: this.mode || '1'
+        //     }
+        //   })
+        //   .then((res) => {
+        //     resolve((this.images = res.data.data.images))
+        //   })
+        //   .catch((err) => {
+        //     this.images = [
+        //       'https://img.alicdn.com/bao/uploaded/i2/813529278/O1CN01Civq0P2IPNCmhRuKS_!!0-item_pic.jpg',
+        //       'https://img.alicdn.com/bao/uploaded/i2/813529278/O1CN01iCxNOs2IPNCn4jyLf_!!0-item_pic.jpg',
+        //       'https://img.alicdn.com/bao/uploaded/i4/813529278/O1CN01WvBYgD2IPNCqyAEWE_!!0-item_pic.jpg',
+        //       'https://img.alicdn.com/bao/uploaded/i4/813529278/O1CN019jRGzx2IPNCqPBmjA_!!0-item_pic.jpg'
+        //     ]
+        //     console.log(err)
+        //     reject(err)
+        //   })
       })
     },
     //  获取视频对象
@@ -336,22 +345,24 @@ export default {
         data.music = this.musics[this.index].id
         data.musicUrl = this.musics[this.index].musicUrl
       }
+      this.$message.wraning('抱歉，该功能暂未实现')
+      this.creating = false
 
       // 新制作视频
-      axios
-        .post('/template/video/createV2.post', data)
-        .then(() => {
-          this.creating = false
-          if (!this.$isQn) {
-            window.location.href = '/template/video/index'
-          } else {
-            window.open('/template/video/index')
-          }
-        })
-        .catch((err) => {
-          this.creating = false
-          console.log(err)
-        })
+      // axios
+      //   .post('/template/video/createV2.post', data)
+      //   .then(() => {
+      //     this.creating = false
+      //     if (!this.$isQn) {
+      //       window.location.href = '/template/video/index'
+      //     } else {
+      //       window.open('/template/video/index')
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     this.creating = false
+      //     console.log(err)
+      //   })
     },
     //  初始化swf参数的回调
     initParamsCallback(params) {

@@ -1,8 +1,8 @@
 <template>
   <el-dialog
     title="上传图片"
-    v-model:visible="isShow"
-    @update:visible="val => $emit('update:visible', val)"
+    v-model="isShow"
+    @update:visible="(val) => $emit('update:visible', val)"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     custom-class="video-add-images-dialog"
@@ -50,6 +50,7 @@
 import imageSpace from 'components/imageSpace'
 export default {
   name: 'addImagesDialog',
+  emits: ['confirm'],
   components: {
     imageSpace
   },
@@ -90,7 +91,7 @@ export default {
         })
         return false
       }
-      let images = this.uploadedImages.map(item => {
+      let images = this.uploadedImages.map((item) => {
         return item.url
       })
       this.$emit('confirm', images)

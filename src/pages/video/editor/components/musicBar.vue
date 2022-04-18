@@ -26,6 +26,7 @@
 <script>
 export default {
   name: 'musicBar',
+  emits: ['handlerMusic', 'volumeControl'],
   props: {
     // 获取父组件发来数据
     musics: {
@@ -45,7 +46,7 @@ export default {
   // 由于生命周期时间的问题  在created() 、mounted() 拿不到父组件传来的参数musics,下面通过监听
   watch: {
     //监听父组件传参是否传过来了，传过来了就给 musicTitle 赋初始值
-    musics: function(newVal) {
+    musics: function (newVal) {
       this.currentMusicName = newVal[0].musicTitle //newVal即是musics
     }
   },

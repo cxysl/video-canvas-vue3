@@ -2,7 +2,7 @@
  * @Author: chengsl
  * @Date: 2022-01-06 09:29:40
  * @LastEditors: chengsl
- * @LastEditTime: 2022-01-25 15:34:50
+ * @LastEditTime: 2022-04-18 15:12:37
  * @Description: file content
  */
 import { createRouter, createWebHistory } from 'vue-router'
@@ -24,12 +24,13 @@ const routes = [
       title: '视频编辑器'
     }
   },
+
+  // /* webpackChunkName: "watermarkEditor" */ '../pages/watermark/editor'
   {
     path: '/subpage/template/watermark/watermarkEditor',
     components: {
       subpage: () =>
         import(
-          // /* webpackChunkName: "watermarkEditor" */ '../pages/watermark/editor'
           /* webpackChunkName: "watermarkEditor" */ '../pages/watermark/edit'
         )
     },

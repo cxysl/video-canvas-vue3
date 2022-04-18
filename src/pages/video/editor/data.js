@@ -1,68 +1,53 @@
 const video = [
-  // {
-  //     id: 1,
-  //     title: '遮帘过度',
-  //     img: 'https://img.alicdn.com/imgextra/i4/17157061/TB25mDtrsj_B1NjSZFHXXaDWpXa-17157061.png'
-  // },
   {
     id: 1,
     title: '上下放大',
-    img:
-      'https://img.alicdn.com/imgextra/i2/17157061/TB2out_rsUrBKNjSZPxXXX00pXa-17157061.png'
+    img: 'https://img.alicdn.com/imgextra/i2/17157061/TB2out_rsUrBKNjSZPxXXX00pXa-17157061.png'
   },
   {
     id: 2,
     title: '淡入淡出',
-    img:
-      'https://img.alicdn.com/imgextra/i3/17157061/TB2iR.XrrArBKNjSZFLXXc_dVXa-17157061.png'
+    img: 'https://img.alicdn.com/imgextra/i3/17157061/TB2iR.XrrArBKNjSZFLXXc_dVXa-17157061.png'
   },
   {
     id: 3,
     title: '多形状过渡',
-    img:
-      'https://img.alicdn.com/imgextra/i1/17157061/TB2qIgkrcIrBKNjSZK9XXagoVXa-17157061.png'
+    img: 'https://img.alicdn.com/imgextra/i1/17157061/TB2qIgkrcIrBKNjSZK9XXagoVXa-17157061.png'
   },
   {
     id: 4,
     title: '像素溶解过渡',
-    img:
-      'https://img.alicdn.com/imgextra/i3/17157061/TB2Ce76rXooBKNjSZPhXXc2CXXa-17157061.png'
+    img: 'https://img.alicdn.com/imgextra/i3/17157061/TB2Ce76rXooBKNjSZPhXXc2CXXa-17157061.png'
   },
   {
     id: 5,
     title: '百叶窗',
-    img:
-      'https://img.alicdn.com/imgextra/i2/17157061/TB22Vwarr3nBKNjSZFMXXaUSFXa-17157061.png'
+    img: 'https://img.alicdn.com/imgextra/i2/17157061/TB22Vwarr3nBKNjSZFMXXaUSFXa-17157061.png'
   },
   {
     id: 6,
     title: '旋转过渡',
-    img:
-      'https://img.alicdn.com/imgextra/i1/17157061/TB2GJNzrBnTBKNjSZPfXXbf1XXa-17157061.png'
+    img: 'https://img.alicdn.com/imgextra/i1/17157061/TB2GJNzrBnTBKNjSZPfXXbf1XXa-17157061.png'
   },
   {
     id: 7,
     title: '斜角过渡',
-    img:
-      'https://img.alicdn.com/imgextra/i2/17157061/TB2M_3jrDmWBKNjSZFBXXXxUFXa-17157061.png'
+    img: 'https://img.alicdn.com/imgextra/i2/17157061/TB2M_3jrDmWBKNjSZFBXXXxUFXa-17157061.png'
   },
   {
     id: 8,
     title: '挤压过渡',
-    img:
-      'https://img.alicdn.com/imgextra/i3/17157061/TB2J7shrDCWBKNjSZFtXXaC3FXa-17157061.png'
+    img: 'https://img.alicdn.com/imgextra/i3/17157061/TB2J7shrDCWBKNjSZFtXXaC3FXa-17157061.png'
   },
   {
     id: 9,
     title: '直角过渡',
-    img:
-      'https://img.alicdn.com/imgextra/i4/17157061/TB2ipjorrorBKNjSZFjXXc_SpXa-17157061.png'
+    img: 'https://img.alicdn.com/imgextra/i4/17157061/TB2ipjorrorBKNjSZFjXXc_SpXa-17157061.png'
   },
   {
     id: 10,
     title: '两侧飞入',
-    img:
-      'https://img.alicdn.com/imgextra/i3/17157061/TB290_MrpkoBKNjSZFEXXbrEVXa-17157061.png'
+    img: 'https://img.alicdn.com/imgextra/i3/17157061/TB290_MrpkoBKNjSZFEXXbrEVXa-17157061.png'
   }
 ]
 
@@ -305,7 +290,7 @@ const musics = [
     modifyTime: '2020-08-21 18:12:27',
     musicTitle: '城南花已开',
     musicUrl: '//material.baobeituan.com/video/admin/22.mp3',
-    nick: 'admin',
+    nick: 'laocheng',
     status: 'SUCESS',
     upladeTime: null
   },
@@ -316,7 +301,7 @@ const musics = [
     modifyTime: '2020-08-21 18:12:31',
     musicTitle: 'Luv Letter',
     musicUrl: '//material.baobeituan.com/video/admin/23.mp3',
-    nick: 'admin',
+    nick: 'laocheng',
     status: 'SUCESS',
     upladeTime: null
   },
@@ -327,7 +312,7 @@ const musics = [
     modifyTime: '2020-08-21 15:44:48',
     musicTitle: 'TRUE - Letter',
     musicUrl: '//material.baobeituan.com/video/admin/24.mp3',
-    nick: 'admin',
+    nick: 'laocheng',
     status: 'SUCESS',
     upladeTime: null
   }

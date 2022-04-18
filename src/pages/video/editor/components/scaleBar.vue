@@ -25,7 +25,7 @@
         <i class="line"></i>
       </div>
     </div>
-    <div class="bg-miusic" style="display:none;">
+    <div class="bg-miusic" style="display: none">
       <audio id="canvas-music" :src="musicUrl" loop="loop">
         你的浏览器不支持audio标签。
       </audio>
