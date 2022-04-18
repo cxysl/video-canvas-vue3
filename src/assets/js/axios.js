@@ -1,5 +1,12 @@
+/*
+ * @Author: chengsl
+ * @Date: 2022-01-06 09:29:40
+ * @LastEditors: chengsl
+ * @LastEditTime: 2022-01-25 14:25:03
+ * @Description: file content
+ */
 import axios from 'axios'
-const initAxios = vm => {
+const initAxios = (vm) => {
   setBbtapi(vm)
   //  全局配置axios
   axios.defaults.baseURL = vm.$store.state.bbtApi

@@ -1,3 +1,10 @@
+/*
+ * @Author: chengsl
+ * @Date: 2022-01-06 09:29:40
+ * @LastEditors: chengsl
+ * @LastEditTime: 2022-01-25 15:34:50
+ * @Description: file content
+ */
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../pages/home'
 
@@ -22,6 +29,7 @@ const routes = [
     components: {
       subpage: () =>
         import(
+          // /* webpackChunkName: "watermarkEditor" */ '../pages/watermark/editor'
           /* webpackChunkName: "watermarkEditor" */ '../pages/watermark/edit'
         )
     },

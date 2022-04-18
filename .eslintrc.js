@@ -1,3 +1,10 @@
+/*
+ * @Author: chengsl
+ * @Date: 2022-01-06 09:29:40
+ * @LastEditors: chengsl
+ * @LastEditTime: 2022-01-25 15:14:21
+ * @Description: file content
+ */
 module.exports = {
   root: true,
   env: {

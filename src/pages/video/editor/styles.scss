@@ -1,6 +1,12 @@
 @import '@/assets/scss/common';
 .video-editor {
+  height: 100%;
+  overflow-y: auto;
+  position: relative;
   .video-header {
+    position: sticky;
+    top: 0;
+    z-index: 3;
     padding-left: 15px;
     box-sizing: border-box;
     width: 100%;
@@ -26,7 +32,7 @@
     }
     .create-btn {
       float: right;
-      height: 70px;
+      height: 100%;
       width: 160px;
       text-align: center;
       line-height: 70px;
@@ -46,6 +52,7 @@
       height: 400px;
       margin-right: 400px;
       .el-tabs--border-card {
+        border-top: none;
         box-sizing: border-box;
         height: 100%;
         background-color: #42464f;

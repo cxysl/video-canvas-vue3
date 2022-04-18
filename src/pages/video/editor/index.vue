@@ -2,7 +2,7 @@
   <div class="video-editor">
     <div class="video-header">
       <div class="logo" @click="goToVideo"></div>
-      <div class="title">主图视频编辑器</div>
+      <div class="title">图片模拟视频编辑器</div>
       <el-button
         type="primary"
         class="create-btn"
@@ -204,11 +204,11 @@ export default {
           .post('/template/video/getMusicByNick.post', {
             nick: this.nick
           })
-          .then(res => {
+          .then((res) => {
             this.musics = res.data.data
             this.$emit('musics', this.musics)
           })
-          .catch(err => {
+          .catch((err) => {
             this.musics = musics
             this.$emit('musics', this.musics)
             console.log(err)
@@ -250,10 +250,10 @@ export default {
               mode: this.mode || '1'
             }
           })
-          .then(res => {
+          .then((res) => {
             resolve((this.images = res.data.data.images))
           })
-          .catch(err => {
+          .catch((err) => {
             this.images = [
               'https://img.alicdn.com/bao/uploaded/i2/813529278/O1CN01Civq0P2IPNCmhRuKS_!!0-item_pic.jpg',
               'https://img.alicdn.com/bao/uploaded/i2/813529278/O1CN01iCxNOs2IPNCn4jyLf_!!0-item_pic.jpg',
@@ -348,7 +348,7 @@ export default {
             window.open('/template/video/index')
           }
         })
-        .catch(err => {
+        .catch((err) => {
           this.creating = false
           console.log(err)
         })

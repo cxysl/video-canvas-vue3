@@ -17,6 +17,9 @@ html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquot
 	font-size: 100%;
 	font-weight: normal;
 }
+* {
+  box-sizing: border-box;
+}
 body, button, input, select, textarea {
     font: 14px/1.5 tahoma,arial,"Microsoft Yahei",sans-serif;
 	color: #5e6d82;

@@ -1,5 +1,14 @@
+/*
+ * @Author: chengsl
+ * @Date: 2022-01-06 09:29:40
+ * @LastEditors: chengsl
+ * @LastEditTime: 2022-01-25 15:11:05
+ * @Description: file content
+ */
 import { createStore } from 'vuex'
 import video from './modules/video'
+import watermark from './modules/watermark'
+import poster from './modules/poster'
 
 export default createStore({
   state: {
@@ -20,5 +29,5 @@ export default createStore({
     }
   },
   actions: {},
-  modules: { video }
+  modules: { video, watermark, poster }
 })

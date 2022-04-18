@@ -1,0 +1,169 @@
+@import 'src/assets/scss/common.scss';
+.editor-canvas-view-panel {
+  .view-size-item {
+    position: relative;
+    padding: 10px 30px 10px 20px;
+    background-color: #f9f9f9;
+    font-size: 12px;
+    cursor: pointer;
+    .size-label {
+      position: absolute;
+      color: #c1c1c1;
+      right: 10px;
+      top: 10px;
+    }
+  }
+}
+.canvas-view-size-options {
+  width: 1000px;
+  height: 500px;
+  .el-dialog__body {
+    padding: 0;
+  }
+  .el-dialog__header {
+    display: none;
+  }
+  .canvas-preview {
+    float: left;
+    position: relative;
+    width: 580px;
+    height: 500px;
+    overflow: hidden;
+    background-color: #000;
+    .canvas-container-outer-ring{
+      position: static;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      .poster-canvas-wrap {
+        padding-top: 0px !important;
+        .editor-el-img {
+          transform: scale(1) !important;
+        }
+      }
+    }
+  }
+  .view-options{
+    float: right;
+    box-sizing: border-box;
+    width: 420px;
+    height: 500px;
+    padding: 20px;
+    color: #556274;
+    .options-header{
+      width: 100%;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+    .el-icon-close{
+      float: right;
+      color: #AFBCCD;
+      cursor: pointer;
+    }
+    .size-select-wrap{
+      box-sizing: border-box;
+      height: 230px;
+      padding: 10px 0;
+      border: 1px solid $bdc;
+      font-size: 12px;
+      overflow: auto;
+      margin-bottom: 20px;
+      li{
+        height: 40px;
+        line-height: 40px;
+        padding: 0 18px;
+        cursor: pointer;
+        &:hover{
+          background-color: #f5faff;
+        }
+        &.active{
+          color: $primary;
+          background-color: #f5faff;
+        }
+      }
+    }
+    .custom-size{
+      position: relative;
+      margin-bottom: 80px;
+      .custom-size-label{
+        margin-right: 20px;
+      }
+      .el-input{
+        width: 120px;
+        background-color: #f9f9f9;
+        border-radius: 4px;
+        border: 1px solid #fff;
+        &.error{
+          border-color: $danger;
+        }
+        .el-input__inner{
+          background-color: #f9f9f9;
+          border-color: transparent;
+        }
+        .el-input-group__append{
+          font-size: 12px;
+          background-color: #f9f9f9;
+          border-color: transparent;
+          color: #c1c1c1;
+        }
+      }
+      .lock-icon{
+        cursor: pointer;
+        &.locked{
+          color: $danger;
+        }
+      }
+      .error-msg{
+        position: absolute;
+        font-size: 12px;
+        top: 44px;
+        left: 105px;
+        color: $danger;
+      }
+    }
+    .confirm-btn{
+      width: 100%;
+    }
+  }
+  .poster-canvas-wrap .canvas-wrap {
+    padding: 0;
+  }
+  .poster-canvas-wrap {
+    top: 0;
+    left: 0;
+    right: 0;
+    overflow: visible;
+  }
+  .clip-content{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+  }
+  .clip-bg{
+    background-color: #fff;
+  }
+  .clip-box {
+    box-shadow: 0 0 600px 600px rgba(0, 0, 0, 0.6);
+    z-index: 9;
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      border: 1px solid #fff;
+    }
+    &::after{
+      border: 1px dashed #000;
+    }
+  }
+  .editor-canvas{
+    overflow: visible!important;
+  }
+}

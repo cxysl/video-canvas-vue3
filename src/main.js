@@ -5,6 +5,7 @@ import store from './store'
 import ElementPlus from 'element-plus'
 import laochengIcon from '../src/components/laochengIcon'
 import lazyPlugin from 'vue3-lazy'
+import './assets/css/index.css'
 
 const app = createApp(App)
 app

@@ -66,7 +66,9 @@ export default {
       isStart: true,
       isEnd: false,
       isProcess: false,
-      isHold: false
+      isHold: false,
+      oneTimeOut: null,
+      twoTimeOut: null
     }
   },
   computed: {
@@ -284,7 +286,7 @@ export default {
     upEnlarge(index1, index2) {
       let that = this
       // eslint-disable-next-line no-unused-vars
-      return new Promise(function(res, rej) {
+      return new Promise(function (res, rej) {
         ;(function out(img1, img2) {
           let h1 = img1.height
           let w1 = img1.width
@@ -409,7 +411,7 @@ export default {
     fadeIn(index1, index2) {
       let that = this
       // eslint-disable-next-line no-unused-vars
-      return new Promise(function(res, rej) {
+      return new Promise(function (res, rej) {
         ;(function out(img1, img2) {
           let h1 = img1.height
           let w1 = img1.width
@@ -534,7 +536,7 @@ export default {
     shape(index1, index2) {
       let that = this
       // eslint-disable-next-line no-unused-vars
-      return new Promise(function(res, rej) {
+      return new Promise(function (res, rej) {
         ;(function out(img1, img2) {
           let h1 = img1.height
           let w1 = img1.width
@@ -710,7 +712,7 @@ export default {
     pixelsDot(index1, index2) {
       let that = this
       // eslint-disable-next-line no-unused-vars
-      return new Promise(function(res, rej) {
+      return new Promise(function (res, rej) {
         ;(function out(img1, img2) {
           let h1 = img1.height
           let w1 = img1.width
@@ -789,7 +791,7 @@ export default {
                   imgArr.push(obj)
                 }
               }
-              imgArr.sort(function() {
+              imgArr.sort(function () {
                 return 0.5 - Math.random()
               })
               ;(function two() {
@@ -900,7 +902,7 @@ export default {
     leafWindow(index1, index2) {
       let that = this
       // eslint-disable-next-line no-unused-vars
-      return new Promise(function(res, rej) {
+      return new Promise(function (res, rej) {
         ;(function out(img1, img2) {
           let h1 = img1.height
           let w1 = img1.width
@@ -1064,7 +1066,7 @@ export default {
     rotate(index1, index2) {
       let that = this
       // eslint-disable-next-line no-unused-vars
-      return new Promise(function(res, rej) {
+      return new Promise(function (res, rej) {
         ;(function out(img1, img2) {
           let h1 = img1.height
           let w1 = img1.width
@@ -1222,7 +1224,7 @@ export default {
     bevelAngle(index1, index2) {
       let that = this
       // eslint-disable-next-line no-unused-vars
-      return new Promise(function(res, rej) {
+      return new Promise(function (res, rej) {
         ;(function out(img1, img2) {
           let h1 = img1.height
           let w1 = img1.width
@@ -1452,7 +1454,7 @@ export default {
     pushOut(index1, index2) {
       let that = this
       // eslint-disable-next-line no-unused-vars
-      return new Promise(function(res, rej) {
+      return new Promise(function (res, rej) {
         ;(function out(img1, img2) {
           let h1 = img1.height
           let w1 = img1.width
@@ -1591,7 +1593,7 @@ export default {
     rightAngle(index1, index2) {
       let that = this
       // eslint-disable-next-line no-unused-vars
-      return new Promise(function(res, rej) {
+      return new Promise(function (res, rej) {
         ;(function out(img1, img2) {
           let h1 = img1.height
           let w1 = img1.width
@@ -1771,7 +1773,7 @@ export default {
     flyIn(index1, index2) {
       let that = this
       // eslint-disable-next-line no-unused-vars
-      return new Promise(function(res, rej) {
+      return new Promise(function (res, rej) {
         ;(function out(img1, img2) {
           let h1 = img1.height
           let w1 = img1.width
