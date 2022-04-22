@@ -1,17 +1,21 @@
 <template>
   <div class="video-editor">
     <div class="video-header">
-      <div class="logo" @click="goToVideo"></div>
-      <div class="title">图片模拟视频编辑器</div>
-      <el-button
-        type="primary"
-        class="create-btn"
-        :loading="creating"
-        @click="createVideo"
-      >
-        制作视频
-      </el-button>
-      <div class="current-duration">当前视频时长：{{ duration }}秒</div>
+      <div class="left-logo">
+        <div class="logo" @click="goToVideo"></div>
+        <div class="title">图片模拟视频编辑器</div>
+      </div>
+      <div class="right-buts">
+        <div class="current-duration">当前视频时长：{{ duration }}秒</div>
+        <el-button
+          type="primary"
+          class="create-btn"
+          :loading="creating"
+          @click="createVideo"
+        >
+          制作视频
+        </el-button>
+      </div>
     </div>
     <div class="controler">
       <div class="material">
@@ -332,21 +336,21 @@ export default {
     },
     //  生成视频
     createVideo() {
-      this.creating = true
-      let data = {
-        itemId: this.$route.query.itemId,
-        images: this.images,
-        style: this.$refs.video.active,
-        music: '',
-        musicUrl: '',
-        mode: this.mode
-      }
-      if (this.isUseMusic) {
-        data.music = this.musics[this.index].id
-        data.musicUrl = this.musics[this.index].musicUrl
-      }
-      this.$message.wraning('抱歉，该功能暂未实现')
-      this.creating = false
+      this.$message.warning('抱歉，该功能暂未上线')
+      // this.creating = true
+      // let data = {
+      //   itemId: this.$route.query.itemId,
+      //   images: this.images,
+      //   style: this.$refs.video.active,
+      //   music: '',
+      //   musicUrl: '',
+      //   mode: this.mode
+      // }
+      // if (this.isUseMusic) {
+      //   data.music = this.musics[this.index].id
+      //   data.musicUrl = this.musics[this.index].musicUrl
+      // }
+      // this.creating = false
 
       // 新制作视频
       // axios

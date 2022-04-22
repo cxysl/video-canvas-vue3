@@ -15,12 +15,13 @@
         >
           <div class="img-container">
             <div class="item-img">
-              <img :src="`${item}_100x100.jpg`" />
+              <!-- <img :src="`${item}_100x100.jpg`" />
+                :on-success="handlerUploadSuccess"-->
+              <img :src="`${item}`" />
               <el-upload
+                action="#"
                 accept=".jpg,.jpeg,.png"
-                :action="`${bbtApi}/template/video/uploadFodder.post`"
-                :on-success="handlerUploadSuccess"
-                :on-error="handlerUploadError"
+                :on-change="handlerChange"
                 :before-upload="beforeUpload"
                 :show-file-list="false"
                 :with-credentials="true"
@@ -138,25 +139,28 @@ export default {
         return false
       }
     },
-    handlerUploadSuccess(res) {
-      if (res.status === 1) {
-        let copy = [...this.items]
-        copy[this.active] = res.data.img
-        this.$emit('update:items', copy)
-        this.$emit('videoReset')
-      } else {
-        this.$message.warning({
-          message: res.msg
+    handlerChange(file) {
+      let copy = [...this.items]
+      copy[this.active] = URL.createObjectURL(
+        new Blob([file.raw], {
+          type: file.raw.type
         })
-      }
+      )
+      this.$emit('update:items', copy)
+      this.$emit('videoReset')
     },
-    handlerUploadError(err, file) {
-      this.$message.error({
-        showClose: true,
-        message: `“${file.name}”上传失败，请稍后再试`
-      })
-      console.log(err)
-    },
+    // handlerUploadSuccess(res) {
+    //   if (res.status === 1) {
+    //     let copy = [...this.items]
+    //     copy[this.active] = res.data.img
+    //     this.$emit('update:items', copy)
+    //     this.$emit('videoReset')
+    //   } else {
+    //     this.$message.warning({
+    //       message: res.msg
+    //     })
+    //   }
+    // },
     //  打开添加图片的弹窗
     showAddImagesDialog() {
       if (this.items.length < this.limitCount) {

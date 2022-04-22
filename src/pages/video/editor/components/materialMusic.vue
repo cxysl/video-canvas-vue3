@@ -119,7 +119,8 @@ export default {
     showAddMusicDialog() {
       console.log('???? you  click me')
       //   显示上传音乐界面
-      this.isShowAddMusicDialog = true
+      return this.$message('抱歉，该功能已下线！')
+      // this.isShowAddMusicDialog = true
     },
     del(index) {
       this.musics.splice(index, 1) //  界面上删除这家伙
@@ -216,7 +217,7 @@ export default {
       text-overflow: ellipsis; /* 超出部分显示省略号 */
       white-space: nowrap; /*规定段落中的文本不进行换行 */
       color: #fff;
-      text-align: center;
+      text-align: left;
     }
     .dis-none {
       display: none;

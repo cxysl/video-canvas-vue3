@@ -1,58 +1,55 @@
 <template>
+  <!-- v-el-dialog-drag -->
   <el-dialog
     title="上传图片"
     v-model="isShow"
-    @update:visible="(val) => $emit('update:visible', val)"
-    :close-on-click-modal="false"
-    :close-on-press-escape="false"
+    @close="
+      () => {
+        $emit('update:visible', false)
+      }
+    "
     custom-class="video-add-images-dialog"
   >
-    <el-tabs v-model="activeName">
-      <el-tab-pane class="img-upload" label="本地上传" name="local">
-        <el-upload
-          accept=".jpg,.jpeg,.png"
-          :action="`${bbtApi}/template/video/uploadFodder.post`"
-          :on-success="handlerUploadSuccess"
-          :on-change="handlerChange"
-          :on-error="handlerUploadError"
-          :on-remove="handlerRemove"
-          :before-upload="beforeUpload"
-          :show-file-list="true"
-          :with-credentials="true"
-          list-type="picture-card"
-          :auto-upload="true"
-          :file-list="fileList"
-          ref="upload"
-          multiple
-        >
-          <i class="el-icon-plus"></i>
-        </el-upload>
-        <div class="upload-confirm-bar">
-          <ul class="tips">
-            <li>1、上传图片建议2M以内，仅支持jpg、png格式</li>
-            <li>2、视频最多支持制作{{ limitCount }}张图片</li>
-          </ul>
-          <el-button type="primary" @click="confirm">添加到编辑器</el-button>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="图片空间" name="remote">
-        <image-space
-          ref="imageSpace"
-          :limit="limitCount - count"
-          @confirm="imageSpaceConfirm"
-        ></image-space>
-      </el-tab-pane>
-    </el-tabs>
+    <div>
+      <el-upload
+        action="#"
+        accept=".jpg,.jpeg,.png"
+        :on-change="handlerChange"
+        :on-preview="handlePictureCardPreview"
+        :on-remove="handleRemove"
+        list-type="picture-card"
+        :auto-upload="false"
+        :file-list="fileList"
+        multiple
+        ref="upload"
+      >
+        <!-- :show-file-list="true"
+      :with-credentials="true"
+      multiple -->
+        <el-icon><Plus /></el-icon>
+      </el-upload>
+      <div class="upload-confirm-bar">
+        <ul class="tips">
+          <li>1、上传图片建议2M以内，仅支持jpg、png格式</li>
+          <li>2、视频最多支持制作{{ limitCount }}张图片</li>
+        </ul>
+        <el-button type="primary" @click="confirm">添加到编辑器</el-button>
+      </div>
+
+      <el-dialog v-model="dialogVisible">
+        <img w-full :src="dialogImageUrl" alt="Preview Image" />
+      </el-dialog>
+    </div>
   </el-dialog>
 </template>
 
 <script>
-import imageSpace from 'components/imageSpace'
+// import imageSpace from 'components/imageSpace'
 export default {
   name: 'addImagesDialog',
-  emits: ['confirm'],
+  emits: ['confirm', 'update:visible'],
   components: {
-    imageSpace
+    // imageSpace
   },
   inject: ['limitCount'],
   props: {
@@ -70,7 +67,9 @@ export default {
       uploadedImages: [],
       tbImage: '',
       addTblmageLoading: false,
-      fileList: []
+      fileList: [],
+      dialogVisible: false, // 预览大图
+      dialogImageUrl: '' // 大图地址
     }
   },
   computed: {
@@ -91,8 +90,11 @@ export default {
         })
         return false
       }
-      let images = this.uploadedImages.map((item) => {
-        return item.url
+      // let images = this.uploadedImages.map((item) => {
+      //   return item.url
+      // })
+      let images = this.fileList.map((file) => {
+        return file.url
       })
       this.$emit('confirm', images)
       this.uploadedImages = []
@@ -100,64 +102,20 @@ export default {
       this.isShow = false
       this.$emit('update:visible', this.isShow)
     },
-    handlerUploadSuccess(res, file) {
-      if (res.status === 1) {
-        this.uploadedImages.push({
-          uid: file.uid,
-          url: res.data.img
-        })
-      } else {
-        this.$message.warning({
-          message: res.msg
-        })
-      }
+    changeShow(val) {
+      console.log('变化', val)
+      this.$emit('update:visible', val)
     },
-
-    handlerUploadError(err, file) {
-      this.$message.error({
-        showClose: true,
-        message: `“${file.name}”上传失败，请稍后再试`
-      })
-      console.log(err)
-    },
-    handlerRemove(file) {
-      let fileIndex = ''
-      this.uploadedImages.forEach((item, index) => {
-        if (item.uid === file.uid) {
-          fileIndex = index
-        }
-      })
-      if (fileIndex !== '') {
-        this.uploadedImages.splice(fileIndex, 1)
-      }
-    },
-    beforeUpload(file) {
-      if (this.fileList.length + this.count > this.limitCount) {
-        this.$message.warning({
-          message: `视频最多支持制作${this.limitCount}张图片`
-        })
-        return false
-      }
-      //  图片不能超过2M
-      let isOverSize = file.size > 2097152
-      let isAccept = /\.(jpg|jpeg|png)$/.test(file.name)
-      if (!isAccept || isOverSize) {
-        this.$message.warning({
-          message: isOverSize
-            ? '图片大小不能超过2M'
-            : '只可上传.jpg，.jpeg，.png等后缀名的文件'
-        })
-        return false
-      }
-    },
+    // eslint-disable-next-line no-unused-vars
     handlerChange(file, fileList) {
       this.fileList = fileList
     },
-    //  添加淘宝图片空间的图片
-    imageSpaceConfirm(imgs) {
-      this.$emit('confirm', imgs)
-      this.$refs.imageSpace.init()
-      this.isShow = false
+    handlePictureCardPreview(uploadFile) {
+      this.dialogImageUrl = uploadFile.url
+      this.dialogVisible = true
+    },
+    handleRemove(uploadFile) {
+      console.log('uploadFile', uploadFile)
     },
 
     onFocus(event) {
@@ -168,11 +126,13 @@ export default {
     visible: {
       handler(val) {
         this.isShow = val
-        if (val && this.$isQn) {
-          this.initQnParams()
-        }
       },
       immediate: true
+    },
+    dialogVisible(val) {
+      if (!val) {
+        this.dialogImageUrl = ''
+      }
     }
   }
 }
@@ -181,7 +141,7 @@ export default {
 <style lang="scss">
 @import '@/assets/scss/common';
 .video-add-images-dialog {
-  width: 950px;
+  // width: 950px;
   .img-upload {
     position: relative;
   }
@@ -198,6 +158,9 @@ export default {
       }
     }
   }
+  .el-button {
+    height: 40px;
+  }
   .el-upload--picture-card {
     width: 110px;
     height: 110px;
@@ -213,16 +176,16 @@ export default {
     }
   }
   .tips {
-    float: left;
     text-align: left;
     color: $danger;
     height: 60px;
   }
   .upload-confirm-bar {
     padding-top: 20px;
-    .el-button {
-      float: right;
-    }
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: flex-end;
   }
 }
 </style>

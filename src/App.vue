@@ -43,7 +43,7 @@ export default {
   },
   created() {
     window.axios = initAxios(this)
-    window.VM = this
+    // window.VM = this
     // eslint-disable-next-line no-unused-vars
     this.$router.beforeEach((to, from, next) => {
       // console.log(to, from, next)

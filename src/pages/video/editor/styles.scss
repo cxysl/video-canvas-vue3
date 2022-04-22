@@ -6,15 +6,27 @@
   .video-header {
     position: sticky;
     top: 0;
-    z-index: 3;
+    z-index: 11;
     padding-left: 15px;
     box-sizing: border-box;
     width: 100%;
     height: 60px;
     background-color: #34373e;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    .left-logo, .right-buts {
+      height: 100%;
+      width: 50%;
+      display: flex;
+      flex-wrap: nowrap;
+    }
+    .right-buts {
+      justify-content: flex-end;
+    }
     .logo {
       cursor: pointer;
-      float: left;
       width: 40px;
       height: 40px;
       margin: 10px;
@@ -25,17 +37,21 @@
       // background-image: url(https://img.alicdn.com/imgextra/i1/17157061/TB2v4DCdHJmpuFjSZFBXXXaZXXa-17157061.png_70x70.jpg);
     }
     .title {
-      float: left;
       color: #fff;
       line-height: 60px;
       font-size: 18px;
     }
+    .current-duration {
+      height: 70px;
+      line-height: 70px;
+      color: #d2d2d2;
+      margin-right: 20px;
+    }
     .create-btn {
-      float: right;
       height: 100%;
       width: 160px;
       text-align: center;
-      line-height: 70px;
+      line-height: 60px;
       font-size: 18px;
       border-radius: 0;
       padding: 0;
@@ -126,13 +142,6 @@
         background: transparent url('../../../assets/images/play-btn-bbt.png');
       }
     }
-  }
-  .current-duration {
-    float: right;
-    height: 70px;
-    line-height: 70px;
-    color: #d2d2d2;
-    margin-right: 20px;
   }
   .video-editor-tips {
     background-color: #7e828c;

@@ -1,3 +1,10 @@
+/*
+ * @Author: chengsl
+ * @Date: 2022-04-18 08:55:02
+ * @LastEditors: chengsl
+ * @LastEditTime: 2022-04-19 15:26:24
+ * @Description: file content
+ */
 module.exports = {
   printWidth: 80, //一行的字符数，如果超过会进行换行，默认为80
   tabWidth: 2, //一个tab代表几个空格数，默认为80
@@ -12,6 +19,12 @@ module.exports = {
   overrides: [
     {
       files: '*.js',
+      options: {
+        parser: 'babel'
+      }
+    },
+    {
+      files: '*.ts',
       options: {
         parser: 'babel'
       }

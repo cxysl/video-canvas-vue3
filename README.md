@@ -24,3 +24,17 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 其内容是 将平时开发中看上去比较牛的功能 实现
 目前 已将动画视频 实现 (技术栈: canvas)
 KEEP CODEIND...
+
+### other-随笔记录
+水印编辑页
+http://promote-dev.baobeituan.com:8080/subpage/watermark/editor?type=1&id=671&modes=1&activityId=&isTbWm=false
+/subpage/watermark/editor?type=1&id=671&modes=1,2,3&activityId=&isTbWm=false
+https://yingxiao.baobeituan.com/#/material/subpage/watermark/editor?type=1&id=671&modes=1,2,3&activityId=&isTbWm=false
+海报编辑页
+
+[
+'♿️', '⚠️', '⚡️', '✅', '✏️', '✨', '🍡', '🎁', '🎉', '🎨',
+'🎯', '🐛', '👥', '👷', '💃', '💪', '💿', '📄', '📖', '📝',
+'📦', '📱', '🔌', '🚀', '🚨', '🚫', '🛡', '🛴', '🤔', '🥄',
+'🧳', '🛠️'
+]
