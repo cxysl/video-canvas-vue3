@@ -25,6 +25,8 @@
       </div>
     </div>
     <div class="footer">————世林出品</div>
+    <!-- 个性化设置 -->
+    <user-setting />
   </div>
 </template>
 <script>

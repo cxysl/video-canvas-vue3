@@ -2,7 +2,7 @@
  * @Author: chengsl
  * @Date: 2022-04-18 08:55:03
  * @LastEditors: chengsl
- * @LastEditTime: 2022-04-21 09:32:06
+ * @LastEditTime: 2022-04-22 17:55:48
  * @Description: main.js
  */
 import { createApp } from 'vue'
@@ -60,9 +60,12 @@ directives.keys().forEach((directivePath) => {
   }
 })
 
-/** ***** 添加原型属性 $XEUtils 指向 XEUtils *****/
+/** ***** 添加原型属性 dayjs 指向 app *****/
 import dayjs from 'dayjs'
 vm.$dayjs = dayjs
+
+import { updateThemeColor } from '@/utils/updateThemeColor'
+vm.$updateThemeColor = updateThemeColor
 window.VM = vm
 // window.VMApp = app
 // console.log('aaaa', this)

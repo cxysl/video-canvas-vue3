@@ -17,7 +17,7 @@
     .production-name {
       font-size: 18px;
       font-weight: 600;
-      color: #1677ff;
+      color: var(--theme-color);
       float: left;
       // margin-top: 12px;
     }
@@ -38,7 +38,7 @@
         right: 0;
         content: '';
         height: 5px;
-        background-color: #1677ff;
+        background-color: var(--theme-color);
         width: 100%;
         opacity: 0;
         transition: opacity 0.3s ease-in 0s;
@@ -49,6 +49,9 @@
     }
   }
   .user-info {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
     cursor: pointer;
     // display: flex;
     .head-portrait {
@@ -64,6 +67,24 @@
       // no-repeat 50% 50%;
     }
     .user-name {
+    }
+    .el-icon {
+      line-height: 60px;
+      margin-left: 5px;
+    }
+  }
+}
+.user-block {
+  .item {
+    height: 27px;
+    line-height: 27px;
+    text-align: center;
+    padding: 0 15px;
+    font-size: 13px;
+    cursor: pointer;
+    &:hover {
+      background-color: var(--theme-weaken-color-10);
+      color: var(--theme-color);
     }
   }
 }

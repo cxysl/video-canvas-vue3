@@ -4,9 +4,7 @@
       <p v-if="!isTbWm">宝贝团价签</p>
       <div v-else class="tb">
         官方自动价签
-        <p class="question" @click="openTips">
-          ?
-        </p>
+        <p class="question" @click="openTips">?</p>
         <span @click="openTbTip" class="tb-tip">查看详细解释</span>
       </div>
     </div>
@@ -32,7 +30,7 @@
         </div>
       </div>
       <div class="tb-price" v-else>
-        <p style="color: #f00;font-size:12px">
+        <p style="color: #f00; font-size: 12px">
           使用官方自动价签后，只能选择店内大促商品
         </p>
         <div class="price-group">
@@ -82,14 +80,12 @@
             <div v-if="priceRadioTb != 3" class="price-switch">
               <div>
                 展示价格公式
-                <span class="question" @click="openPriceTips">
-                  ?
-                </span>
+                <span class="question" @click="openPriceTips">?</span>
               </div>
               <el-switch
                 v-model="priceSwitch"
                 :disabled="priceRadioTb == '2'"
-                active-color="#1677FF"
+                active-color="var(--theme-color)"
                 inactive-color="#CCCCCC"
               ></el-switch>
             </div>
@@ -104,7 +100,7 @@
               <el-input
                 v-model="textLine1"
                 @change="updateTextLine"
-                style="margin-bottom:5px"
+                style="margin-bottom: 5px"
                 placeholder="请输入第一行兜底文案"
               ></el-input>
               <p>兜底文案2</p>
@@ -127,14 +123,12 @@
                     <br />
                     赠品信息后台更新后，主图也会同步更新
                   </div>
-                  <span class="question">
-                    ?
-                  </span>
+                  <span class="question">?</span>
                 </el-tooltip>
               </div>
               <el-switch
                 v-model="showGift"
-                active-color="#1677FF"
+                active-color="var(--theme-color)"
                 inactive-color="#CCCCCC"
               ></el-switch>
             </div>
@@ -149,14 +143,14 @@
       append-to-body
       width="25%"
       top="25vh"
-      @update:visible="val => (showGiftTipDialog = val)"
+      @update:visible="(val) => (showGiftTipDialog = val)"
       :close-on-press-escape="false"
     >
       <p>
         开启后，可以自动在主图上表达在店铺宝后台设置的赠品信息，最多表达前三个设置的赠品信息
       </p>
 
-      <span slot="footer" style="text-align:left">
+      <span slot="footer" style="text-align: left">
         <el-button type="primary" @click="() => (showGiftTipDialog = false)">
           我知道了
         </el-button>
@@ -169,25 +163,17 @@
       append-to-body
       width="30%"
       top="25vh"
-      @update:visible="val => (showPriceTip = val)"
+      @update:visible="(val) => (showPriceTip = val)"
       :close-on-press-escape="false"
     >
-      <p>
-        1. 凑单价大于等于单件优惠价（劵后价）时，表达劵后价
-      </p>
+      <p>1. 凑单价大于等于单件优惠价（劵后价）时，表达劵后价</p>
       <p>
         2.若商品为限购商品，且限购件数小于凑单件数时，表达单件优惠价（劵后价）
       </p>
-      <p>
-        3.当前商品无可用优惠时，表达活动报名价
-      </p>
-      <p>
-        4.商品当前有前n优惠时，表达单件优惠价（劵后价）
-      </p>
-      <p>
-        5.优惠变更时，系统会重新计算价格
-      </p>
-      <span slot="footer" style="text-align:left">
+      <p>3.当前商品无可用优惠时，表达活动报名价</p>
+      <p>4.商品当前有前n优惠时，表达单件优惠价（劵后价）</p>
+      <p>5.优惠变更时，系统会重新计算价格</p>
+      <span slot="footer" style="text-align: left">
         <el-button type="primary" @click="() => (showPriceTip = false)">
           我知道了
         </el-button>
@@ -299,7 +285,7 @@ export default {
       let pollChunks = () => {
         if (this.chunks.length > 0) {
           let haveControl = false
-          this.chunks.some(item => {
+          this.chunks.some((item) => {
             if (haveControl && this.haveGift) {
               return true
             }
@@ -380,7 +366,7 @@ export default {
     },
     checkHavePriceTag() {
       let flag = false
-      this.chunks.some(chunk => {
+      this.chunks.some((chunk) => {
         if (chunk.priceTag) {
           flag = true
           return true

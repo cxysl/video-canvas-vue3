@@ -177,7 +177,7 @@ export default {
   }
   .tips {
     text-align: left;
-    color: $danger;
+    color: var(--theme-color);
     height: 60px;
   }
   .upload-confirm-bar {

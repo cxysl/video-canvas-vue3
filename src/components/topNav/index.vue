@@ -38,15 +38,18 @@
         </el-row>
       </el-col>
       <el-col :span="5">
-        <el-popover placement="bottom" :width="300" trigger="hover">
-          <template #reference>
-            <div class="user-info" data-traceid="20-0">
-              <div class="head-portrait"></div>
+        <div class="user-info" data-traceid="20-0">
+          <div class="head-portrait"></div>
+          <el-popover placement="bottom" :width="85" trigger="hover">
+            <template #reference>
               <div class="user-name">小楼昨夜又东风</div>
+              <el-icon><arrow-down /></el-icon>
+            </template>
+            <div class="user-block">
+              <div class="item" @click="sysSetting">系统设置</div>
             </div>
-          </template>
-          <div class="user-block">wula</div>
-        </el-popover>
+          </el-popover>
+        </div>
       </el-col>
     </el-row>
   </div>
@@ -108,6 +111,10 @@ export default {
     },
     hideSubmenu() {
       this.activeIndex = 9999
+    },
+    // 系统设置
+    sysSetting() {
+      this.$store.commit('SET_IS_OPEN_SYSCONFIG', true)
     }
   }
 }
