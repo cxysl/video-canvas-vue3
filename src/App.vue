@@ -33,6 +33,7 @@
 import { mapState } from 'vuex'
 import initAxios from './assets/js/axios'
 import topNav from '@/components/topNav'
+import userSetting from '@/components/user-setting'
 export default {
   name: 'app',
   data() {
@@ -41,7 +42,8 @@ export default {
     }
   },
   components: {
-    topNav
+    topNav,
+    userSetting
   },
   created() {
     window.axios = initAxios(this)

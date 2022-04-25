@@ -1,7 +1,7 @@
 <!--
  * @Author: Nahco.Huang
  * @Date: 2020-09-28 14:26:53
- * @LastEditTime: 2022-04-22 18:35:10
+ * @LastEditTime: 2022-04-25 18:20:19
  * @LastEditors: chengsl
  * @Description: 个性化设置
 -->
@@ -39,6 +39,7 @@
             <p class="title">字体大小</p>
             <el-select
               v-model="settingForm.fontSize"
+              :popper-append-to-body="false"
               placeholder="请选择字体大小"
               style="width: 244px"
               @change="onSelectFontSize"
@@ -94,8 +95,10 @@ export default {
       ],
       fontSizeOptions: [
         { label: '12px', value: '12' },
-        { label: '13px', value: '13' },
-        { label: '14px（默认）', value: '14' }
+        { label: '14px（默认）', value: '14' },
+        { label: '16px', value: '16' },
+        { label: '18px', value: '18' },
+        { label: '20px', value: '20' }
       ]
     }
   },
