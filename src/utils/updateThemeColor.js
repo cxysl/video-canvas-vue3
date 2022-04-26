@@ -2,7 +2,7 @@
  * @Author: chengsl
  * @Date: 2022-04-22 17:52:46
  * @LastEditors: chengsl
- * @LastEditTime: 2022-04-22 18:08:09
+ * @LastEditTime: 2022-04-26 15:25:39
  * @Description: file content
  */
 
@@ -105,8 +105,8 @@ export const updateThemeColor = function (val) {
     .replace(/.el-icon-[a-zA-Z0-9-:^]+before{content:"[^}]+}/g, '') // 去掉图标样式
   // require('element-ui/lib/theme-chalk/index.css')
 
-  console.log('updateThemeColor ------------------------ in')
-  console.log('ORIGINAL_THEME', ORIGINAL_THEME)
+  // console.log('updateThemeColor ------------------------ in')
+  // console.log('ORIGINAL_THEME', ORIGINAL_THEME)
   // try {
   //   console.log('ThemeCode', ThemeCode)
   //   console.log('ThemeCode', String(ThemeCode))
@@ -139,5 +139,5 @@ export const updateThemeColor = function (val) {
   const chalkHandler = getHandler('chalk-style')
   chalkHandler()
 
-  console.log('updateThemeColor ------------------------ end')
+  // console.log('updateThemeColor ------------------------ end')
 }

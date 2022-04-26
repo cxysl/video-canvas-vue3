@@ -42,8 +42,10 @@
           <div class="head-portrait"></div>
           <el-popover placement="bottom" :width="85" trigger="hover">
             <template #reference>
-              <div class="user-name">小楼昨夜又东风</div>
-              <el-icon><arrow-down /></el-icon>
+              <div class="user-name">
+                小楼昨夜又东风
+                <el-icon><arrow-down /></el-icon>
+              </div>
             </template>
             <div class="user-block">
               <div class="item" @click="sysSetting">系统设置</div>

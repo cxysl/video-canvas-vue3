@@ -2,14 +2,19 @@
   // box-shadow: 0 4px 6px 0 rgba(232, 237, 250, 0.9);
   .logo-wrap {
     cursor: pointer;
+    // .logo {
+    //   background: url(../../assets/images/laocheng/dsxs.jpg);
+    //   background-size: 94px 40px;
+    //   background-position: 56% center;
+    // }
     .logo {
       float: left;
       width: 40px;
       height: 40px;
       margin-top: 10px;
       overflow: hidden;
-      background: url(../../assets/images/laocheng/dsxs.jpg);
-      background-size: 94px 40px;
+      background: url(../../assets/images/laocheng/systemlogo.png);
+      background-size: 40px 40px;
       background-position: 56% center;
       margin-right: 8px;
       // no-repeat 50% 50%;

@@ -1,7 +1,7 @@
 <!--
  * @Author: Nahco.Huang
  * @Date: 2020-09-28 14:26:53
- * @LastEditTime: 2022-04-25 18:20:19
+ * @LastEditTime: 2022-04-26 15:27:31
  * @LastEditors: chengsl
  * @Description: 个性化设置
 -->
@@ -92,6 +92,7 @@ export default {
         { code: '07', color: '#7822ED' },
         { code: '08', color: '#222226' },
         { code: '09', color: '#E56C96' }
+        // { code: '10', color: '#A268F2' }
       ],
       fontSizeOptions: [
         { label: '12px', value: '12' },

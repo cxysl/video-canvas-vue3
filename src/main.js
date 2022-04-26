@@ -2,7 +2,7 @@
  * @Author: chengsl
  * @Date: 2022-04-18 08:55:03
  * @LastEditors: chengsl
- * @LastEditTime: 2022-04-22 17:55:48
+ * @LastEditTime: 2022-04-26 17:43:05
  * @Description: main.js
  */
 import { createApp } from 'vue'
@@ -38,9 +38,12 @@ const vm = app
 // }
 
 /** *************** 引入 element-plus 的图标 *******************/
+const iconNameList = []
 Object.keys(ElIconModules).forEach(function (key) {
+  iconNameList.push(ElIconModules[key].name)
   app.component(ElIconModules[key].name, ElIconModules[key])
 })
+console.log('直接可用的图标有：', iconNameList)
 
 /** *************** 全局组件 *******************/
 const components = require.context('@/components', true, /\.vue$/)
@@ -60,12 +63,51 @@ directives.keys().forEach((directivePath) => {
   }
 })
 
+// app.config.globalProperties.$yourObj =
+// const { appContext } = getCurrentInstance()
+// const globalProxy = appContext.config.globalProperties;
+// globalProxy.$yourObj
 /** ***** 添加原型属性 dayjs 指向 app *****/
 import dayjs from 'dayjs'
 vm.$dayjs = dayjs
 
 import { updateThemeColor } from '@/utils/updateThemeColor'
 vm.$updateThemeColor = updateThemeColor
+
+/**
+ * 添加原型属性 $getDialogHeight 计算弹框高度
+ * @param {*} fatherClassName 父容器的样式class名
+ * @param {*} loseHeight 额外减去的高度
+ * @param {*} dontAddOverflowY 不自动加滚动条
+ */
+vm.$getDialogHeight = function (fatherClassName, loseHeight, dontAddOverflowY) {
+  const className = fatherClassName
+    ? fatherClassName.includes('.')
+      ? fatherClassName
+      : '.' + fatherClassName
+    : '.el-dialog'
+  const dialogBody = document.querySelector(`${className} .el-dialog__body`)
+  const headerHeight = document.querySelector(
+    `${className} .el-dialog__header`
+  ).offsetHeight
+  if (!dontAddOverflowY) {
+    dialogBody.style.overflowY = 'auto'
+  }
+  dialogBody.style.maxHeight =
+    (document.body.clientHeight - headerHeight - loseHeight || 150) + 'px'
+  console.log(
+    '计算dialogBody高度, className:',
+    className,
+    ', body:',
+    document.body.clientHeight,
+    '-headerHeight:',
+    headerHeight,
+    '-',
+    headerHeight + loseHeight || 120,
+    '=',
+    document.body.clientHeight - headerHeight - loseHeight || 50
+  )
+}
 window.VM = vm
 // window.VMApp = app
 // console.log('aaaa', this)
