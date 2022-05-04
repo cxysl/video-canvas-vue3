@@ -33,6 +33,21 @@ html {
 	box-sizing: border-box;
 }
 
+/* 美化滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  opacity: 0;
+  -webkit-transition: opacity .12s ease-in-out;
+  transition: opacity .12s ease-in-out;
+}
+::-webkit-scrollbar-thumb {
+border-radius: 4px;
+background-color: rgba(144,147,153,.3);
+-webkit-transition: background-color .3s;
+transition: background-color .3s;
+}
+
 
 /* consider resetting the default cursor: https://gist.github.com/murtaugh/5247154 */
 

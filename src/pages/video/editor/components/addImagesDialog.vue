@@ -1,5 +1,6 @@
 <template>
-  <!-- v-el-dialog-drag -->
+  <!-- v-el-dialog-drag
+    draggable -->
   <el-dialog
     title="上传图片"
     v-model="isShow"
@@ -10,7 +11,7 @@
     "
     custom-class="video-add-images-dialog"
   >
-    <div>
+    <div class="dialog-body">
       <el-upload
         action="#"
         accept=".jpg,.jpeg,.png"
@@ -28,6 +29,8 @@
       multiple -->
         <el-icon><Plus /></el-icon>
       </el-upload>
+    </div>
+    <template #footer>
       <div class="upload-confirm-bar">
         <ul class="tips">
           <li>1、上传图片建议2M以内，仅支持jpg、png格式</li>
@@ -35,11 +38,11 @@
         </ul>
         <el-button type="primary" @click="confirm">添加到编辑器</el-button>
       </div>
+    </template>
 
-      <el-dialog v-model="dialogVisible">
-        <img w-full :src="dialogImageUrl" alt="Preview Image" />
-      </el-dialog>
-    </div>
+    <el-dialog v-model="dialogVisible">
+      <img w-full :src="dialogImageUrl" alt="Preview Image" />
+    </el-dialog>
   </el-dialog>
 </template>
 
@@ -126,6 +129,13 @@ export default {
     visible: {
       handler(val) {
         this.isShow = val
+        if (val) {
+          this.$nextTick(() => {
+            window.VM.$getDialogHeight('video-add-images-dialog', 250)
+          })
+        } else {
+          this.fileList = []
+        }
       },
       immediate: true
     },
@@ -142,6 +152,7 @@ export default {
 @import '@/assets/scss/common';
 .video-add-images-dialog {
   // width: 950px;
+  min-width: 755px;
   .img-upload {
     position: relative;
   }

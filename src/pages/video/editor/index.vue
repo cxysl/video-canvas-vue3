@@ -2,7 +2,12 @@
   <div class="video-editor">
     <div class="video-header">
       <div class="left-logo">
-        <div class="logo" @click="goToVideo"></div>
+        <!-- <div class="logo" @click="goToVideo"></div> -->
+
+        <logo-icon
+          :style="{ background: '#fff', borderRadius: '50%' }"
+          @click="goToVideo"
+        ></logo-icon>
         <div class="title">图片模拟视频编辑器</div>
       </div>
       <div class="right-buts">

@@ -43,6 +43,11 @@ export default {
       currentMusicName: ''
     }
   },
+  mounted() {
+    this.$nextTick(() => {
+      this.currentMusicName = this.musics[0].musicTitle //newVal即是musics
+    })
+  },
   // 由于生命周期时间的问题  在created() 、mounted() 拿不到父组件传来的参数musics,下面通过监听
   watch: {
     //监听父组件传参是否传过来了，传过来了就给 musicTitle 赋初始值

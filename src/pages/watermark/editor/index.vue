@@ -110,9 +110,9 @@ export default {
         }
         axios
           .get('/template/activity/v2/allTemplateFontFamily.get', { params })
-          .then(res => {
+          .then((res) => {
             let fonts = res.data.data
-            fonts.forEach(font => {
+            fonts.forEach((font) => {
               font.ttfUrl = font.ttfUrl.replace('http:', '')
               font.woffUrl = font.woffUrl.replace('https:', '')
               let type =
@@ -130,7 +130,7 @@ export default {
             })
             resolve()
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err)
             reject()
           })

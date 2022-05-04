@@ -3,7 +3,8 @@
     <el-row>
       <el-col :span="4">
         <div class="logo-wrap" data-traceid="20-0">
-          <div class="logo"></div>
+          <!-- <div class="logo"></div> -->
+          <logo-icon></logo-icon>
           <div class="production-name">LaoCheng</div>
         </div>
       </el-col>
@@ -58,9 +59,10 @@
 </template>
 
 <script>
+// import logoIcon from '../logoIcon'
 export default {
   name: 'topNav',
-  components: {},
+  // components: { logoIcon },
   props: {},
   data() {
     return {

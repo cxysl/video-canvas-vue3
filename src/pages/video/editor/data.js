@@ -55,6 +55,17 @@ const musics = [
   {
     createTime: '2020-08-10 11:35:57',
     errorMsg: '',
+    id: 22,
+    modifyTime: '2020-08-21 18:12:27',
+    musicTitle: '城南花已开',
+    musicUrl: '//material.baobeituan.com/video/admin/22.mp3',
+    nick: 'laocheng',
+    status: 'SUCESS',
+    upladeTime: null
+  },
+  {
+    createTime: '2020-08-10 11:35:57',
+    errorMsg: '',
     id: 1,
     modifyTime: '2020-08-21 18:11:53',
     musicTitle: 'Sky (Radio Edit)',
@@ -280,17 +291,6 @@ const musics = [
     musicTitle: 'Summer (PIANO VER.)',
     musicUrl: '//material.baobeituan.com/video/admin/21.mp3',
     nick: 'admin',
-    status: 'SUCESS',
-    upladeTime: null
-  },
-  {
-    createTime: '2020-08-10 11:35:57',
-    errorMsg: '',
-    id: 22,
-    modifyTime: '2020-08-21 18:12:27',
-    musicTitle: '城南花已开',
-    musicUrl: '//material.baobeituan.com/video/admin/22.mp3',
-    nick: 'laocheng',
     status: 'SUCESS',
     upladeTime: null
   },

@@ -201,8 +201,10 @@ export default {
       )
       this.isEnd = true
       let audio = document.getElementById('canvas-music')
-      audio.pause()
-      audio.currentTime = 0
+      if (audio) {
+        audio.pause()
+        audio.currentTime = 0
+      }
       this.isProcess = false
       this.$emit('update:isPlaying', false)
     },

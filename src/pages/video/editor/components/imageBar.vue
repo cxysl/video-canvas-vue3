@@ -227,6 +227,9 @@ export default {
   .image-list {
     margin-left: -5px;
     margin-right: -5px;
+    // overflow-x: auto;
+    // display: flex;
+    // flex-wrap: nowrap;
     &:after,
     &:before {
       display: table;
@@ -241,6 +244,7 @@ export default {
       float: left;
       margin-top: 10px;
       padding: 0 5px;
+      // min-width: 100px;
       &.can-del:hover {
         .del-btn {
           display: block;
@@ -336,20 +340,20 @@ export default {
         line-height: 18px;
         color: $danger;
         cursor: pointer;
-        i {
-          position: relative;
-          &:after {
-            content: '';
-            position: absolute;
-            width: 14px;
-            height: 14px;
-            top: 2px;
-            left: 2px;
-            background-color: #fff;
-            border-radius: 10px;
-            z-index: -1;
-          }
-        }
+        // i {
+        //   position: relative;
+        //   &:after {
+        //     content: '';
+        //     position: absolute;
+        //     width: 14px;
+        //     height: 14px;
+        //     // top: 2px;
+        //     // left: 2px;
+        //     background-color: #fff;
+        //     border-radius: 10px;
+        //     z-index: -1;
+        //   }
+        // }
       }
     }
   }

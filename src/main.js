@@ -2,7 +2,7 @@
  * @Author: chengsl
  * @Date: 2022-04-18 08:55:03
  * @LastEditors: chengsl
- * @LastEditTime: 2022-04-26 17:43:05
+ * @LastEditTime: 2022-05-04 10:32:45
  * @Description: main.js
  */
 import { createApp } from 'vue'
@@ -46,13 +46,17 @@ Object.keys(ElIconModules).forEach(function (key) {
 console.log('直接可用的图标有：', iconNameList)
 
 /** *************** 全局组件 *******************/
-const components = require.context('@/components', true, /\.vue$/)
+const componentNameList = []
+const components = require.context('@/components', true, /index\.vue$/)
 components.keys().forEach((componentPath) => {
   const componentEntity = components(componentPath).default
   if (componentEntity.name) {
+    console.log('componentEntity', componentEntity)
+    componentNameList.push(componentEntity.name)
     app.component(componentEntity.name, componentEntity)
   }
 })
+console.log('直接可用的组件有：', componentNameList)
 
 /** *************** 全局指令 *******************/
 const directives = require.context('@/directives', true, /\.js$/) // 批量注册全局指令
