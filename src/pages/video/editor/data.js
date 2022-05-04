@@ -59,7 +59,7 @@ const musics = [
     modifyTime: '2020-08-21 18:12:27',
     musicTitle: '城南花已开',
     musicUrl: '//material.baobeituan.com/video/admin/22.mp3',
-    nick: 'laocheng',
+    nick: 'admin',
     status: 'SUCESS',
     upladeTime: null
   },

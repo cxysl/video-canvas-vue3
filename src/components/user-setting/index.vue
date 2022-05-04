@@ -1,7 +1,7 @@
 <!--
  * @Author: Nahco.Huang
  * @Date: 2020-09-28 14:26:53
- * @LastEditTime: 2022-04-26 15:27:31
+ * @LastEditTime: 2022-05-04 11:29:48
  * @LastEditors: chengsl
  * @Description: 个性化设置
 -->
@@ -32,6 +32,19 @@
                 :color="item.color"
                 @click.native="onSelectColorTheme(item)"
               />
+            </div>
+            <div class="color-input">
+              <el-input
+                v-model="customColor"
+                placeholder="输入自定义颜色"
+                @keyup.native.enter="onSelectColorTheme(customColor, true)"
+              ></el-input>
+              <el-button
+                type="primary"
+                @click="onSelectColorTheme(customColor, true)"
+              >
+                确定
+              </el-button>
             </div>
           </div>
           <el-divider />
@@ -100,7 +113,8 @@ export default {
         { label: '16px', value: '16' },
         { label: '18px', value: '18' },
         { label: '20px', value: '20' }
-      ]
+      ],
+      customColor: ''
     }
   },
 
@@ -152,10 +166,12 @@ export default {
      * @description: 处理主题选择
      * @param {object} item 选项对象
      */
-    onSelectColorTheme(item) {
+    onSelectColorTheme(item, isCustom) {
       // 更新表单对象
-      this.settingForm.themeColor = item.color
-      window.VM.$updateThemeColor(item.color)
+      let colorStr = isCustom ? item : item.color
+      colorStr = colorStr.includes('#') ? colorStr : '#' + colorStr
+      this.settingForm.themeColor = colorStr
+      window.VM.$updateThemeColor(colorStr)
 
       // 提交到vuex
       this.$store.commit('SET_THEME_COLOR', item.color)
@@ -189,7 +205,7 @@ export default {
           defaultColorType: this.settingForm.themeColor,
           defaultTextStyle: this.settingForm.fontSize
         }
-        localStorage.setItem('save-setting-data', data)
+        localStorage.setItem('save-setting-data', JSON.stringify(data))
         this.isOpen = false
         this.$store.commit('SAVE_SETTING_DATA')
       } catch (error) {
@@ -209,6 +225,7 @@ export default {
 
 <style lang="scss" scoped>
 .user-setting {
+  // z-index: 10;
   .mask {
     position: fixed;
     left: 0;
@@ -283,6 +300,14 @@ export default {
   margin-bottom: 24px;
   .color-item + .color-item {
     margin-left: 8px;
+  }
+}
+.color-input {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  .el-button {
+    margin-left: 10px;
   }
 }
 .theme-list {

@@ -107,7 +107,12 @@ export default {
     },
     async specialCanvas() {
       let canvas = document.getElementById('player')
-      this.ctx = canvas.getContext('2d')
+      try {
+        this.ctx = canvas.getContext('2d')
+      } catch (error) {
+        console.log('canvas,ctx,getContext', error)
+        return
+      }
       this.width = canvas.width
       this.height = canvas.height
       this.ctx.clearRect(0, 0, this.width, this.height)

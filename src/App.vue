@@ -1,6 +1,10 @@
 <template>
   <div class="page-loading" v-if="!showMain">正在加载....</div>
-  <router-view v-else-if="isOperationPage" name="subpage"></router-view>
+  <div class="page-subpage" v-else-if="isOperationPage">
+    <router-view name="subpage"></router-view>
+    <!-- 个性化设置 -->
+    <user-setting />
+  </div>
   <div class="page-all" v-else>
     <!-- <el-container>
       <el-header class="page-header">

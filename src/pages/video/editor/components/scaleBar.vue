@@ -166,7 +166,8 @@ export default {
         position: absolute;
         height: 254px;
         left: 5px;
-        border-right: 1px dashed #d2d2d2;
+        // border-right: 1px dashed #d2d2d2;
+        border-right: 1px dashed var(--theme-weaken-color-5);
       }
     }
   }

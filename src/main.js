@@ -2,7 +2,7 @@
  * @Author: chengsl
  * @Date: 2022-04-18 08:55:03
  * @LastEditors: chengsl
- * @LastEditTime: 2022-05-04 10:32:45
+ * @LastEditTime: 2022-05-04 13:20:06
  * @Description: main.js
  */
 import { createApp } from 'vue'
@@ -51,7 +51,6 @@ const components = require.context('@/components', true, /index\.vue$/)
 components.keys().forEach((componentPath) => {
   const componentEntity = components(componentPath).default
   if (componentEntity.name) {
-    console.log('componentEntity', componentEntity)
     componentNameList.push(componentEntity.name)
     app.component(componentEntity.name, componentEntity)
   }

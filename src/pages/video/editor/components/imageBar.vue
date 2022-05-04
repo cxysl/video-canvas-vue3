@@ -258,10 +258,16 @@ export default {
       .img-container {
         box-sizing: border-box;
         height: 120px;
-        background-color: #875ece;
-        background: linear-gradient(#9a6fe3, #875ece);
         padding: 10px;
-        border: 1px solid #b99bed;
+        // background-color: #875ece;
+        // background: linear-gradient(#9a6fe3, #875ece);
+        // border: 1px solid #b99bed;
+        background-color: var(--theme-color);
+        background: linear-gradient(
+          var(--theme-weaken-color-3),
+          var(--theme-color)
+        );
+        border: 1px solid var(--theme-weaken-color-7);
         border-radius: 8px;
         cursor: pointer;
       }
@@ -278,6 +284,7 @@ export default {
         &:hover {
           .control {
             opacity: 1;
+            // opacity: 0.6;
           }
         }
         .control {
@@ -290,14 +297,21 @@ export default {
           left: 0;
           text-align: center;
           background-color: rgba(0, 0, 0, 0.6);
+          // background-color: var(
+          //   --theme-weaken-color-9
+          // ); //rgba(var(--theme-weaken-color-10), 0.6);
           transition: all 0.3s;
           z-index: 2;
         }
         .tips {
           max-width: 50px;
-          max-height: 70px;
+          // max-height: 70px;
+          height: calc(100% - 21px);
+          display: flex;
+          align-items: center;
           overflow: hidden;
-          color: #fff;
+          // color: #fff;
+          color: var(--theme-color);
           line-height: 1.5;
           padding: 4px;
           margin: 0 auto;
@@ -308,9 +322,10 @@ export default {
           bottom: 4px;
           z-index: 3;
           i {
-            color: #fff;
+            // color: #fff;
+            color: var(--theme-color);
             font-size: 18px;
-            opacity: 0.6;
+            opacity: 0.7;
             transition: all 0.3s;
             &:hover {
               opacity: 1;
@@ -364,18 +379,35 @@ export default {
     width: 30px;
     height: 122px;
     box-sizing: border-box;
-    background-color: #875ece;
     color: #fff;
-    background: linear-gradient(#9a6fe3, #875ece);
+    // background-color: #875ece;
+    // background: linear-gradient(#9a6fe3, #875ece);
+    // border: 1px solid #b99bed;
+    background-color: var(--theme-color);
+    background: linear-gradient(
+      var(--theme-weaken-color-4),
+      var(--theme-weaken-color-2)
+    );
+    border: 1px solid var(--theme-weaken-color-7);
     padding: 4px;
-    border: 1px solid #b99bed;
     border-radius: 8px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s;
     &:hover {
       background: linear-gradient(darken(#9a6fe3, 5), darken(#875ece, 5));
-      border-color: darken(#b99bed, 5);
+      border-color: darken(#b99bed, 7);
+      // background: linear-gradient(
+      //   darken(var(--theme-weaken-color-3), 5),
+      //   darken(var(--theme-color), 5)
+      // );
+      // border-color: darken(var(--theme-weaken-color-5), 5);
+
+      background: linear-gradient(
+        var(--theme-weaken-color-2),
+        var(--theme-color)
+      );
+      border: 1px solid var(--theme-weaken-color-4);
     }
   }
   .el-loading-mask {

@@ -1,5 +1,8 @@
 <template>
-  <div class="watermark-editor">城南花已开，老程已不在; ---watermarkEditor</div>
+  <div class="watermark-editor">
+    城南花已开，老程已不在;
+    <!-- ---watermarkEditor -->
+  </div>
 </template>
 
 <script>

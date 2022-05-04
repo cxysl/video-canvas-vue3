@@ -101,9 +101,15 @@ export default {
     width: 100%;
     height: 100%;
     border-radius: 8px;
-    background-color: #875ece;
-    background: linear-gradient(#9a6fe3, #875ece);
-    border: 1px solid #b99bed;
+    // background-color: #875ece;
+    // background: linear-gradient(#9a6fe3, #875ece);
+    // border: 1px solid #b99bed;
+    background-color: var(--theme-color);
+    background: linear-gradient(
+      var(--theme-weaken-color-4),
+      var(--theme-weaken-color-2)
+    );
+    border: 1px solid var(--theme-weaken-color-7);
     padding: 10px;
     color: #fff;
     cursor: pointer;

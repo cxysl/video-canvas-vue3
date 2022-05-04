@@ -20,6 +20,11 @@ export default {
 </script>
 <style lang="scss">
 .home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  height: 100%;
   .logo {
     // background: url('../assets/images/laocheng/dsxs.jpg') no-repeat scroll 0 -20px transparent;margin: 0 auto;
     height: 300px;
