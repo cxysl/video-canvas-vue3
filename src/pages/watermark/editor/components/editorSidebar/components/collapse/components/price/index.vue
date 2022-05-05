@@ -1,7 +1,7 @@
 <template>
   <div class="wm-price">
     <div class="header">
-      <p v-if="!isTbWm">宝贝团价签</p>
+      <p v-if="!isTbWm">老程价签</p>
       <div v-else class="tb">
         官方自动价签
         <p class="question" @click="openTips">?</p>
@@ -29,7 +29,7 @@
           </div>
         </div>
       </div>
-      <div class="tb-price" v-else>
+      <!-- <div class="tb-price" v-else>
         <p style="color: #f00; font-size: 12px">
           使用官方自动价签后，只能选择店内大促商品
         </p>
@@ -76,7 +76,6 @@
             <el-radio v-model="multipleType" label="1">凑跨店满减</el-radio>
           </el-form-item>
           <el-form-item class="price-formula" v-if="priceRadioTb != 3">
-            <!-- <template v-if="priceRadioTb != 3" slot="label"> -->
             <div v-if="priceRadioTb != 3" class="price-switch">
               <div>
                 展示价格公式
@@ -89,7 +88,6 @@
                 inactive-color="#CCCCCC"
               ></el-switch>
             </div>
-            <!-- </template> -->
             <div class="one">
               <template v-if="priceSwitch">
                 <span>兜底文案1</span>
@@ -134,7 +132,7 @@
             </div>
           </el-form-item>
         </el-form>
-      </div>
+      </div> -->
     </div>
     <el-dialog
       class="wm-gift-tip-dialog"
@@ -187,7 +185,6 @@
 <script>
 import priceTagTip from './components/priceTagTip'
 import priceTag from './components/priceTag.vue'
-import moment from 'moment'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('poster')
 export default {
@@ -359,7 +356,6 @@ export default {
     },
     openPriceTag() {
       this.checkHavePriceTag()
-      this.checkUser()
     },
     openPriceTips() {
       this.showPriceTip = true
@@ -375,39 +371,6 @@ export default {
       if (!flag) {
         this.$message.info('检测到您未添加价签，已自动为您添加')
         this.$emit('add-text', 'priceTag')
-      }
-    },
-    checkUser() {
-      this.priceRadio = '2'
-      // radio 和 单独的click 时间叠加了 用firstIn临时兼容下 后面再优化:不用 el-radio
-      if (this.firstIn) {
-        this.firstIn = false
-        if (this.$store.state.user.versionName === '全能版') {
-          this.showPriceTag = true
-        } else {
-          this.$confirm(
-            '当前选的是全能版专享功能，如要使用请升级！',
-            '操作提示',
-            {
-              confirmButtonText: '升级全能版',
-              cancelButtonText: '取 消',
-              type: 'info'
-            }
-          )
-            .then(() => {
-              let _czc = window._czc || []
-              let nick = this.$store.state.user.userNick
-              let now = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
-              _czc.push([
-                '_trackEvent',
-                '通过水印价签计算器升级全能版' + '~' + nick + '~' + now,
-                '点击'
-              ])
-              return this.openUpgrade()
-            })
-            .catch()
-        }
-        this.firstIn = true
       }
     },
     updateTextLine() {

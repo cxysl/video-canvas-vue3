@@ -4,7 +4,7 @@
       class="editor-sub-panel"
       v-if="
         chunks[currentChunkIndex].type == 'text' &&
-          !chunks[currentChunkIndex].priceTag
+        !chunks[currentChunkIndex].priceTag
       "
     >
       <div class="sub-panel-title">编辑文字</div>
@@ -136,7 +136,7 @@
 </template>
 
 <script>
-import fonts from 'pages/itemsManage/watermark/editor/fonts'
+import fonts from '../../../../common/fonts'
 import fontSizeSuggestions from './fontSizeSuggestions'
 import { createNamespacedHelpers } from 'vuex'
 import debounce from 'lodash/debounce'
@@ -289,7 +289,7 @@ export default {
         }
       }
     },
-    fontSizeValidate: debounce(function(val) {
+    fontSizeValidate: debounce(function (val) {
       if (!/^\d+(\.\d{1,2})?$/.test(val)) {
         this.fontSize = 12
       }
@@ -303,7 +303,7 @@ export default {
   },
   watch: {
     fontSize: {
-      handler: debounce(function() {
+      handler: debounce(function () {
         this.$store.commit('poster/setStorageRecord')
       }, 500)
     }

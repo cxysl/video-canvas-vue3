@@ -24,7 +24,7 @@
               (feature === 'watermark' &&
                 item.type !== 'poster' &&
                 (item.label != '贴图' || !isTbWm)) ||
-                (feature === 'poster' && item.type !== 'watermark')
+              (feature === 'poster' && item.type !== 'watermark')
             "
           >
             <!-- v-if="!(feature === 'watermark' && item.icon === '#bbt-requ')" -->
@@ -59,35 +59,29 @@
         @onClose="onClose"
         @add-text="addText"
       ></collapse>
-      <upload :visible.sync="isShowUpload" @add-img="addImg"></upload>
-      <hot-areas ref="hotAreas" v-if="isShowHotAreas"></hot-areas>
+      <!-- <upload :visible.sync="isShowUpload" @add-img="addImg"></upload> -->
+      <!-- <hot-areas ref="hotAreas" v-if="isShowHotAreas"></hot-areas> -->
     </div>
   </div>
 </template>
 
 <script>
-import upload from 'pages/itemsManage/watermark/editor/upload'
+// import upload from 'pages/itemsManage/watermark/editor/upload'
 import collapse from './components/collapse'
-import hotAreas from './components/hotAreas'
+// import hotAreas from './components/hotAreas'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('poster')
 export default {
   name: 'posterSidebar',
   components: {
-    upload,
-    collapse,
-    hotAreas
+    // upload,
+    collapse
+    // hotAreas
   },
   data() {
     return {
       btns: [
         //type: all、poster、watermark
-        {
-          icon: '#bbt-requ',
-          label: '热区',
-          canShowCollapse: true,
-          type: 'poster'
-        },
         {
           icon: '#bbt-moban',
           label: '模板',
@@ -100,11 +94,6 @@ export default {
           canShowCollapse: true,
           type: 'watermark'
         },
-        // {
-        //   icon: '#bbt-tubiao1',
-        //   label: '图标',
-        //   canShowCollapse: true
-        // },
         {
           icon: '#bbt-text',
           label: '文字',
@@ -165,7 +154,7 @@ export default {
     },
     addPriceText() {
       let hasPriceTag = false
-      this.chunks.some(item => {
+      this.chunks.some((item) => {
         if (item.priceTag) {
           hasPriceTag = true
           return true

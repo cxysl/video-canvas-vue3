@@ -45,7 +45,7 @@
           <el-button class="full-btn" @click="turn('h')">垂直翻转</el-button>
         </el-col>
       </el-row>
-      <el-row :gutter="20" style="margin-top:10px;">
+      <el-row :gutter="20" style="margin-top: 10px">
         <el-col :span="12">
           <el-button
             class="full-btn"
@@ -73,22 +73,22 @@
     >
       上传背景图
     </el-button>
-    <img-upload
+    <!-- <img-upload
       :visible="isShowUpload"
       :limit="1"
       @add-img="addImg"
-    ></img-upload>
+    ></img-upload> -->
   </div>
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('poster')
-import imgUpload from 'pages/itemsManage/watermark/editor/upload'
+// import imgUpload from 'pages/itemsManage/watermark/editor/upload'
 export default {
   name: 'editorBg',
   components: {
-    imgUpload
+    // imgUpload
   },
   data() {
     return {

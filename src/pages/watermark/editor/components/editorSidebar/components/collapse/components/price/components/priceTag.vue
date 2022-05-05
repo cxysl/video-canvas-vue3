@@ -10,10 +10,7 @@
     :close-on-press-escape="false"
   >
     <div class="template-group">
-      <template
-        v-for="(temp, index) in templateArr"
-        :key="'templateRadio' + index"
-      >
+      <div v-for="(temp, index) in templateArr" :key="'templateRadio' + index">
         <el-radio
           v-model="templateRadio"
           :label="index"
@@ -22,7 +19,7 @@
         >
           <p class="name">{{ temp.name }}</p>
         </el-radio>
-      </template>
+      </div>
       <div class="edit-template-name" v-if="templateRadio != -1">
         <span>模板名称：</span>
         <p
@@ -272,42 +269,45 @@ export default {
       this.isToSave = true
     },
     getTemplate() {
-      axios
-        .get('/itemManage/listMarketings.get')
-        .then((res) => {
-          let data = res.data.data
-          data.items.forEach((item) => {
-            item.content = JSON.parse(item.content)
-            item.editing = false
-          })
-          this.templateArr = data.items
-        })
-        .catch((err) => console.log(err))
+      console.log('查询模板')
+      this.templateArr = []
+      //   axios
+      //     .get('/itemManage/listMarketings.get')
+      //     .then((res) => {
+      //       let data = res.data.data
+      //       data.items.forEach((item) => {
+      //         item.content = JSON.parse(item.content)
+      //         item.editing = false
+      //       })
+      //       this.templateArr = data.items
+      //     })
+      //     .catch((err) => console.log(err))
     },
     saveTemplate() {
-      if (this.templateName) {
-        let content = JSON.stringify(this.discountArr.slice(1))
-        let params = {
-          content: content,
-          name: this.templateName
-        }
-        this.templateRadio != '-1'
-          ? (params.id = this.templateArr[this.templateRadio].id)
-          : ''
-        axios
-          .post('/itemManage/savePromoteWatermarkMarketing.post', params)
-          .then((res) => {
-            if (res.data.status == 1) {
-              this.$message.success('保存成功')
-              this.isToSave = false
-              this.getTemplate()
-              this.templateName = ''
-            }
-          })
-          .catch((err) => console.log(err))
-      } else {
-        this.$message.warning('模板名称不能为空')
-      }
+      console.log('保存模板')
+      //   if (this.templateName) {
+      //     let content = JSON.stringify(this.discountArr.slice(1))
+      //     let params = {
+      //       content: content,
+      //       name: this.templateName
+      //     }
+      //     this.templateRadio != '-1'
+      //       ? (params.id = this.templateArr[this.templateRadio].id)
+      //       : ''
+      //     axios
+      //       .post('/itemManage/savePromoteWatermarkMarketing.post', params)
+      //       .then((res) => {
+      //         if (res.data.status == 1) {
+      //           this.$message.success('保存成功')
+      //           this.isToSave = false
+      //           this.getTemplate()
+      //           this.templateName = ''
+      //         }
+      //       })
+      //       .catch((err) => console.log(err))
+      //   } else {
+      //     this.$message.warning('模板名称不能为空')
+      //   }
     },
     updateTemplate() {
       this.templateName = this.templateArr[this.templateRadio].name
@@ -315,21 +315,31 @@ export default {
     },
     delTemplate() {
       let id = this.templateArr[this.templateRadio].id
-      axios
-        .post('/itemManage/deletePromoteWatermarkMarketing.post?id=' + id)
-        .then(() => {
-          this.$message.success('删除成功')
-          this.templateArr.some((item, index) => {
-            if (item.id == id) {
-              this.templateArr.splice(index, 1)
-              return true
-            }
-            this.templateRadio = '-1'
-            this.templateName = ''
-            this.isToSave = false
-          })
-        })
-        .catch((err) => console.log(err))
+      this.templateArr.some((item, index) => {
+        if (item.id == id) {
+          this.templateArr.splice(index, 1)
+          return true
+        }
+        this.templateRadio = '-1'
+        this.templateName = ''
+        this.isToSave = false
+      })
+      // let id = this.templateArr[this.templateRadio].id
+      // axios
+      //   .post('/itemManage/deletePromoteWatermarkMarketing.post?id=' + id)
+      //   .then(() => {
+      //     this.$message.success('删除成功')
+      //     this.templateArr.some((item, index) => {
+      //       if (item.id == id) {
+      //         this.templateArr.splice(index, 1)
+      //         return true
+      //       }
+      //       this.templateRadio = '-1'
+      //       this.templateName = ''
+      //       this.isToSave = false
+      //     })
+      //   })
+      //   .catch((err) => console.log(err))
     },
     submit() {
       console.log('设置完成')

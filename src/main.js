@@ -2,7 +2,7 @@
  * @Author: chengsl
  * @Date: 2022-04-18 08:55:03
  * @LastEditors: chengsl
- * @LastEditTime: 2022-05-04 13:20:06
+ * @LastEditTime: 2022-05-04 16:53:06
  * @Description: main.js
  */
 import { createApp } from 'vue'
@@ -12,6 +12,8 @@ import store from './store'
 import ElementPlus from 'element-plus'
 import lazyPlugin from 'vue3-lazy'
 import * as ElIconModules from '@element-plus/icons-vue'
+import VueClipboards from 'vue-clipboards'
+import './assets/js/bbt-icon'
 
 // 复制 element-plus 的样式文件到本地 并引入
 // node_modules\element-plus\theme-chalk\index.css
@@ -24,6 +26,7 @@ const vm = app
   .use(store)
   .use(router)
   .use(ElementPlus)
+  .use(VueClipboards)
   .use(lazyPlugin, {
     loading: require('@/assets/images/holder.png'), // 图片加载时默认图片
     error: require('@/assets/images/holder.png') // 图片加载失败时默认图片

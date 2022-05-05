@@ -34,16 +34,12 @@
 <script>
 import postermaps from './components/posterMaps/index.vue'
 import watermarkmaps from './components/watermarkMaps'
-import iconCollapse from './components/iconCollapse'
-import addHotArea from './components/addHotArea'
 import price from './components/price'
 export default {
   name: 'posterCollapse',
   components: {
     postermaps,
     watermarkmaps,
-    iconCollapse,
-    addHotArea,
     price
   },
   props: {
@@ -82,12 +78,6 @@ export default {
             type: 'poster/setIsCompatible',
             isCompatible: true
           })
-        } else if (val === '#bbt-tubiao1') {
-          //废弃了??
-          this.activeCollapse = 'iconCollapse'
-        } else if (val === '#bbt-requ') {
-          //热区
-          this.activeCollapse = 'addHotArea'
         } else if (val === '#bbt-wenzi') {
           //价签
           this.activeCollapse = 'price'

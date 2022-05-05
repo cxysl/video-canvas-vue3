@@ -33,8 +33,8 @@ import posterCanvas from './components/canvas'
 // import tbCanvas from './components/canvasByTb'
 import editorPanel from './components/editorPanel'
 import hotkeys from 'hotkeys-js'
-import fontStr from '../../../itemsManage/watermark/editor/fonts/styleStr'
-import tbFontStr from '../../../itemsManage/watermark/editor/fonts/tbFontStr'
+import fontStr from './common/styleStr'
+// import tbFontStr from '../../../itemsManage/watermark/editor/fonts/tbFontStr'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('poster')
 
@@ -75,22 +75,22 @@ export default {
     /**
      * web端暂定使用oss
      */
-    if (this.$isQn) {
-      this.getFontsUrl(3)
-    } else {
-      if (this.isTbWm) {
-        //官方字体  水印改造
-        let fontStyle = document.createElement('STYLE')
-        let fontTextNode = document.createTextNode(tbFontStr)
-        fontStyle.appendChild(fontTextNode)
-        document.head.appendChild(fontStyle)
-      } else {
-        let fontStyle = document.createElement('STYLE')
-        let fontTextNode = document.createTextNode(fontStr)
-        fontStyle.appendChild(fontTextNode)
-        document.head.appendChild(fontStyle)
-      }
-    }
+    // if (this.$isQn) {
+    //   this.getFontsUrl(3)
+    // } else {
+    //   if (this.isTbWm) {
+    //     //官方字体  水印改造
+    //     let fontStyle = document.createElement('STYLE')
+    //     let fontTextNode = document.createTextNode(tbFontStr)
+    //     fontStyle.appendChild(fontTextNode)
+    //     document.head.appendChild(fontStyle)
+    //   } else {
+    let fontStyle = document.createElement('STYLE')
+    let fontTextNode = document.createTextNode(fontStr)
+    fontStyle.appendChild(fontTextNode)
+    document.head.appendChild(fontStyle)
+    //   }
+    // }
   },
   destroyed() {
     hotkeys.unbind('ctrl+z, command+z, ctrl+y, command+shift+z, ctrl+v')
@@ -102,7 +102,7 @@ export default {
     ...mapState(['currentChunkIndex', 'chunks', 'copyChunk'])
   },
   methods: {
-    fontsLoad(pageNo, pageSize) {
+    /** fontsLoad(pageNo, pageSize) {
       return new Promise((resolve, reject) => {
         let params = {
           pageNo: pageNo,
@@ -159,6 +159,9 @@ export default {
           this.$message.warning('部分字体未加载成功')
         })
     },
+    **/
+
+    // 粘贴
     paste() {
       console.log('ctrl+v')
       let chunkTemp = JSON.parse(JSON.stringify(this.copyChunk))

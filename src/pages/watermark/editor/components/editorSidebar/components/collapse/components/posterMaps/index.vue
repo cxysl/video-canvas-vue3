@@ -23,7 +23,8 @@
     <div class="contain-box">
       <div class="contain">
         <!-- <vue-scrollbar class="maps-container" > -->
-        <ul
+        you want change chunks?
+        <!-- <ul
           class="maps"
           v-infinite-scroll="getPoster"
           :infinite-scroll-disabled="busy"
@@ -43,7 +44,7 @@
               "
             />
           </li>
-        </ul>
+        </ul> -->
         <div class="text-content" v-if="loading" v-loading="loading"></div>
         <div class="text-content" v-if="!list.length && !loading">
           暂无更多数据
@@ -122,100 +123,101 @@ export default {
       this.pageNo = 1
       this.pageSize = 20
       this.list = []
-      this.getPoster()
-    },
-    getPoster() {
-      this.busy = true
-      this.loading = true
-      axios
-        .post('/template/poster/posterList.post', {
-          key: this.content,
-          pageNo: this.pageNo,
-          pageSize: this.pageSize,
-          posterType: this.templatetype
-        })
-        .then(res => {
-          if (!res.data.data.total) {
-            this.list = []
-            this.pageNo = 1
-          } else {
-            this.list.push(...res.data.data.list)
-            this.pageNo += 1
-            // this.moban.busy = false
-          }
-          this.busy = this.pageNo > res.data.data.totalPage
-          this.loading = false
-        })
-        .catch(err => {
-          this.loading = false
-          console.log(err)
-        })
-    },
-    confirmContent(posterId, posterType) {
-      if (posterType == 0 && this.$route.query.type == 3) {
-        posterType = 3
-      }
-      if (this.chunks.length) {
-        this.$confirm(
-          '替换后将不保存本次编辑的内容，是否确认替换？',
-          '替换当前模板？',
-          {
-            confirmButtonText: '替换模板',
-            cancelButtonText: '取消'
-          }
-        )
-          .then(() => {
-            this.currentPoster = { posterId, posterType }
-            this.getPosterContent()
-          })
-          .catch(() => {})
-      } else {
-        this.currentPoster = { posterId, posterType }
-        this.getPosterContent()
-      }
-    },
-    getPosterContent() {
-      axios
-        .get('/template/poster/getTemplatePosterSeriesContent.get', {
-          params: {
-            posterId: this.currentPoster.posterId,
-            posterType: this.currentPoster.posterType,
-            isCustom: false
-          }
-        })
-        .then(res => {
-          this.resetCanvasState()
-          if (this.currentPoster.posterType == 3) {
-            res.data.data.height = parseInt(
-              res.data.data.height * (950.0 / 750.0)
-            )
-          }
-          this.$store.commit({
-            type: 'poster/setCanvasSize',
-            width: res.data.data.width,
-            height: res.data.data.height
-          })
-          res.data.data.chunks.forEach(item => {
-            item.adsorbing = ['false', 'false']
-            item.transformX = item.transformX || 1
-            item.transformY = item.transformY || 1
-            item.xFontSpacing = item.xFontSpacing || 0
-            item.yFontSpacing = item.yFontSpacing || 1
-            item.rotate = item.rotate || 0
-          })
-          this.$store.commit({
-            type: 'poster/setChunks',
-            chunks: res.data.data.chunks
-          })
-          this.$store.commit({
-            type: 'poster/setBgc',
-            color: res.data.data.backgroundColor
-          })
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      // this.getPoster()
     }
+    // getPoster() {
+    //   this.busy = true
+    //   this.loading = true
+    //   axios
+    //     .post('/template/poster/posterList.post', {
+    //       key: this.content,
+    //       pageNo: this.pageNo,
+    //       pageSize: this.pageSize,
+    //       posterType: this.templatetype
+    //     })
+    //     .then(res => {
+    //       if (!res.data.data.total) {
+    //         this.list = []
+    //         this.pageNo = 1
+    //       } else {
+    //         this.list.push(...res.data.data.list)
+    //         this.pageNo += 1
+    //         // this.moban.busy = false
+    //       }
+    //       this.busy = this.pageNo > res.data.data.totalPage
+    //       this.loading = false
+    //     })
+    //     .catch(err => {
+    //       this.loading = false
+    //       console.log(err)
+    //     })
+    // },
+    // confirmContent(posterId, posterType) {
+    //   if (posterType == 0 && this.$route.query.type == 3) {
+    //     posterType = 3
+    //   }
+    //   if (this.chunks.length) {
+    //     this.$confirm(
+    //       '替换后将不保存本次编辑的内容，是否确认替换？',
+    //       '替换当前模板？',
+    //       {
+    //         confirmButtonText: '替换模板',
+    //         cancelButtonText: '取消'
+    //       }
+    //     )
+    //       .then(() => {
+    //         this.currentPoster = { posterId, posterType }
+    //         this.getPosterContent()
+    //       })
+    //       .catch(() => {})
+    //   } else {
+    //     this.currentPoster = { posterId, posterType }
+    //     this.getPosterContent()
+    //   }
+    // }
+
+    // getPosterContent() {
+    //   axios
+    //     .get('/template/poster/getTemplatePosterSeriesContent.get', {
+    //       params: {
+    //         posterId: this.currentPoster.posterId,
+    //         posterType: this.currentPoster.posterType,
+    //         isCustom: false
+    //       }
+    //     })
+    //     .then(res => {
+    //       this.resetCanvasState()
+    //       if (this.currentPoster.posterType == 3) {
+    //         res.data.data.height = parseInt(
+    //           res.data.data.height * (950.0 / 750.0)
+    //         )
+    //       }
+    //       this.$store.commit({
+    //         type: 'poster/setCanvasSize',
+    //         width: res.data.data.width,
+    //         height: res.data.data.height
+    //       })
+    //       res.data.data.chunks.forEach(item => {
+    //         item.adsorbing = ['false', 'false']
+    //         item.transformX = item.transformX || 1
+    //         item.transformY = item.transformY || 1
+    //         item.xFontSpacing = item.xFontSpacing || 0
+    //         item.yFontSpacing = item.yFontSpacing || 1
+    //         item.rotate = item.rotate || 0
+    //       })
+    //       this.$store.commit({
+    //         type: 'poster/setChunks',
+    //         chunks: res.data.data.chunks
+    //       })
+    //       this.$store.commit({
+    //         type: 'poster/setBgc',
+    //         color: res.data.data.backgroundColor
+    //       })
+    //     })
+    //     .catch(err => {
+    //       console.log(err)
+    //     })
+    // }
   },
   components: {
     // vueScrollbar

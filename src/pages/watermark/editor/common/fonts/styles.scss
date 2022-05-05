@@ -1,0 +1,121 @@
+$path: '//material.baobeituan.com/font';
+
+@mixin woff-font($value, $name) {
+  @font-face {
+    font-family: '#{$value}';
+    src: url('#{$path}/#{$value}/#{$value}.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+}
+
+@mixin ttf-font($value, $name) {
+  @font-face {
+    font-family: '#{$value}';
+    src: url('#{$path}/#{$value}/#{$value}.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+}
+
+@mixin otf-font($value, $name) {
+  @font-face {
+    font-family: '#{$value}';
+    src: url('#{$path}/#{$value}/#{$value}.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+}
+
+@include woff-font('SourceHanSansSC-Heavy', '思源黑体Heavy');
+@include woff-font('SourceHanSansSC-Bold', '思源黑体Bold');
+@include woff-font('SourceHanSansSC-Medium', '思源黑体medium');
+@include woff-font('SourceHanSansSC-Light', '思源黑体Light');
+@include woff-font('SourceHanSansSC-Regular', '思源黑体');
+@include woff-font('SourceHanSansSC-ExtraLight', '思源黑体ExtraLight');
+
+@include woff-font('Alibaba-PuHuiTi-Regular', '阿里普惠Regular');
+@include woff-font('Alibaba-PuHuiTi-Medium', '阿里普惠Medium');
+@include woff-font('Alibaba-PuHuiTi-Bold', '阿里普惠Bold');
+@include woff-font('Alibaba-PuHuiTi-Heavy', '阿里普惠Heavy');
+@include woff-font('Alibaba-PuHuiTi-Light', '阿里普惠Light');
+@include woff-font('SourceHanSerifCN-Heavy', '思源宋体Heavy');
+@include woff-font('SourceHanSerifCN-Light', '思源宋体Light');
+@include woff-font('SourceHanSerifCN-Medium', '思源宋体Medium');
+@include woff-font('SourceHanSerifCN-Regular', '思源宋体Regular');
+@include woff-font('SourceHanSerifCN-SemiBold', '思源宋体SemiBold');
+@include woff-font('SourceHanSerifCN-ExtraLight', '思源宋体Extralight');
+@include woff-font('SourceHanSerifCN-Bold', '思源宋体Bold');
+
+// 用ttf文件
+@include ttf-font('FZHei-B01', '方正黑体');
+@include ttf-font('FZKai-Z03', '方正楷体');
+@include ttf-font('FZShuSong-Z01', '方正书宋');
+@include ttf-font('PangMenZhengDao', '庞门正道标题体');
+@include ttf-font('zcool-gdh', '站酷高端黑');
+@include ttf-font('HappyZcool', '站酷快乐体');
+
+//新增字体
+@include ttf-font('Youshe-Title', '优设标题黑');
+@include ttf-font('Youshe-Title-Bold', '优设标题黑 粗体');
+@include ttf-font('MasaFont-Bold', '正风毛笔字体 Bold');
+@include ttf-font('MasaFont-ExtraLight', '正风毛笔字体 ExtraLight');
+@include ttf-font('MasaFont-Light', '正风毛笔字体 Light');
+@include ttf-font('MasaFont-Medium', '正风毛笔字体 Medium');
+@include ttf-font('MasaFont-Regular', '正风毛笔字体 Regular');
+@include ttf-font('Nyashi-Friends', '猫猫朋友体');
+@include ttf-font('JasonHandwriting1-SemiBold', '清松手写体 SemiBold');
+@include ttf-font('JasonHandwriting1-ExtraLight', '清松手写体 ExtraLight');
+@include ttf-font('JasonHandwriting1-Medium', '清松手写体 Medium');
+@include ttf-font('JasonHandwriting1-Regular', '清松手写体 Regular');
+@include ttf-font('MeiGan-Writing', '梅干手写体');
+@include ttf-font('DotPixel-Square', '点点像素体-方形');
+@include ttf-font('DotPixel-Diamond', '点点像素体-菱形');
+@include ttf-font('JiangCity-Friend', '江城知音体');
+@include ttf-font('JiangCity-MoonLake', '江城月湖体');
+@include ttf-font('JiangCity-Circular', '江城圆体');
+@include ttf-font('Cangershu-Circular', '仓耳舒圆体');
+@include ttf-font('Cangeror-ink', '仓耳与墨');
+@include ttf-font('Cangerno-White', '仓耳非白');
+@include ttf-font('Canger-Sun', '站酷仓耳渔阳体');
+@include ttf-font('Canger-Meatball', '仓耳小丸子');
+@include ttf-font('PMZD-Bold', 'pang门正道粗书体');
+@include ttf-font('Idot-Ming', '一点明体');
+@include ttf-font('JiangCity-Justice', '江城正义体');
+@include ttf-font('JiangCity-SharpBlade', '江城尖刃黑');
+@include ttf-font('HazyGothicSC-Bold', '朦胧黑体 Bold');
+@include ttf-font('Muyao-Softbrush', '沐瑶软笔手写体');
+@include ttf-font('Modern-Cuboid', '摩登小方体');
+@include ttf-font('Fengguang-BrightAndSharp', '峰广明锐体');
+@include ttf-font('Yozai-Bold', '悠哉字体 Blod');
+@include ttf-font('Yozai-Light', '悠哉字体 Light');
+@include ttf-font('Yozai-Medium', '悠哉字体 Medium');
+@include ttf-font('Yozai-Regular', '悠哉字体 Regular');
+@include ttf-font('ZK-Literature', '站酷文艺体');
+@include ttf-font('BaoTu-Simple', '包图小白体');
+@include ttf-font('Slidechunfeng-Regular', '演示春风楷');
+@include ttf-font('Slidexiaxing-Regular', '演示夏行楷');
+@include ttf-font('LQXianEr', '贤二体');
+@include ttf-font('Slideyouran-Regular', '演示悠然小楷');
+@include ttf-font('ZK-KBlack', '站酷酷黑体');
+@include ttf-font('SUCAI-JISHI-KangKang', '素材集市康康体');
+@include ttf-font('Luyao-Suixin', '沐瑶随心手写体');
+@include ttf-font('ResourceHanRoundedHC-Bold', '资源圆体 Bold');
+@include ttf-font('ResourceHanRoundedHC-Light', '资源圆体 Light');
+@include ttf-font('ResourceHanRoundedHC-Medium', '资源圆体 Medium');
+@include ttf-font('ResourceHanRoundedHC-Heavy', '资源圆体 Heavy');
+@include ttf-font('YRD-ZL-Bold', '杨任东竹石体 Bold');
+@include ttf-font('YRD-ZL-Light', '杨任东竹石体 Light');
+@include ttf-font('YRD-ZL-Medium', '杨任东竹石体 Medium');
+@include ttf-font('YRD-ZL-Regular', '杨任东竹石体 Regular');
+@include ttf-font('YRD-ZL-Heavy', '杨任东竹石体 Heavy');
+@include ttf-font('HHC-JXZK', '黄煜臣江西拙楷');
+@include ttf-font('HCSZT-Regular', '寒蝉手拙体');
+@include ttf-font('SoukouMincho', '装甲明朝体');
+@include ttf-font('Slidefu-Regular', '演示佛系体');
+@include ttf-font('RuiZhi-ZhenYan', '锐字真言');
+
+@include otf-font('ZK-LOGO', '站酷小薇LOGO体');
+@include otf-font('PangPang-Pork', '胖胖猪肉体');
+@include otf-font('HXB-SB', '胡晓波骚包体');
+@include otf-font('HXB-ZS', '胡晓波真帅体');

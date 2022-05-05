@@ -70,7 +70,7 @@
                 (['controlTextLine1', 'controlTextLine2'].indexOf(chunk.kind) ==
                   -1 ||
                   priceSwitch) &&
-                  (chunk.linkId == 0 || isShowGift)
+                (chunk.linkId == 0 || isShowGift)
               "
               :key="'chunk' + index"
               :ref="`chunk${index}`"
@@ -167,7 +167,7 @@
         </el-button>
       </div>
       <!-- 商品主图列表 -->
-      <item-list
+      <!-- <item-list
         v-if="feature === 'watermark'"
         ref="itemList"
         @confirm="insetItem"
@@ -175,7 +175,7 @@
         :mode="watermarkMode + 1"
         :current="selectedInsetItems"
         :show.sync="isShowInsetItemList"
-      ></item-list>
+      ></item-list> -->
 
       <div
         v-if="isShowSelector"
@@ -188,12 +188,14 @@
 
 <script>
 import chunk from './components/chunk'
+import { testWmChunks } from '../testData/wmChunks'
+import { testPosterChunks } from '../testData/posterChunks'
 import { snapCheckLine, snapCheckBlock } from './components/snapCheck/snapCheck'
 import { convertToChunks } from './components/convert/convert'
 import throttle from 'lodash/throttle'
 import transformTool from './components/transformTool'
 import clipBg from './components/clipBg'
-import itemList from '../../../../../itemsManage/watermark/editor/components/itemList'
+// import itemList from '../../../../../itemsManage/watermark/editor/components/itemList'
 // import tbChunks from './tbWatermark3'
 import { createNamespacedHelpers } from 'vuex'
 import hotkeys from 'hotkeys-js'
@@ -203,8 +205,8 @@ export default {
   components: {
     chunk,
     transformTool,
-    clipBg,
-    itemList
+    clipBg
+    // itemList
   },
   props: {
     defaultLockedState: {
@@ -320,7 +322,7 @@ export default {
       this.modes = this.$route.query.modes
       let modes = this.modes.split(',')
       this.activityId = this.$route.query.activityId
-      modes.forEach(mode => {
+      modes.forEach((mode) => {
         if (mode == 1) {
           this.modeList.push({
             type: 1,
@@ -352,7 +354,7 @@ export default {
       })
       this.$store.commit({
         type: 'poster/setSize',
-        size: 90
+        size: 80
       })
       if (this.isTbWm) {
         this.initTbWaterMark()
@@ -390,12 +392,6 @@ export default {
     isTbWm() {
       return this.$route.query.isTbWm == 'true'
     },
-    editAgain() {
-      return this.$route.query.editAgain == 'true'
-    },
-    isReplace() {
-      return this.$route.query.activityId
-    },
     bgStyles() {
       let zoom = this.size / 100
       let { width, height, top, left } = this.bg
@@ -408,24 +404,24 @@ export default {
       }
     },
     ...mapState({
-      isShowTransformTool: state => state.isShowTransformTool,
-      sizeRange: state => state.sizeRange,
-      originalWidth: state => state.canvasWidth,
-      originalHeight: state => state.canvasHeight,
-      canvasWidth: state => state.currentCanvasWidth,
-      canvasHeight: state => state.currentCanvasHeight,
-      bgc: state => state.bgc,
-      bg: state => state.bg,
-      active: state => state.currentChunkIndex,
-      isShowBgPanel: state => state.isShowBgPanel,
-      isShowClipBg: state => state.isShowClipBg,
-      isCompatible: state => state.isCompatible,
-      selection: state => state.selection,
-      snapTolerance: state => state.snapTolerance,
-      snapToleranceByBlock: state => state.snapToleranceByBlock,
-      priceSwitch: state => state.priceSwitch,
-      isShowGift: state => state.isShowGift,
-      changeWmMode: state => state.changeWmMode
+      isShowTransformTool: (state) => state.isShowTransformTool,
+      sizeRange: (state) => state.sizeRange,
+      originalWidth: (state) => state.canvasWidth,
+      originalHeight: (state) => state.canvasHeight,
+      canvasWidth: (state) => state.currentCanvasWidth,
+      canvasHeight: (state) => state.currentCanvasHeight,
+      bgc: (state) => state.bgc,
+      bg: (state) => state.bg,
+      active: (state) => state.currentChunkIndex,
+      isShowBgPanel: (state) => state.isShowBgPanel,
+      isShowClipBg: (state) => state.isShowClipBg,
+      isCompatible: (state) => state.isCompatible,
+      selection: (state) => state.selection,
+      snapTolerance: (state) => state.snapTolerance,
+      snapToleranceByBlock: (state) => state.snapToleranceByBlock,
+      priceSwitch: (state) => state.priceSwitch,
+      isShowGift: (state) => state.isShowGift,
+      changeWmMode: (state) => state.changeWmMode
     }),
     bbtPriceType() {
       return this.$store.state.watermark.priceTag.priceTagType
@@ -528,11 +524,11 @@ export default {
     getRefLineParams(params) {
       const { vLine, hLine } = params
       let id = 0
-      this.vLine = vLine.map(item => {
+      this.vLine = vLine.map((item) => {
         item['id'] = ++id
         return item
       })
-      this.hLine = hLine.map(item => {
+      this.hLine = hLine.map((item) => {
         item['id'] = ++id
         return item
       })
@@ -543,7 +539,7 @@ export default {
       let zoom = this.size / 100
       const { vBlock, hBlock } = params
       let id = 0
-      this.vBlock = vBlock.map(item => {
+      this.vBlock = vBlock.map((item) => {
         item['id'] = ++id
         item.width *= zoom
         item.top *= zoom
@@ -551,7 +547,7 @@ export default {
         item.height *= zoom
         return item
       })
-      this.hBlock = hBlock.map(item => {
+      this.hBlock = hBlock.map((item) => {
         item['id'] = ++id
         item.width *= zoom
         item.height *= zoom
@@ -564,7 +560,7 @@ export default {
     onWindowResize() {
       this.setDefaultSize(this)
     },
-    setDefaultSize: throttle(self => {
+    setDefaultSize: throttle((self) => {
       let ch = window.innerHeight - 60 - 80
       let cw = window.innerWidth - 80 - 80
       let hs =
@@ -592,143 +588,36 @@ export default {
         index
       })
     }, 500),
-    getTbWmActivity(params) {
-      /**
-       * 查活动的dsl 和 价签信息
-       */
-      return new Promise((resolve, reject) => {
-        axios
-          .get('/itemManage/watermark/editPicTagTaskWatermark.get', {
-            params
-          })
-          .then(res => {
-            console.log('res', res)
-            let result = res.data.data.result
-            let dsl = JSON.parse(result.templateDsl)
-
-            let tbPriceTag = {}
-            tbPriceTag.priceMode = result.priceMode
-            tbPriceTag.sellProfitString1 = result.sellProfitString1
-            tbPriceTag.sellProfitString2 = result.sellProfitString2
-            tbPriceTag.makeUpType = result.makeUpType
-            tbPriceTag.makeUpNum = result.makeUpNum
-            sessionStorage.setItem(
-              'initPirceTagInfo',
-              JSON.stringify(tbPriceTag)
-            )
-            resolve(dsl)
-          })
-          .catch(err => {
-            console.log(err)
-            reject(err)
-          })
-      })
-    },
-    getTbWmChunks(params) {
-      /**
-       * 查模板的dsl
-       */
-      return new Promise((resolve, reject) => {
-        axios
-          .get('/itemManage/watermark/getOfficialChunks.get', { params })
-          .then(res => {
-            let dsl = res.data.data.DslObject
-            resolve(dsl)
-          })
-          .catch(err => {
-            console.log(err)
-            reject(err)
-          })
-      })
-    },
-    async initTbWaterMark() {
-      // console.log('tbChunks', tbChunks)
-      if (this.wmID) {
-        let dsl = {}
-        if (this.editAgain) {
-          // 重新编辑 通过 task 查
-          let params = {
-            taskId: this.wmID
-          }
-          dsl = await this.getTbWmActivity(params)
-        } else if (this.isReplace) {
-          /**
-           * 替换水印
-           * 水印内容通过 水印id查
-           * 活动价签模式通过 活动id查
-           */
-          await this.getTbWmActivity({ taskId: this.$route.query.activityId })
-          let params = {
-            id: this.wmID,
-            mode: this.modes
-          }
-          dsl = await this.getTbWmChunks(params)
-        } else {
-          // 创建官方水印
-          let params = {
-            id: this.wmID,
-            mode: this.modes
-          }
-          dsl = await this.getTbWmChunks(params)
-        }
-        this.$store.commit({
-          type: 'poster/setTbDslInitData',
-          tbDslInitData: dsl
-        })
-        dsl.mode = this.modes
-        let tbchunksNow = []
-        tbchunksNow[this.modes - 1] = dsl
-        this.convertToChunks(tbchunksNow)
-      }
-    },
     initWaterMark() {
       if (this.wmID) {
-        axios
-          .get('/itemManage/watermark/getChunks.get', {
-            params: {
-              [this.wmType === '1' ? 'id' : 'customizedId']: this.wmID,
-              modes: this.modes
-            }
-          })
-          .then(res => {
-            if (res.data.status === 1) {
-              this.formatChunks(res.data.data.modeDatas)
-              this.editorChunks = this.chunksWaterMarkArr[this.watermarkMode]
-            } else {
-              this.$notify.error({
-                title: '获取水印模块失败',
-                message: res.data.msg
-              })
-            }
-            this.$store.commit({
-              // 设置可见区域的画布大小
-              type: 'poster/setCurrentCanvasSize',
-              width: this.modeList[this.mode].width * (this.size / 100),
-              height: this.modeList[this.mode].height * (this.size / 100)
-            })
-            this.$store.commit({
-              // 设置画布的原始大小
-              type: 'poster/setCanvasSize',
-              width: this.modeList[this.mode].width,
-              height: this.modeList[this.mode].height
-            })
-            this.$store.commit({
-              // 设置海报元素
-              type: 'poster/setChunks',
-              chunks: this.editorChunks
-            })
-            this.$store.commit('poster/setStorageRecord') // 存操作记录
-            this.cache[this.mode] = this.$store.state.poster.storageRecord
-          })
-          .catch(err => {
-            console.warn(err)
-          })
+        // testWmChunks
+        this.formatChunks(testWmChunks.modeDatas)
+        this.editorChunks = this.chunksWaterMarkArr[this.watermarkMode]
+        this.$store.commit({
+          // 设置可见区域的画布大小
+          type: 'poster/setCurrentCanvasSize',
+          width: this.modeList[this.mode].width * (this.size / 100),
+          height: this.modeList[this.mode].height * (this.size / 100)
+        })
+        this.$store.commit({
+          // 设置画布的原始大小
+          type: 'poster/setCanvasSize',
+          width: this.modeList[this.mode].width,
+          height: this.modeList[this.mode].height
+        })
+        this.$store.commit({
+          // 设置海报元素
+          type: 'poster/setChunks',
+          chunks: this.editorChunks
+        })
+        this.$store.commit('poster/setStorageRecord') // 存操作记录
+        this.cache[this.mode] = this.$store.state.poster.storageRecord
       } else {
         //自定义水印
         this.editorChunks = []
         this.chunksWaterMarkArr = new Array(this.modeList.length).fill([])
         // this.cache = new Array(this.modeList.length).fill([[]])
-        this.modeList.forEach(item => {
+        this.modeList.forEach((item) => {
           let obj = {
             bgc: '',
             canvasHeight: item.height,
@@ -770,90 +659,75 @@ export default {
     },
     //获取海报内容
     getChunks() {
+      // eslint-disable-next-line no-unused-vars
       let { id, type, activityType } = this.$route.query
       if (id) {
-        let params = {
-          posterId: id,
-          posterType: type,
-          isCustom: activityType === '1'
+        this.loading = false
+        let {
+          backgroundColor,
+          bg,
+          chunks,
+          height,
+          width,
+          hotAreas,
+          posterTitle
+        } = testPosterChunks
+        if (type == 3) {
+          height = parseInt(height * (950.0 / 750.0))
         }
-        this.loading = true
-        axios
-          .get('/template/poster/getTemplatePosterSeriesContent.get', {
-            params
+        chunks.forEach((item) => {
+          item.adsorbing = ['false', 'false']
+          if (!this.isTbWm) {
+            item.canBeOption = true
+          }
+          item.transformX = item.transformX || 1
+          item.transformY = item.transformY || 1
+          item.xFontSpacing = item.xFontSpacing || 0
+          item.yFontSpacing = item.yFontSpacing || 1
+          item.rotate = item.rotate || 0
+        })
+        this.$store.commit({
+          // 设置可见区域的画布大小
+          type: 'poster/setCurrentCanvasSize',
+          width: width * (this.size / 100),
+          height: height * (this.size / 100)
+        })
+        this.$store.commit({
+          // 设置画布的原始大小
+          type: 'poster/setCanvasSize',
+          width,
+          height
+        })
+        if (bg && bg.img) {
+          bg.scale = bg.scale || 1
+          bg.opacity = bg.opacity || 1
+          this.$store.commit({
+            type: 'poster/setBg',
+            bg: bg,
+            isModifyOrigin: true
           })
-          .then(res => {
-            this.loading = false
-            let {
-              backgroundColor,
-              bg,
-              chunks,
-              height,
-              width,
-              hotAreas,
-              posterTitle
-            } = res.data.data
-            if (type == 3) {
-              height = parseInt(height * (950.0 / 750.0))
-            }
-            chunks.forEach(item => {
-              item.adsorbing = ['false', 'false']
-              if (!this.isTbWm) {
-                item.canBeOption = true
-              }
-              item.transformX = item.transformX || 1
-              item.transformY = item.transformY || 1
-              item.xFontSpacing = item.xFontSpacing || 0
-              item.yFontSpacing = item.yFontSpacing || 1
-              item.rotate = item.rotate || 0
-            })
-            this.$store.commit({
-              // 设置可见区域的画布大小
-              type: 'poster/setCurrentCanvasSize',
-              width: width * (this.size / 100),
-              height: height * (this.size / 100)
-            })
-            this.$store.commit({
-              // 设置画布的原始大小
-              type: 'poster/setCanvasSize',
-              width,
-              height
-            })
-            if (bg && bg.img) {
-              bg.scale = bg.scale || 1
-              bg.opacity = bg.opacity || 1
-              this.$store.commit({
-                type: 'poster/setBg',
-                bg: bg,
-                isModifyOrigin: true
-              })
-            }
-            this.$store.commit({
-              // 设置背景颜色
-              type: 'poster/setBgc',
-              color: backgroundColor
-            })
-            this.$store.commit({
-              // 设置海报标题
-              type: 'poster/setTitle',
-              title: posterTitle
-            })
-            this.$store.commit({
-              // 设置海报元素
-              type: 'poster/setChunks',
-              chunks
-            })
-            this.$store.commit({
-              // 设置热区信息
-              type: 'poster/setHotAreas',
-              hotAreas
-            })
-            this.$store.commit('poster/setStorageRecord') // 存操作记录
-          })
-          .catch(err => {
-            this.loading = false
-            throw err
-          })
+        }
+        this.$store.commit({
+          // 设置背景颜色
+          type: 'poster/setBgc',
+          color: backgroundColor
+        })
+        this.$store.commit({
+          // 设置海报标题
+          type: 'poster/setTitle',
+          title: posterTitle
+        })
+        this.$store.commit({
+          // 设置海报元素
+          type: 'poster/setChunks',
+          chunks
+        })
+        this.$store.commit({
+          // 设置热区信息
+          type: 'poster/setHotAreas',
+          hotAreas
+        })
+        this.$store.commit('poster/setStorageRecord') // 存操作记录
       } else {
         let viewSizeOptions = this.$store.state.poster.viewSizeOptions
         let { width, height } = viewSizeOptions[type || 0]
@@ -894,7 +768,7 @@ export default {
         this.lastX = e.pageX
         this.lastY = e.pageY
         this.chunksPosition = [...document.querySelectorAll('.editor-el')].map(
-          item => {
+          (item) => {
             let parentBounds = item.parentNode.getBoundingClientRect()
             return {
               width: item.offsetWidth,
@@ -1023,7 +897,7 @@ export default {
       self.isMoving = true
       self.isShowTransformTool = false
       self.isDrag = true
-      let setPosition = index => {
+      let setPosition = (index) => {
         let isLevel = false,
           isVertical = false,
           step = 0
@@ -1057,7 +931,7 @@ export default {
       self.lastX = e.clientX
       self.lastY = e.clientY
       let zoom = self.size / 100
-      let setPosition = index => {
+      let setPosition = (index) => {
         let adsorbing = self.chunks[index].adsorbing
         let leftAdsorbing = self.isAdsorbing(adsorbing, 'left')
         let topAdsorbing = self.isAdsorbing(adsorbing, 'top')
@@ -1149,10 +1023,9 @@ export default {
           }
           if (this.isSelect) {
             this.rectCaches = {}
-            this.selection.forEach(item => {
-              let bounds = this.$refs[
-                `chunk${item}`
-              ][0].$el.getBoundingClientRect()
+            this.selection.forEach((item) => {
+              let bounds =
+                this.$refs[`chunk${item}`][0].$el.getBoundingClientRect()
               position.width.push(bounds.width + bounds.left)
               position.height.push(bounds.height + bounds.top)
               position.top.push(bounds.top)
@@ -1268,7 +1141,7 @@ export default {
         refBlock[i] = JSON.parse(JSON.stringify(temArrBlock))
       }
       this.getRefBlockParams(refBlock) //鼠标松开 去掉 等间距
-      this.chunks.forEach(item => {
+      this.chunks.forEach((item) => {
         item.adsorbing = ['false', 'false']
       })
       this.vBlock = []
@@ -1287,9 +1160,8 @@ export default {
       let isFound = false
       for (let i = this.chunks.length - 1; i >= 0; i--) {
         if (i > this.active) {
-          let targeBound = this.$refs[
-            `chunk${i}`
-          ][0].$el.getBoundingClientRect()
+          let targeBound =
+            this.$refs[`chunk${i}`][0].$el.getBoundingClientRect()
           let { left, top, width, height } = targeBound
           if (left <= x && left + width >= x && top <= y && top + height >= y) {
             this.$store.commit({
@@ -1309,7 +1181,7 @@ export default {
     transformHandleUp(selectorRect) {
       if (this.isMultipleDrag) {
         this.rectCaches = {}
-        this.selection.forEach(item => {
+        this.selection.forEach((item) => {
           let chunk = this.chunks[item]
           this.rectCaches[item] = {
             width: chunk.width,
@@ -1325,7 +1197,7 @@ export default {
     // 变换工具
     transform(postion, type, resizeScale, originalLeft, originalTop) {
       let { width, height, left, top, rotate } = postion
-      let setChunkBound = item => {
+      let setChunkBound = (item) => {
         let currentChunk = this.chunks[item]
         let rect = this.rectCaches[item]
         let zoom = this.size / 100
@@ -1393,6 +1265,7 @@ export default {
       currentChunk.rotate = (moveRotate + rect.rotate) % 360
     },
     setCanvasSize(size = this.size) {
+      console.log('this.$el.offsetHeight', this)
       let zoom = size / 100
       this.$store.commit({
         type: 'poster/setCurrentCanvasSize',
@@ -1401,7 +1274,8 @@ export default {
       })
       // this.canvasWidth = parseInt(this.originalWidth * zoom)
       // this.canvasHeight = parseInt(this.originalHeight * zoom)
-      let space = this.$el.offsetHeight - 80 - this.canvasHeight
+      // let space = this.$el.offsetHeight - 80 - this.canvasHeight
+      let space = window.offsetHeight - 80 - this.canvasHeight
       this.paddingTop = space <= 0 ? 0 : space / 2
       this.isShowTransformTool = false
       this.isDrag = false
@@ -1497,7 +1371,7 @@ export default {
       })
     },
     showItemList() {
-      this.$refs.itemList.getData()
+      // this.$refs.itemList.getData()
       this.isShowInsetItemList = true
     },
     //  插入宝贝主图预览
@@ -1532,7 +1406,7 @@ export default {
           this.luBanBg = this.chunks[1].src
           this.chunks[1].src = this.editorBg
         } else {
-          this.chunks.forEach(chunk => {
+          this.chunks.forEach((chunk) => {
             if (
               chunk.algoType == 'majorobject' &&
               chunk.kind == 'submajorobject'
@@ -1549,7 +1423,7 @@ export default {
         ) {
           this.chunks[1].src = this.luBanBg
         } else {
-          this.chunks.forEach(chunk => {
+          this.chunks.forEach((chunk) => {
             if (
               chunk.algoType == 'majorobject' &&
               chunk.kind == 'submajorobject'
@@ -1595,7 +1469,7 @@ export default {
       modeData.forEach((data, idx) => {
         // let controlText = {}  //初始化兜底文案
 
-        let chunks = data.chunks.map(item => {
+        let chunks = data.chunks.map((item) => {
           if (!item.xFontSpacing && item.type === 'text') {
             item.xFontSpacing = item.xFontSpacing || 0
             item.yFontSpacing = item.yFontSpacing || 1
@@ -1661,7 +1535,7 @@ export default {
     bingKey() {
       let that = this
       console.log('重新绑定按键')
-      hotkeys('up, down, left, right', function(event, handler) {
+      hotkeys('up, down, left, right', function (event, handler) {
         switch (handler.key) {
           case 'left':
             that.moveByKey(that, 'left')

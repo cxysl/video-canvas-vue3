@@ -7,7 +7,7 @@
     >
       <el-button class="change-img" @click="openUpload">替换图片</el-button>
     </el-tooltip>
-    <upload :visible.sync="isShowUpload" @add-img="addImg"></upload>
+    <!-- <upload :visible.sync="isShowUpload" @add-img="addImg"></upload> -->
     <div class="editor-sub-panel turn-img" v-if="!isTbWm">
       <div class="sub-panel-title">图片翻转</div>
       <el-button @click="turn('v')">水平翻转</el-button>
@@ -18,7 +18,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-import upload from 'pages/itemsManage/watermark/editor/upload'
+// import upload from 'pages/itemsManage/watermark/editor/upload'
 const { mapState } = createNamespacedHelpers('poster')
 export default {
   name: 'imagePanel',
@@ -29,7 +29,7 @@ export default {
     }
   },
   components: {
-    upload
+    // upload
   },
   computed: {
     ...mapState([
@@ -56,6 +56,7 @@ export default {
   },
   methods: {
     openUpload() {
+      console.log('none')
       this.isShowUpload = true
     },
     turn(type) {

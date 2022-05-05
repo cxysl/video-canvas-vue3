@@ -3,7 +3,7 @@ export default {
   state: {
     canvasWidth: 750,
     canvasHeight: 450,
-    size: 100,
+    size: 80,
     sizeRange: [20, 40, 60, 80, 100, 150, 200, 300, 400],
     currentSizeRange: 4,
     chunks: [],

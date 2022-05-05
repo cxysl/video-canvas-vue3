@@ -1,22 +1,9 @@
 <template>
   <div class="poster-editor-top-bar">
-    <div v-if="feature === 'watermark'" class="warning-bar">
-      亲，请您避免素材中出现【最低】、【原价】等广告法和淘宝规定的极限词、违禁词、请慎重使用，如您选择使用，一旦有处罚请自行承担，感谢理解！
-      <el-button
-        type="text"
-        style="padding: 0"
-        @click="
-          open(
-            'https://helpcenter.taobao.com/learn/knowledge?spm=a21pp.8204670.0.0.1ab4ad22HEbozi&id=20082789&xttkn=aa65041ba0c61'
-          )
-        "
-      >
-        违禁词查看
-      </el-button>
-    </div>
     <el-row>
       <el-col :span="6" class="left-wrap">
-        <div class="logo" @click="logoClick"></div>
+        <logo-icon @click="logoClick"></logo-icon>
+        <!-- <div class="logo" @click="logoClick"></div> -->
         <div class="undo-redo-wrap">
           <div
             class="icon-wrap"
@@ -123,10 +110,10 @@
         </template> -->
       </el-col>
       <el-col :span="6" class="right-wrap">
-        <el-button style="margin-right:10px" @click="logoClick" v-if="$isQn">
+        <!-- <el-button style="margin-right:10px" @click="logoClick" v-if="$isQn">
           {{ feature === 'watermark' ? '返回水印选择页' : '返回海报选择页' }}
-        </el-button>
-        <el-popover
+        </el-button> -->
+        <!-- <el-popover
           placement="bottom-end"
           width="410"
           popper-class="poster-editor-top-bar-load-preview"
@@ -140,10 +127,10 @@
             :src="tbPreview"
           />
 
-          <el-button style="margin-right:10px" slot="reference" v-if="isTbWm">
+          <el-button style="margin-right: 10px" slot="reference" v-if="isTbWm">
             预览
           </el-button>
-        </el-popover>
+        </el-popover> -->
         <el-button
           type="primary"
           v-loading.fullscreen.lock="loading"
@@ -170,9 +157,9 @@
       </el-col>
     </el-row>
     <el-dialog
-      :custom-class="
-        `poster-editor-create-state-dialog ${posterType === '2' ? 'large' : ''}`
-      "
+      :custom-class="`poster-editor-create-state-dialog ${
+        posterType === '2' ? 'large' : ''
+      }`"
       :visible.sync="isShowDialog"
       :close-on-click-modal="false"
     >
@@ -305,13 +292,11 @@
 </template>
 
 <script>
-import buildCode from '../../../utils/buildCode'
-import VueClipboards from 'vue-clipboards'
-import unawailWords from '../../../../../itemsManage/watermark/editor/unavailWords'
-import { convertToTbLayers } from '../canvas/components/convert/convert'
+// import buildCode from '../../../utils/buildCode'
+// import unawailWords from '../../../../../itemsManage/watermark/editor/unavailWords'
+// import { convertToTbLayers } from '../canvas/components/convert/convert'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('poster')
-Vue.use(VueClipboards)
 export default {
   name: 'posterEditorTopBar',
   props: {
@@ -331,7 +316,7 @@ export default {
       saveWaterMarkStatus: 0,
       saveMsg: '',
       publishData: {},
-      unavailWords: unawailWords,
+      // unavailWords: unawailWords,
       mode: 0,
       modes: [],
       modeList: [],
@@ -347,7 +332,7 @@ export default {
     this.wmID = this.$route.query.id
     if (this.feature === 'watermark') {
       this.modes = this.$route.query.modes.split(',')
-      this.modes.forEach(mode => {
+      this.modes.forEach((mode) => {
         if (mode == 1) {
           this.modeList.push({
             type: 1,
@@ -428,18 +413,18 @@ export default {
       })
     },
     logoClick() {
-      if (this.$isQn) {
-        let routeUrl = '/template/poster/all'
-        if (this.$route.params.feature == 'watermark') {
-          routeUrl = '/itemsManage/watermark/all'
-        }
-        this.$router.push(routeUrl)
-        setTimeout(() => {
-          location.reload()
-        }, 300)
-      } else {
-        window.location.href = '/'
-      }
+      // if (this.$isQn) {
+      //   let routeUrl = '/template/poster/all'
+      //   if (this.$route.params.feature == 'watermark') {
+      //     routeUrl = '/itemsManage/watermark/all'
+      //   }
+      //   this.$router.push(routeUrl)
+      //   setTimeout(() => {
+      //     location.reload()
+      //   }, 300)
+      // } else {
+      window.location.href = '/'
+      // }
     },
     editTitle() {
       this.isEditTitle = true
@@ -459,7 +444,7 @@ export default {
       let tbPriceTag = JSON.parse(window.sessionStorage.getItem('tbPriceTag'))
       console.log(dsl.layers.length)
       let chunks = []
-      dsl.layers.forEach(item => {
+      dsl.layers.forEach((item) => {
         if (!this.isShowGift && item.linkId != 0) {
           return
         }
@@ -479,54 +464,55 @@ export default {
       dsl.layers = chunks
       return dsl
     },
-    getTbPreview(optionType) {
-      console.log('预览水印')
-      let tbPriceTag = JSON.parse(window.sessionStorage.getItem('tbPriceTag'))
-      let dsl = convertToTbLayers(this.tbDslInitData, this.chunks)
-      let params = {
-        templateDsl: JSON.stringify(this.getWantDsl(dsl)),
-        taskType: 1
-      }
-      if (tbPriceTag) {
-        /**
-         * 1 普通合图，只把主图itemMajorPic+dynamicDatas合成；   (看兜底文案)
-         * 2 自动价格合图，会合成itemMajorPic+dynamicDatas和自动价格图层。   (看价格公式)
-         */
-        params.taskType = 1 //tbPriceTag.priceMode == 3 ? 1 : 2
-        if (tbPriceTag.priceMode == 2) {
-          params.makeUpNum = tbPriceTag.priceRule.makeUpNum
-          params.makeUpType = tbPriceTag.priceRule.makeUpType
-          let num = Number(tbPriceTag.priceMode)
-          params.priceExpressType =
-            num == 1 ? 2 : num == 2 ? 3 : num == 3 ? 1 : 0
-          params.sellProfitString1 = tbPriceTag.sellProfitString1
-          params.sellProfitString2 = tbPriceTag.sellProfitString2
-        }
-      }
-      // sessionStorage.setItem('wmPreviewImg', JSON.stringify(params))
-      if (optionType == 'next') {
-        return new Promise((resolve, reject) => {
-          axios
-            .post('/itemManage/watermark/previewImg.post', params)
-            .then(res => {
-              resolve(res.data.data.previewUrl || '')
-            })
-            .catch(err => {
-              reject(err)
-            })
-        })
-      } else {
-        axios
-          .post('/itemManage/watermark/previewImg.post', params)
-          .then(res => {
-            this.tbPreview = res.data.data.previewUrl || ''
-          })
-          .catch(err => {
-            console.log('err', err)
-            this.tbPreview = ''
-          })
-      }
-    },
+    // getTbPreview(optionType) {
+    //   console.log('预览水印')
+    //   let tbPriceTag = JSON.parse(window.sessionStorage.getItem('tbPriceTag'))
+    //   let dsl = convertToTbLayers(this.tbDslInitData, this.chunks)
+    //   let params = {
+    //     templateDsl: JSON.stringify(this.getWantDsl(dsl)),
+    //     taskType: 1
+    //   }
+    //   if (tbPriceTag) {
+    //     /**
+    //      * 1 普通合图，只把主图itemMajorPic+dynamicDatas合成；   (看兜底文案)
+    //      * 2 自动价格合图，会合成itemMajorPic+dynamicDatas和自动价格图层。   (看价格公式)
+    //      */
+    //     params.taskType = 1 //tbPriceTag.priceMode == 3 ? 1 : 2
+    //     if (tbPriceTag.priceMode == 2) {
+    //       params.makeUpNum = tbPriceTag.priceRule.makeUpNum
+    //       params.makeUpType = tbPriceTag.priceRule.makeUpType
+    //       let num = Number(tbPriceTag.priceMode)
+    //       params.priceExpressType =
+    //         num == 1 ? 2 : num == 2 ? 3 : num == 3 ? 1 : 0
+    //       params.sellProfitString1 = tbPriceTag.sellProfitString1
+    //       params.sellProfitString2 = tbPriceTag.sellProfitString2
+    //     }
+    //   }
+    //   // sessionStorage.setItem('wmPreviewImg', JSON.stringify(params))
+    //   if (optionType == 'next') {
+    //     return new Promise((resolve, reject) => {
+    //       axios
+    //         .post('/itemManage/watermark/previewImg.post', params)
+    //         .then((res) => {
+    //           resolve(res.data.data.previewUrl || '')
+    //         })
+    //         .catch((err) => {
+    //           reject(err)
+    //         })
+    //     })
+    //   } else {
+    //     axios
+    //       .post('/itemManage/watermark/previewImg.post', params)
+    //       .then((res) => {
+    //         this.tbPreview = res.data.data.previewUrl || ''
+    //       })
+    //       .catch((err) => {
+    //         console.log('err', err)
+    //         this.tbPreview = ''
+    //       })
+    //   }
+    // },
+
     restTbPreview() {
       this.tbPreview = ''
     },
@@ -550,364 +536,366 @@ export default {
       })
     },
     save(type) {
-      if (this.feature === 'poster') {
-        this.savePoster()
-      } else if (this.feature === 'watermark') {
-        if (this.isTbWm) {
-          this.showLoading = true
-          let flag = true
-          this.chunks.forEach(item => {
-            if (
-              this.luBanBg &&
-              item.algoType == 'majorobject' &&
-              item.kind == 'submajorobject'
-            ) {
-              item.src = this.luBanBg
-            }
-            // 官方水印先不做违禁词检测
-            // if (item.type === 'text') {
-            //   let i = this.unavailWords.length
-            //   while (i--) {
-            //     if (item.textContent.indexOf(this.unavailWords[i]) > -1) {
-            //       flag = false
-            //       this.showLoading = false
-            //       return this.$message.error({
-            //         showClose: true,
-            //         message: `您编辑的水印含有淘宝违禁词：“${this.unavailWords[i]}”`
-            //       })
-            //     }
-            //   }
-            // }
-          })
-          if (!flag) {
-            return
-          }
-          let tbWmActivity = JSON.parse(
-            window.sessionStorage.getItem('tbWmActivity')
-          )
-          let tbPriceTag = JSON.parse(
-            window.sessionStorage.getItem('tbPriceTag')
-          )
-          let params = {
-            startTime: tbWmActivity.startTime,
-            endTime: tbWmActivity.endTime,
-            templateTagId: tbWmActivity.templateTagId,
-            baseTemplateId: Number(this.wmID),
-            priceMode: 1,
-            priceExpressType: 1,
-            sellProfitString1: '',
-            sellProfitString2: '',
-            mode: Number(this.$route.query.modes),
-            outId: Number(tbWmActivity.outId),
-            templateDsl: JSON.stringify(
-              this.getWantDsl(
-                convertToTbLayers(this.tbDslInitData, this.chunks)
-              )
-            )
-          }
-          if (tbPriceTag) {
-            let num = Number(tbPriceTag.priceMode)
-            params.priceMode = num
-            params.priceRule = tbPriceTag.priceRule
-            params.sellProfitString1 = tbPriceTag.sellProfitString1
-            params.sellProfitString2 = tbPriceTag.sellProfitString2
-            params.priceExpressType =
-              num == 2
-                ? 3
-                : num == 3
-                ? 0
-                : num == 1
-                ? this.priceSwitch
-                  ? 2
-                  : 0
-                : 1
-          }
-          if (this.editAgain) {
-            params.taskId = Number(this.wmID)
-          } else if (this.isReplace) {
-            params.taskId = Number(this.activityId)
-          }
-          if (this.isReplace) {
-            axios
-              .put('/itemManage/watermark/replaceV2.post', params)
-              .then(res => {
-                if (res.data.status === 1) {
-                  this.$message.success({
-                    showClose: true,
-                    message: '操作成功，水印将在后台替换，请耐心等待'
-                  })
-                  this.$store.commit({
-                    type: 'watermark/setActivityId',
-                    activityId: ''
-                  })
-                  window.open('/itemsManage/watermark/activityList', '_self')
-                }
-              })
-              .catch(err => {
-                console.log(err)
-              })
-          } else {
-            axios
-              .post('/itemManage/watermark/savePictagTask.post', params)
-              .then(async res => {
-                let taskId = res.data.data.taskId
-                let imgTemp = await this.getTbPreview('next')
-                let watermark = {
-                  modeDatas: [
-                    {
-                      mode: Number(this.$route.query.modes),
-                      id: taskId,
-                      type: 'tbWm',
-                      img: imgTemp,
-                      startTime: tbWmActivity.startTime,
-                      endTime: tbWmActivity.endTime
-                    }
-                  ]
-                }
-                this.showLoading = false
-                sessionStorage.setItem('watermark', JSON.stringify(watermark))
-                // this.$store.commit({
-                //   type: 'SET_KEEPALIVE_ROUTE',
-                //   keepAliveRoute: 'watermarkActivity'
-                // })
-                this.$store.commit({
-                  type: 'setSeparatedState',
-                  state: false
-                })
-                this.$router.push(
-                  `/itemsManage/watermark/create/index?modes=${this.$route.query.modes}&isTbWm=true`
-                )
-              })
-              .catch(err => {
-                console.log('err', err)
-                this.showLoading = false
-              })
-          }
-        } else {
-          this.saveWaterMark(type)
-        }
-      }
+      console.log('保存', type)
+      // if (this.feature === 'poster') {
+      //   this.savePoster()
+      // } else if (this.feature === 'watermark') {
+      //   if (this.isTbWm) {
+      //     this.showLoading = true
+      //     let flag = true
+      //     this.chunks.forEach((item) => {
+      //       if (
+      //         this.luBanBg &&
+      //         item.algoType == 'majorobject' &&
+      //         item.kind == 'submajorobject'
+      //       ) {
+      //         item.src = this.luBanBg
+      //       }
+      //       // 官方水印先不做违禁词检测
+      //       // if (item.type === 'text') {
+      //       //   let i = this.unavailWords.length
+      //       //   while (i--) {
+      //       //     if (item.textContent.indexOf(this.unavailWords[i]) > -1) {
+      //       //       flag = false
+      //       //       this.showLoading = false
+      //       //       return this.$message.error({
+      //       //         showClose: true,
+      //       //         message: `您编辑的水印含有淘宝违禁词：“${this.unavailWords[i]}”`
+      //       //       })
+      //       //     }
+      //       //   }
+      //       // }
+      //     })
+      //     if (!flag) {
+      //       return
+      //     }
+      //     let tbWmActivity = JSON.parse(
+      //       window.sessionStorage.getItem('tbWmActivity')
+      //     )
+      //     let tbPriceTag = JSON.parse(
+      //       window.sessionStorage.getItem('tbPriceTag')
+      //     )
+      //     let params = {
+      //       startTime: tbWmActivity.startTime,
+      //       endTime: tbWmActivity.endTime,
+      //       templateTagId: tbWmActivity.templateTagId,
+      //       baseTemplateId: Number(this.wmID),
+      //       priceMode: 1,
+      //       priceExpressType: 1,
+      //       sellProfitString1: '',
+      //       sellProfitString2: '',
+      //       mode: Number(this.$route.query.modes),
+      //       outId: Number(tbWmActivity.outId),
+      //       templateDsl: JSON.stringify(
+      //         this.getWantDsl(
+      //           convertToTbLayers(this.tbDslInitData, this.chunks)
+      //         )
+      //       )
+      //     }
+      //     if (tbPriceTag) {
+      //       let num = Number(tbPriceTag.priceMode)
+      //       params.priceMode = num
+      //       params.priceRule = tbPriceTag.priceRule
+      //       params.sellProfitString1 = tbPriceTag.sellProfitString1
+      //       params.sellProfitString2 = tbPriceTag.sellProfitString2
+      //       params.priceExpressType =
+      //         num == 2
+      //           ? 3
+      //           : num == 3
+      //           ? 0
+      //           : num == 1
+      //           ? this.priceSwitch
+      //             ? 2
+      //             : 0
+      //           : 1
+      //     }
+      //     if (this.editAgain) {
+      //       params.taskId = Number(this.wmID)
+      //     } else if (this.isReplace) {
+      //       params.taskId = Number(this.activityId)
+      //     }
+      //     if (this.isReplace) {
+      //       axios
+      //         .put('/itemManage/watermark/replaceV2.post', params)
+      //         .then((res) => {
+      //           if (res.data.status === 1) {
+      //             this.$message.success({
+      //               showClose: true,
+      //               message: '操作成功，水印将在后台替换，请耐心等待'
+      //             })
+      //             this.$store.commit({
+      //               type: 'watermark/setActivityId',
+      //               activityId: ''
+      //             })
+      //             window.open('/itemsManage/watermark/activityList', '_self')
+      //           }
+      //         })
+      //         .catch((err) => {
+      //           console.log(err)
+      //         })
+      //     } else {
+      //       axios
+      //         .post('/itemManage/watermark/savePictagTask.post', params)
+      //         .then(async (res) => {
+      //           let taskId = res.data.data.taskId
+      //           let imgTemp = await this.getTbPreview('next')
+      //           let watermark = {
+      //             modeDatas: [
+      //               {
+      //                 mode: Number(this.$route.query.modes),
+      //                 id: taskId,
+      //                 type: 'tbWm',
+      //                 img: imgTemp,
+      //                 startTime: tbWmActivity.startTime,
+      //                 endTime: tbWmActivity.endTime
+      //               }
+      //             ]
+      //           }
+      //           this.showLoading = false
+      //           sessionStorage.setItem('watermark', JSON.stringify(watermark))
+      //           // this.$store.commit({
+      //           //   type: 'SET_KEEPALIVE_ROUTE',
+      //           //   keepAliveRoute: 'watermarkActivity'
+      //           // })
+      //           this.$store.commit({
+      //             type: 'setSeparatedState',
+      //             state: false
+      //           })
+      //           this.$router.push(
+      //             `/itemsManage/watermark/create/index?modes=${this.$route.query.modes}&isTbWm=true`
+      //           )
+      //         })
+      //         .catch((err) => {
+      //           console.log('err', err)
+      //           this.showLoading = false
+      //         })
+      //     }
+      //   } else {
+      //     this.saveWaterMark(type)
+      //   }
+      // }
     },
     saveWaterMark(type) {
-      console.log('保存水印')
-      let modeDatas = []
-      let flag = true
-      if (!this.chunksWaterMarkArr || this.chunksWaterMarkArr.length === 0) {
-        this.$message({
-          message: '您的水印模板没有元素，无法投放',
-          type: 'warning'
-        })
-        flag = false
-        return false
-      }
-      if (!flag) {
-        return
-      }
-      let modes = this.$route.query.modes.split(',')
-      let mesFlag = false
-      let isFirst = 0
-      let mes = ''
-      modes.forEach(item => {
-        let index = item - 1
-        let name =
-          item == 1
-            ? '1:1主图'
-            : item == 2
-            ? '3:4主图'
-            : item == 3
-            ? '宝贝长图'
-            : ''
-        if (
-          !this.chunksWaterMarkArr[index] ||
-          this.chunksWaterMarkArr[index].length === 0
-        ) {
-          isFirst++
-          mesFlag = true
-          mes = isFirst == 1 ? name : mes + '、' + name
-        }
-        let priceTagTotal = 0
-        this.chunksWaterMarkArr[index].forEach(item => {
-          if (item.priceTag) {
-            priceTagTotal++
-          }
-        })
-        if (priceTagTotal > 1) {
-          this.$message({
-            message: `您的 ${name} 模式存在多个价签，请修改`,
-            type: 'warning'
-          })
-          flag = false
-          return false
-        }
-      })
-      if (mesFlag) {
-        this.$message({
-          message: `您的${mes}模式没有元素，无法投放`,
-          type: 'warning'
-        })
-        flag = false
-        return false
-      }
-      if (!flag) {
-        return
-      }
-      this.chunksWaterMarkArr.forEach(chunks => {
-        chunks.forEach(item => {
-          if (item.type === 'text') {
-            let i = this.unavailWords.length
-            while (i--) {
-              if (item.textContent.indexOf(this.unavailWords[i]) > -1) {
-                flag = false
-                return this.$message.error({
-                  showClose: true,
-                  message: `您编辑的水印含有淘宝违禁词：“${this.unavailWords[i]}”`
-                })
-              }
-            }
-          }
-        })
-      })
-      if (!flag) {
-        return
-      }
-      this.showLoading = true
-      // 透明度转换
-      this.chunksWaterMarkArr.forEach(chunks => {
-        chunks.forEach(item => {
-          item.opacity =
-            item.opacity > 1
-              ? parseFloat(item.opacity / 100.0).toFixed(2)
-              : item.opacity
-        })
-      })
-      modes.forEach(item => {
-        modeDatas.push({
-          mode: parseInt(item),
-          watermark: { chunks: this.chunksWaterMarkArr[item - 1] }
-          // watermarkImageData: ''
-        })
-      })
-      // console.log('modeDatas', modeDatas)
-      let params = {}
-      params.modeDatas = modeDatas
-      if (type === 2) {
-        params.id = Number(this.wmID)
-      }
-      if (this.wmType == 1) {
-        params.baseTemplateId = Number(this.wmID)
-      }
-      axios
-        .post('/itemManage/watermark/createCustomziedWatermark.post', params)
-        .then(res => {
-          this.showLoading = false
-          this.saveWaterMarkStatus = res.data.status
-          this.publishData = res.data.data
-          if (res.data.status === 1) {
-            let id = res.data.data.items[0].id
-            this.$store.commit({
-              type: 'watermark/setPriceTagWmId',
-              wmId: id
-            })
-            if (this.activityId) {
-              this.replace(id)
-            } else {
-              this.showModal = true
-              this.saveMsg = res.data.msg
-              this.publishData = res.data.data
-            }
-          } else {
-            this.$notify.error({
-              offset: 80,
-              title: '保存水印失败！',
-              message: res.data.msg
-            })
-          }
-        })
-        .catch(err => {
-          this.showLoading = false
-          console.error(err)
-        })
+      console.log('保存水印', type)
+      // let modeDatas = []
+      // let flag = true
+      // if (!this.chunksWaterMarkArr || this.chunksWaterMarkArr.length === 0) {
+      //   this.$message({
+      //     message: '您的水印模板没有元素，无法投放',
+      //     type: 'warning'
+      //   })
+      //   flag = false
+      //   return false
+      // }
+      // if (!flag) {
+      //   return
+      // }
+      // let modes = this.$route.query.modes.split(',')
+      // let mesFlag = false
+      // let isFirst = 0
+      // let mes = ''
+      // modes.forEach((item) => {
+      //   let index = item - 1
+      //   let name =
+      //     item == 1
+      //       ? '1:1主图'
+      //       : item == 2
+      //       ? '3:4主图'
+      //       : item == 3
+      //       ? '宝贝长图'
+      //       : ''
+      //   if (
+      //     !this.chunksWaterMarkArr[index] ||
+      //     this.chunksWaterMarkArr[index].length === 0
+      //   ) {
+      //     isFirst++
+      //     mesFlag = true
+      //     mes = isFirst == 1 ? name : mes + '、' + name
+      //   }
+      //   let priceTagTotal = 0
+      //   this.chunksWaterMarkArr[index].forEach((item) => {
+      //     if (item.priceTag) {
+      //       priceTagTotal++
+      //     }
+      //   })
+      //   if (priceTagTotal > 1) {
+      //     this.$message({
+      //       message: `您的 ${name} 模式存在多个价签，请修改`,
+      //       type: 'warning'
+      //     })
+      //     flag = false
+      //     return false
+      //   }
+      // })
+      // if (mesFlag) {
+      //   this.$message({
+      //     message: `您的${mes}模式没有元素，无法投放`,
+      //     type: 'warning'
+      //   })
+      //   flag = false
+      //   return false
+      // }
+      // if (!flag) {
+      //   return
+      // }
+      // this.chunksWaterMarkArr.forEach((chunks) => {
+      //   chunks.forEach((item) => {
+      //     if (item.type === 'text') {
+      //       let i = this.unavailWords.length
+      //       while (i--) {
+      //         if (item.textContent.indexOf(this.unavailWords[i]) > -1) {
+      //           flag = false
+      //           return this.$message.error({
+      //             showClose: true,
+      //             message: `您编辑的水印含有淘宝违禁词：“${this.unavailWords[i]}”`
+      //           })
+      //         }
+      //       }
+      //     }
+      //   })
+      // })
+      // if (!flag) {
+      //   return
+      // }
+      // this.showLoading = true
+      // // 透明度转换
+      // this.chunksWaterMarkArr.forEach((chunks) => {
+      //   chunks.forEach((item) => {
+      //     item.opacity =
+      //       item.opacity > 1
+      //         ? parseFloat(item.opacity / 100.0).toFixed(2)
+      //         : item.opacity
+      //   })
+      // })
+      // modes.forEach((item) => {
+      //   modeDatas.push({
+      //     mode: parseInt(item),
+      //     watermark: { chunks: this.chunksWaterMarkArr[item - 1] }
+      //     // watermarkImageData: ''
+      //   })
+      // })
+      // // console.log('modeDatas', modeDatas)
+      // let params = {}
+      // params.modeDatas = modeDatas
+      // if (type === 2) {
+      //   params.id = Number(this.wmID)
+      // }
+      // if (this.wmType == 1) {
+      //   params.baseTemplateId = Number(this.wmID)
+      // }
+      // axios
+      //   .post('/itemManage/watermark/createCustomziedWatermark.post', params)
+      //   .then((res) => {
+      //     this.showLoading = false
+      //     this.saveWaterMarkStatus = res.data.status
+      //     this.publishData = res.data.data
+      //     if (res.data.status === 1) {
+      //       let id = res.data.data.items[0].id
+      //       this.$store.commit({
+      //         type: 'watermark/setPriceTagWmId',
+      //         wmId: id
+      //       })
+      //       if (this.activityId) {
+      //         this.replace(id)
+      //       } else {
+      //         this.showModal = true
+      //         this.saveMsg = res.data.msg
+      //         this.publishData = res.data.data
+      //       }
+      //     } else {
+      //       this.$notify.error({
+      //         offset: 80,
+      //         title: '保存水印失败！',
+      //         message: res.data.msg
+      //       })
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     this.showLoading = false
+      //     console.error(err)
+      //   })
     },
-    replace(id) {
-      axios
-        .put('/itemManage/watermark/replace.put', {
-          activityId: this.activityId,
-          wmID: id,
-          promoteType: 26
-        })
-        .then(res => {
-          if (res.data.status === 1) {
-            this.$message.success({
-              showClose: true,
-              message: '操作成功，水印将在后台替换，请耐心等待'
-            })
-            this.$store.commit({
-              type: 'watermark/setActivityId',
-              activityId: ''
-            })
-            window.open('/itemsManage/watermark/activityList', '_self')
-          }
-        })
-        .catch(err => {
-          this.isReplacing = false
-          console.log(err)
-        })
-    },
+    // replace(id) {
+    //   axios
+    //     .put('/itemManage/watermark/replace.put', {
+    //       activityId: this.activityId,
+    //       wmID: id,
+    //       promoteType: 26
+    //     })
+    //     .then((res) => {
+    //       if (res.data.status === 1) {
+    //         this.$message.success({
+    //           showClose: true,
+    //           message: '操作成功，水印将在后台替换，请耐心等待'
+    //         })
+    //         this.$store.commit({
+    //           type: 'watermark/setActivityId',
+    //           activityId: ''
+    //         })
+    //         window.open('/itemsManage/watermark/activityList', '_self')
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       this.isReplacing = false
+    //       console.log(err)
+    //     })
+    // },
     // 保存海报
     savePoster() {
+      console.log('保存海报')
       // eslint-disable-next-line
-      let { id, type, activityType, activityId } = this.$route.query
-      let posterContent = {
-        chunks: this.chunks,
-        width: this.canvasWidth,
-        height: this.canvasHeight,
-        backgroundColor: this.bgc,
-        bg: this.bg
-      }
-      let data = {
-        posterTitle: this.title,
-        posterType: this.posterType,
-        hotAreas: this.hotAreas,
-        posterContent: JSON.stringify(posterContent)
-      }
-      if (activityType === '0') {
-        data.posterId = id
-      } else {
-        data.posterCustomId = id
-      }
-      if (activityId) {
-        data.activityId = activityId
-      }
-      this.loading = true
-      axios
-        .post('/template/poster/saveCustomPoster.post', data)
-        .then(res => {
-          let data = res.data.data
-          this.loading = false
-          this.isShowDialog = true
-          this.posterId = data.posterCustomId
-          this.createState = 1
-          this.createMessage = '海报已经保存，快去投放吧'
-          this.posterPreview = data.posterPreview
-          if (this.posterType === '1' || this.posterType === '3') {
-            this.code = buildCode({
-              id: data.posterCustomId,
-              width: this.canvasWidth,
-              height: this.canvasHeight,
-              isFull: this.posterType === '1',
-              img: data.posterPreview,
-              hotAreas: this.hotAreas
-            })
-          }
-        })
-        .catch(err => {
-          this.loading = false
-          this.isShowDialog = true
-          this.createState = 0
-          this.createMessage =
-            err.data && err.data.msg ? err.data.msg : '保存失败'
-          throw err
-        })
+      // let { id, type, activityType, activityId } = this.$route.query
+      // let posterContent = {
+      //   chunks: this.chunks,
+      //   width: this.canvasWidth,
+      //   height: this.canvasHeight,
+      //   backgroundColor: this.bgc,
+      //   bg: this.bg
+      // }
+      // let data = {
+      //   posterTitle: this.title,
+      //   posterType: this.posterType,
+      //   hotAreas: this.hotAreas,
+      //   posterContent: JSON.stringify(posterContent)
+      // }
+      // if (activityType === '0') {
+      //   data.posterId = id
+      // } else {
+      //   data.posterCustomId = id
+      // }
+      // if (activityId) {
+      //   data.activityId = activityId
+      // }
+      // this.loading = true
+      // axios
+      //   .post('/template/poster/saveCustomPoster.post', data)
+      //   .then((res) => {
+      //     let data = res.data.data
+      //     this.loading = false
+      //     this.isShowDialog = true
+      //     this.posterId = data.posterCustomId
+      //     this.createState = 1
+      //     this.createMessage = '海报已经保存，快去投放吧'
+      //     this.posterPreview = data.posterPreview
+      //     if (this.posterType === '1' || this.posterType === '3') {
+      //       this.code = buildCode({
+      //         id: data.posterCustomId,
+      //         width: this.canvasWidth,
+      //         height: this.canvasHeight,
+      //         isFull: this.posterType === '1',
+      //         img: data.posterPreview,
+      //         hotAreas: this.hotAreas
+      //       })
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     this.loading = false
+      //     this.isShowDialog = true
+      //     this.createState = 0
+      //     this.createMessage =
+      //       err.data && err.data.msg ? err.data.msg : '保存失败'
+      //     throw err
+      //   })
     },
     //  投放
     publish() {
@@ -933,11 +921,11 @@ export default {
 
     //  我的设计
     toMyDesign() {
-      if (!this.$isQn) {
-        window.location.href = '/itemsManage/watermark/myDesign'
-      } else {
-        open('/itemsManage/watermark/myDesign')
-      }
+      // if (!this.$isQn) {
+      window.location.href = '/itemsManage/watermark/myDesign'
+      // } else {
+      //   open('/itemsManage/watermark/myDesign')
+      // }
     },
     open(link, target) {
       if (target === 'self' && !this.$isQn) {

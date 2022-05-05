@@ -1,6 +1,13 @@
+/*
+ * @Author: chengsl
+ * @Date: 2022-04-18 08:55:03
+ * @LastEditors: chengsl
+ * @LastEditTime: 2022-05-04 16:32:54
+ * @Description: file content
+ */
 const path = require('path')
 const webpack = require('webpack')
-const resolve = dir => {
+const resolve = (dir) => {
   return path.join(__dirname, dir)
 }
 module.exports = {
@@ -8,7 +15,7 @@ module.exports = {
   assetsDir: 'static',
   publicPath: '/',
   runtimeCompiler: true,
-  chainWebpack: config => {
+  chainWebpack: (config) => {
     config.resolve.alias
       .set('@', resolve('src'))
       .set('src', resolve('src'))
@@ -58,9 +65,9 @@ module.exports = {
   configureWebpack: {
     plugins: [
       new webpack.ProvidePlugin({
-        axios: 'axios',
+        axios: 'axios'
         // axios: ['./src/assets/js/axios.js', 'default'],
-        Vue: ['vue/dist/vue.esm.js', 'default']
+        // Vue: ['vue/dist/vue.esm.js', 'default']
       })
     ]
   },
