@@ -29,139 +29,19 @@
           </div>
         </div>
       </div>
-      <!-- <div class="tb-price" v-else>
-        <p style="color: #f00; font-size: 12px">
-          使用官方自动价签后，只能选择店内大促商品
-        </p>
-        <div class="price-group">
-          <el-radio
-            :disabled="noControlTextLine"
-            :class="noControlTextLine ? 'price-group-disabled' : ''"
-            v-model="priceRadioTb"
-            label="1"
-            border
-          >
-            <p class="title">单件优惠价</p>
-            <p class="tip">券后价</p>
-          </el-radio>
-          <el-radio
-            :disabled="noControlTextLine"
-            :class="noControlTextLine ? 'price-group-disabled' : ''"
-            v-model="priceRadioTb"
-            label="2"
-            border
-          >
-            <p class="title">多件凑单价</p>
-            <p class="tip">购买多件同店/跨店商品的单件均价</p>
-          </el-radio>
-          <el-radio v-model="priceRadioTb" label="3" border>
-            <p class="title">活动报名价</p>
-            <p class="tip">自动获取宝贝大促活动报名价</p>
-          </el-radio>
-        </div>
-        <el-form>
-          <el-form-item
-            label="请选择凑单类型"
-            class="multiple-order"
-            v-show="priceRadioTb == 2"
-          >
-            <el-radio v-model="multipleType" label="0">凑单品：</el-radio>
-            凑
-            <el-input
-              v-model.number="itemsCount"
-              @input="updateTbPrice"
-              :disabled="multipleType != 0"
-            ></el-input>
-            件
-            <el-radio v-model="multipleType" label="1">凑跨店满减</el-radio>
-          </el-form-item>
-          <el-form-item class="price-formula" v-if="priceRadioTb != 3">
-            <div v-if="priceRadioTb != 3" class="price-switch">
-              <div>
-                展示价格公式
-                <span class="question" @click="openPriceTips">?</span>
-              </div>
-              <el-switch
-                v-model="priceSwitch"
-                :disabled="priceRadioTb == '2'"
-                active-color="var(--theme-color)"
-                inactive-color="#CCCCCC"
-              ></el-switch>
-            </div>
-            <div class="one">
-              <template v-if="priceSwitch">
-                <span>兜底文案1</span>
-                <span class="tip">(仅在价格规则切换时生效)</span>
-              </template>
-            </div>
-            <template v-if="priceSwitch">
-              <el-input
-                v-model="textLine1"
-                @change="updateTextLine"
-                style="margin-bottom: 5px"
-                placeholder="请输入第一行兜底文案"
-              ></el-input>
-              <p>兜底文案2</p>
-              <el-input
-                v-model="textLine2"
-                @change="updateTextLine"
-                placeholder="请输入第二行兜底文案"
-              ></el-input>
-            </template>
-          </el-form-item>
-          <el-form-item class="show-gift" v-if="haveGift">
-            <div class="gift-switch">
-              <div>
-                展示赠品
-                <el-tooltip placement="bottom" effect="light">
-                  <div slot="content" class="tb-wm-gift-tip">
-                    <p>说明</p>
-                    开启后，主图会表达店铺宝配置的赠品信息
-                    <span @click="openGiftTips">查看说明</span>
-                    <br />
-                    赠品信息后台更新后，主图也会同步更新
-                  </div>
-                  <span class="question">?</span>
-                </el-tooltip>
-              </div>
-              <el-switch
-                v-model="showGift"
-                active-color="var(--theme-color)"
-                inactive-color="#CCCCCC"
-              ></el-switch>
-            </div>
-          </el-form-item>
-        </el-form>
-      </div> -->
     </div>
-    <el-dialog
-      class="wm-gift-tip-dialog"
-      title="说明"
-      :visible="showGiftTipDialog"
+    <!--
+      @update:visible="(val) => (showPriceTip = val)"
       append-to-body
-      width="25%"
-      top="25vh"
-      @update:visible="(val) => (showGiftTipDialog = val)"
-      :close-on-press-escape="false"
-    >
-      <p>
-        开启后，可以自动在主图上表达在店铺宝后台设置的赠品信息，最多表达前三个设置的赠品信息
-      </p>
-
-      <span slot="footer" style="text-align: left">
-        <el-button type="primary" @click="() => (showGiftTipDialog = false)">
-          我知道了
-        </el-button>
-      </span>
-    </el-dialog>
+       -->
+    <!-- <div class="wm-price-change-tip"> -->
     <el-dialog
-      class="wm-price-change-tip"
+      custom-class="wm-price-change-tip"
       title="价格规则切换说明"
-      :visible="showPriceTip"
+      v-model="showPriceTip"
       append-to-body
       width="30%"
       top="25vh"
-      @update:visible="(val) => (showPriceTip = val)"
       :close-on-press-escape="false"
     >
       <p>1. 凑单价大于等于单件优惠价（劵后价）时，表达劵后价</p>
@@ -177,8 +57,9 @@
         </el-button>
       </span>
     </el-dialog>
-    <price-tag-tip :visible.sync="showTip"></price-tag-tip>
-    <price-tag :visible.sync="showPriceTag"></price-tag>
+    <!-- </div> -->
+    <price-tag-tip v-model:visible="showTip"></price-tag-tip>
+    <price-tag v-model:visible="showPriceTag"></price-tag>
   </div>
 </template>
 
@@ -189,7 +70,7 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('poster')
 export default {
   name: 'peiceTag',
-  inject: ['openUpgrade', 'isLimitFeature'],
+  // inject: ['openUpgrade', 'isLimitFeature'],
   components: { priceTagTip, priceTag },
   props: {},
   data() {
@@ -208,7 +89,7 @@ export default {
       pollStatus: null,
       timeout: 0,
       timeout2: 0,
-      showGiftTipDialog: false,
+      // showGiftTipDialog: false,
       noControlTextLine: false,
       haveGift: false
     }
@@ -309,7 +190,7 @@ export default {
       pollChunks()
     },
     openGiftTips() {
-      this.showGiftTipDialog = true
+      // this.showGiftTipDialog = true
     },
     initDataInfo() {
       this.pollStatus = () => {

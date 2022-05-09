@@ -1,8 +1,8 @@
 <template>
   <el-dialog
-    class="price-tag-discount-edit"
+    custom-class="price-tag-discount-edit"
     title="价签计算器"
-    :visible.sync="isShow"
+    v-model="isShow"
     append-to-body
     width="40%"
     top="15vh"

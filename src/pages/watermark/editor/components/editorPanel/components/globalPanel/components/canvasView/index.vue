@@ -21,7 +21,7 @@
       </el-col>
     </el-row>
     <el-dialog
-      :visible.sync="isShowDialog"
+      v-model:visible="isShowDialog"
       custom-class="canvas-view-size-options"
       :close-on-click-modal="false"
       ref="canvasViewSize"
@@ -86,9 +86,9 @@
             >
               <svg class="bbt-icon">
                 <use
-                  :xlink:href="
-                    `#bbt-${isLockWithHeight ? 'suo-hebing' : 'suo'}`
-                  "
+                  :xlink:href="`#bbt-${
+                    isLockWithHeight ? 'suo-hebing' : 'suo'
+                  }`"
                 ></use>
               </svg>
             </span>
@@ -306,7 +306,7 @@ export default {
         scale = this.customSizeHeight / this.height
         offsetLeft = this.customSizeWidth / 2 - (this.width * scale) / 2
       }
-      this.chunks.forEach(item => {
+      this.chunks.forEach((item) => {
         // eslint-disable-next-line
         let { width, height, left, top, fontSize } = item
         item.width = width * scale

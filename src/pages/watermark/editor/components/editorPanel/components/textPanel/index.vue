@@ -19,7 +19,11 @@
     <div class="editor-sub-panel">
       <div class="sub-panel-title">字体</div>
       <div class="fonts-wrap">
-        <fonts :name.sync="fontFamily" size="large" style="width: 100%"></fonts>
+        <fonts
+          v-model:name="fontFamily"
+          size="large"
+          style="width: 100%"
+        ></fonts>
         <el-autocomplete
           class="inline-input"
           v-model.number="fontSize"

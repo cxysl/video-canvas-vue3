@@ -174,7 +174,7 @@
         :modes="modes"
         :mode="watermarkMode + 1"
         :current="selectedInsetItems"
-        :show.sync="isShowInsetItemList"
+        v-model:show="isShowInsetItemList"
       ></item-list> -->
 
       <div

@@ -1,70 +1,47 @@
 <template>
   <div class="editor-el" :style="wrapStyles">
-    <el-popover
-      placement="top"
-      effect="dark"
-      popper-class="chunk-tb-popover"
-      :open-delay="100"
-      :disabled="!isTbWm || chunk.canBeOption == undefined || chunk.canBeOption"
-      width="160"
-      trigger="hover"
+    <!-- <div> -->
+    <div
+      class="editor-el-img"
+      :style="imgWrapStyles"
+      v-if="chunk.type === 'img'"
     >
-      <!--
-      canBeOption
-      官方水印很多图层不允许操作,自己水印不做限制
-     -->
-      <p>自动填充图层，请勿编辑</p>
-      <div
-        slot="reference"
-        :class="
-          chunk.canBeOption != undefined && !chunk.canBeOption
-            ? 'chunk-disabled'
-            : ''
-        "
+      <img
+        :src="chunk.src"
+        draggable="false"
+        :style="{
+          width: `${chunk.width}px`,
+          height: `${chunk.height}px`,
+          transform: `matrix(${chunk.transformX}, 0, 0, ${chunk.transformY}, 0, 0)`
+        }"
+      />
+    </div>
+    <div
+      class="editor-el-text"
+      :class="{
+        'editor-el-text-editing': isShowEditText && index === currentChunkIndex
+      }"
+      :style="textWrapStyles"
+      v-else
+    >
+      <span
+        :class="{ 'edit-content': isEdit }"
+        style="font-weight: inherit"
+        :contenteditable="!chunk.priceTag && isEdit"
+        v-html="chunk.textContent"
+      ></span>
+      <span
+        v-if="chunk.decimal"
+        :style="{
+          fontSize: `${chunk.fontSize * 0.7}px`,
+          fontWeight: 'inherit'
+        }"
       >
-        <div
-          class="editor-el-img"
-          :style="imgWrapStyles"
-          v-if="chunk.type === 'img'"
-        >
-          <img
-            :src="chunk.src"
-            draggable="false"
-            :style="{
-              width: `${chunk.width}px`,
-              height: `${chunk.height}px`,
-              transform: `matrix(${chunk.transformX}, 0, 0, ${chunk.transformY}, 0, 0)`
-            }"
-          />
-        </div>
-        <div
-          class="editor-el-text"
-          :class="{
-            'editor-el-text-editing':
-              isShowEditText && index === currentChunkIndex
-          }"
-          :style="textWrapStyles"
-          v-else
-        >
-          <span
-            :class="{ 'edit-content': isEdit }"
-            style="font-weight: inherit"
-            :contenteditable="!chunk.priceTag && isEdit"
-            v-html="chunk.textContent"
-          ></span>
-          <span
-            v-if="chunk.decimal"
-            :style="{
-              fontSize: `${chunk.fontSize * 0.7}px`,
-              fontWeight: 'inherit'
-            }"
-          >
-            .99
-          </span>
-        </div>
-      </div>
-    </el-popover>
+        .99
+      </span>
+    </div>
   </div>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -143,9 +120,6 @@ export default {
     ...mapState(['size', 'chunks', 'currentChunkIndex', 'isShowEditText']),
     scale() {
       return this.size / 100
-    },
-    isTbWm() {
-      return this.$route.query.isTbWm == 'true'
     }
   },
   methods: {

@@ -7,7 +7,7 @@
     >
       <el-button class="change-img" @click="openUpload">替换图片</el-button>
     </el-tooltip>
-    <!-- <upload :visible.sync="isShowUpload" @add-img="addImg"></upload> -->
+    <!-- <upload v-model:visible="isShowUpload" @add-img="addImg"></upload> -->
     <div class="editor-sub-panel turn-img" v-if="!isTbWm">
       <div class="sub-panel-title">图片翻转</div>
       <el-button @click="turn('v')">水平翻转</el-button>

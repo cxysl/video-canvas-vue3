@@ -81,7 +81,8 @@ export default {
         {
           name: '编辑页',
           id: 3,
-          url: '/subpage/template/watermark/watermarkEditor'
+          // url: '/subpage/template/watermark/watermarkEditor'
+          url: '/subpage/template/watermark/watermarkEditor?type=1&id=671&modes=1,2,3&activityId=&isTbWm=false'
         },
         {
           name: '尾页',

@@ -60,7 +60,7 @@
         </div>
       </el-col>
       <el-col :span="12" class="mid-wrap">
-        <template v-if="isShowHotAreas">
+        <!-- <template v-if="isShowHotAreas">
           <div class="hot-areas-tips">
             <el-button type="text" @click="toEdit">
               <i class="el-icon-arrow-left"></i>
@@ -68,7 +68,7 @@
             </el-button>
             已添加的热区和链接将会自动保存，点击返回按钮或者收起热区边栏可继续编辑海报
           </div>
-        </template>
+        </template> -->
         <div class="poster-title-wrap">
           <!-- {{
             modes[0] == 1
@@ -156,11 +156,11 @@
         </el-button>
       </el-col>
     </el-row>
-    <el-dialog
+    <!-- <el-dialog
       :custom-class="`poster-editor-create-state-dialog ${
         posterType === '2' ? 'large' : ''
       }`"
-      :visible.sync="isShowDialog"
+      v-model:visible="isShowDialog"
       :close-on-click-modal="false"
     >
       <div class="poster-editor-create-state">
@@ -241,14 +241,14 @@
           </div>
         </template>
       </div>
-    </el-dialog>
+    </el-dialog> -->
     <div
       v-loading.fullscreen="showLoading"
       :element-loading-text="isTbWm ? '合成官方水印中' : '水印保存中'"
     ></div>
-    <el-dialog
+    <!-- <el-dialog
       title="提示"
-      :visible.sync="showModal"
+      v-model:visible="showModal"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
       custom-class="msg-box"
@@ -287,7 +287,7 @@
           我的水印
         </el-button>
       </span>
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 
@@ -306,7 +306,7 @@ export default {
     return {
       isEditTitle: false,
       loading: false,
-      isShowDialog: false,
+      // isShowDialog: false,
       createState: 1,
       createMessage: '海报已经保存，快去投放吧',
       posterId: '',

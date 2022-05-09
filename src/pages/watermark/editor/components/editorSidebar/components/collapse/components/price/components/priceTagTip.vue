@@ -1,12 +1,12 @@
 <template>
   <el-dialog
-    class="tip"
+    custom-class="tip"
     title="价格规则说明"
-    :visible.sync="isShow"
+    v-model="isShow"
     append-to-body
     width="45%"
     top="20vh"
-    @update:visible="val => $emit('update:visible', val)"
+    @update:visible="(val) => $emit('update:visible', val)"
     :close-on-press-escape="false"
   >
     <div>
@@ -31,14 +31,12 @@
       <p>
         1、系统计算的优惠类型有：单品优惠（前N价、预售价、活动报名价等）店铺宝、优惠券、品类购物券、跨店满减。
       </p>
-      <p>
-        2、计算方式：
-      </p>
-      <p style="padding-left: 15px;">
+      <p>2、计算方式：</p>
+      <p style="padding-left: 15px">
         1）选择凑多件时，根据填写件数的总价格作为门槛，计算可用优惠。如：商品价格100元，有优惠券满100减10，优惠券满200
         减30。选择凑2件，则多件凑单价为(200-30)/2=85元。
       </p>
-      <p style="padding-left: 15px;">
+      <p style="padding-left: 15px">
         2）选择凑跨店满减时，跨店满减优惠按折扣计算，其他优惠按单件可直减计算。如：商品价格100元，有优惠券满100减10，优
         惠券满200减30，跨店满减满300减40，选择凑跨店满减，则多件凑单价为100-10-(40/300*100)=76.67元
       </p>

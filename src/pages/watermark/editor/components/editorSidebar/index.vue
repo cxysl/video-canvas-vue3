@@ -53,13 +53,13 @@
         </el-tooltip> -->
       </ul>
       <collapse
-        :activeBtn.sync="activeBtn"
-        :firstShow.sync="firstShow"
+        v-model:activeBtn="activeBtn"
+        v-model:firstShow="firstShow"
         @addHotArea="addHotArea"
         @onClose="onClose"
         @add-text="addText"
       ></collapse>
-      <!-- <upload :visible.sync="isShowUpload" @add-img="addImg"></upload> -->
+      <!-- <upload v-model:visible="isShowUpload" @add-img="addImg"></upload> -->
       <!-- <hot-areas ref="hotAreas" v-if="isShowHotAreas"></hot-areas> -->
     </div>
   </div>
