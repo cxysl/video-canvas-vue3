@@ -11,11 +11,6 @@
       ref="sidebar"
     ></sidebar>
     <!-- 左 -->
-    <!-- <tb-canvas
-      v-if="isTbWm"
-      ref="canvas"
-      :default-locked-state="isLockedCanvas"
-    ></tb-canvas> -->
     <poster-canvas
       ref="canvas"
       :default-locked-state="isLockedCanvas"
@@ -96,9 +91,6 @@ export default {
     hotkeys.unbind('ctrl+z, command+z, ctrl+y, command+shift+z, ctrl+v')
   },
   computed: {
-    isTbWm() {
-      return this.$route.query.isTbWm == 'true'
-    },
     ...mapState(['currentChunkIndex', 'chunks', 'copyChunk'])
   },
   methods: {

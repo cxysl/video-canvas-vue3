@@ -15,7 +15,8 @@ export default {
   },
   data() {
     return {}
-  }
+  },
+  created() {}
 }
 </script>
 <style lang="scss">

@@ -1,7 +1,7 @@
 <!--
  * @Author: Nahco.Huang
  * @Date: 2020-09-28 14:26:53
- * @LastEditTime: 2022-05-04 11:29:48
+ * @LastEditTime: 2022-05-10 14:05:17
  * @LastEditors: chengsl
  * @Description: 个性化设置
 -->
@@ -37,10 +37,12 @@
               <el-input
                 v-model="customColor"
                 placeholder="输入自定义颜色"
+                clearable
                 @keyup.native.enter="onSelectColorTheme(customColor, true)"
               ></el-input>
               <el-button
                 type="primary"
+                :disabled="!/^[#]{0,1}[0-9a-fA-F]{6}$/.test(customColor)"
                 @click="onSelectColorTheme(customColor, true)"
               >
                 确定
@@ -129,7 +131,7 @@ export default {
         return this.$store.state.setting.isOpenSysConfig || false
       },
       set(val) {
-        this.$store.commit('SET_IS_OPEN_SYSCONFIG', !!val)
+        this.$store.commit('setting/SET_IS_OPEN_SYSCONFIG', !!val)
       }
     }
   },
@@ -167,6 +169,9 @@ export default {
      * @param {object} item 选项对象
      */
     onSelectColorTheme(item, isCustom) {
+      if (isCustom && !/^[#]{0,1}[0-9a-fA-F]{6}$/.test(item)) {
+        return
+      }
       // 更新表单对象
       let colorStr = isCustom ? item : item.color
       colorStr = colorStr.includes('#') ? colorStr : '#' + colorStr
@@ -174,7 +179,7 @@ export default {
       window.VM.$updateThemeColor(colorStr)
 
       // 提交到vuex
-      this.$store.commit('SET_THEME_COLOR', item.color)
+      this.$store.commit('setting/SET_THEME_COLOR', item.color)
     },
 
     /**
@@ -183,7 +188,7 @@ export default {
      */
     onSelectFontSize(value) {
       this.updateFontSize(value)
-      this.$store.commit('SET_FONT_SIZE', value)
+      this.$store.commit('setting/SET_FONT_SIZE', value)
     },
 
     /**
@@ -207,7 +212,7 @@ export default {
         }
         localStorage.setItem('save-setting-data', JSON.stringify(data))
         this.isOpen = false
-        this.$store.commit('SAVE_SETTING_DATA')
+        this.$store.commit('setting/SAVE_SETTING_DATA')
       } catch (error) {
         //
       }

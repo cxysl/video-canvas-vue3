@@ -2,47 +2,31 @@
  * @Author: chengsl
  * @Date: 2022-01-06 09:29:40
  * @LastEditors: chengsl
- * @LastEditTime: 2022-05-09 17:10:56
+ * @LastEditTime: 2022-05-10 17:49:30
  * @Description: file content
  */
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../pages/home'
+import navList from './navList'
 
-const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: Home
-  },
-  {
-    path: '/subpage/template/video/editor',
-    components: {
-      subpage: () =>
-        import(/* webpackChunkName: "videoEditor" */ '../pages/video/editor')
-    },
-    meta: {
-      title: '视频编辑器'
+export var routes = []
+
+function getRouterList(list) {
+  list.forEach((item) => {
+    if (item.children && item.children.length) {
+      const tempItem = {
+        path: item.path,
+        name: item.name,
+        component: item.component
+      }
+      routes.push(tempItem)
+      getRouterList(item.children)
+    } else {
+      routes.push(item)
     }
-  },
-  {
-    path: '/subpage/template/:feature(poster|watermark)/watermarkEditor',
-    components: {
-      subpage: () =>
-        import(
-          /* webpackChunkName: "watermarkEditor" */ '../pages/watermark/editor'
-          // /* webpackChunkName: "watermarkEditor" */ '../pages/watermark/edit'
-        )
-    },
-    meta: {
-      title: '水印编辑器'
-    }
-  },
-  {
-    path: '/endStory',
-    name: 'endStory',
-    component: () => import(/* webpackChunkName: "endStory" */ '../pages/story')
-  }
-]
+  })
+}
+getRouterList(navList)
+console.log('routes222', routes)
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

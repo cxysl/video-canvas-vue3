@@ -34,6 +34,8 @@ export default {
   },
   watch: {
     currentChunkIndex(val) {
+      // TODO 有error未处理
+      console.log('val', val, ' ,chunk: ', this.chunks[val])
       this.opacity = this.chunks[val].opacity * 100
     }
   }

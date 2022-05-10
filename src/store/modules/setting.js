@@ -2,7 +2,7 @@
  * @Author: chengsl
  * @Date: 2022-04-22 15:52:14
  * @LastEditors: chengsl
- * @LastEditTime: 2022-04-22 18:20:51
+ * @LastEditTime: 2022-05-10 14:01:17
  * @Description: file content
  */
 
@@ -38,10 +38,15 @@ const setting = localSetting || {
 }
 const state = {
   isOpenSysConfig: false,
+  sideMenuList: [],
   ...setting
 }
 
 const mutations = {
+  // 侧边栏菜单
+  SET_SIDE_MENU_LIST(state, data) {
+    state.sideMenuList = data
+  },
   SET_THEME_COLOR(state, data) {
     state.themeColor = data
   },
@@ -68,6 +73,7 @@ const actions = {
 }
 
 export default {
+  namespaced: true,
   state,
   mutations,
   actions

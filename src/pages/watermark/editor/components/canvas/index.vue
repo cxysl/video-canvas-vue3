@@ -11,19 +11,6 @@
       :style="{ paddingTop: `${feature === 'watermark' ? 0 : paddingTop}px` }"
       v-loading="loading"
     >
-      <!--
-        // 模式切换 移至 topBar
-        <div class="chunk-btn" v-if="feature === 'watermark' && !isTbWm">
-        <el-radio-group v-model="mode" @change="switchMode">
-          <el-radio-button
-            v-for="(item, idx) in modeList"
-            :key="'mode' + idx"
-            :label="idx"
-          >
-            {{ item.name }}
-          </el-radio-button>
-        </el-radio-group>
-      </div> -->
       <div
         :class="
           feature === 'watermark' ? 'canvas-wrap-watermark' : 'canvas-wrap'
@@ -356,11 +343,7 @@ export default {
         type: 'poster/setSize',
         size: 80
       })
-      if (this.isTbWm) {
-        this.initTbWaterMark()
-      } else {
-        this.initWaterMark()
-      }
+      this.initWaterMark()
     }
   },
   mounted() {
@@ -388,9 +371,6 @@ export default {
     },
     feature() {
       return this.$route.params.feature
-    },
-    isTbWm() {
-      return this.$route.query.isTbWm == 'true'
     },
     bgStyles() {
       let zoom = this.size / 100
@@ -677,9 +657,7 @@ export default {
         }
         chunks.forEach((item) => {
           item.adsorbing = ['false', 'false']
-          if (!this.isTbWm) {
-            item.canBeOption = true
-          }
+          item.canBeOption = true
           item.transformX = item.transformX || 1
           item.transformY = item.transformY || 1
           item.xFontSpacing = item.xFontSpacing || 0
@@ -1358,10 +1336,6 @@ export default {
       if (this.selectedInsetItems.length > 0) {
         this.insetItem(this.selectedInsetItems)
       }
-
-      if (this.isTbWm && this.editorBg) {
-        this.addItemBgByTb('add')
-      }
     },
     // 使当前编辑的元素失焦
     editBlur() {
@@ -1391,9 +1365,6 @@ export default {
             ? items[0].itemImgs[0].url
             : items[0].img
         }
-      }
-      if (this.isTbWm) {
-        this.addItemBgByTb('add')
       }
     },
     addItemBgByTb(type) {
@@ -1438,9 +1409,6 @@ export default {
     clearEditorBg() {
       this.editorBg = ''
       this.selectedInsetItems = []
-      if (this.isTbWm) {
-        this.addItemBgByTb('clear')
-      }
     },
     //官方水印转成我们的
     convertToChunks(modeData) {
@@ -1478,13 +1446,6 @@ export default {
           if (!item.opacity) {
             item.opacity = 1
           }
-          // if (this.isTbWm) {
-          //   if (item.kind == 'controlTextLine1') {
-          //     controlText.controlTextLine1 = item.textContent
-          //   } else if (item.kind == 'controlTextLine2') {
-          //     controlText.controlTextLine2 = item.textContent
-          //   }
-          // }
           item.textDecoration = item.textDecoration || '' //下划线、删除线
           // 方正黑体
           item.transformX = item.transformX || 1
@@ -1499,9 +1460,7 @@ export default {
               ? 'SourceHanSansSC-Regular'
               : item.fontFamily
           item.adsorbing = ['false', 'false']
-          if (!this.isTbWm) {
-            item.canBeOption = true
-          }
+          item.canBeOption = true
           return item
         })
 

@@ -60,6 +60,8 @@
 
 <script>
 // import logoIcon from '../logoIcon'
+import { routes } from '../../router/index'
+import navList from '../../router/navList'
 export default {
   name: 'topNav',
   // components: { logoIcon },
@@ -67,45 +69,47 @@ export default {
   data() {
     return {
       activeIndex: 9999,
-      navList: [
-        {
-          name: '首页',
-          id: 1,
-          url: '/'
-        },
-        {
-          name: '视频动画',
-          id: 2,
-          url: '/subpage/template/video/editor?itemId=589462069387&mode=1'
-        },
-        {
-          name: '编辑页',
-          id: 3,
-          // url: '/subpage/template/watermark/watermarkEditor'
-          url: '/subpage/template/watermark/watermarkEditor?type=1&id=671&modes=1,2,3&activityId=&isTbWm=false'
-        },
-        {
-          name: '尾页',
-          id: 4,
-          url: '/endStory'
-        }
-      ]
+      routeList: routes,
+      navList: navList
     }
   },
   computed: {},
-  watch: {},
+  watch: {
+    $route() {
+      this.updateSideMenuList()
+    }
+  },
   created() {},
-  mounted() {},
+  mounted() {
+    this.updateSideMenuList()
+  },
   methods: {
+    // 更新左侧栏菜单
+    updateSideMenuList() {
+      var sideList = []
+      this.navList.some((item) => {
+        if (item.path.includes(this.$route.path.split('/')[1])) {
+          sideList = item.children
+          return true
+        }
+      })
+      this.$store.commit('setting/SET_SIDE_MENU_LIST', sideList)
+    },
     jump(nav) {
       // console.log('路由跳转', nav)
-      if ([2, 3].indexOf(nav.id) > -1) {
+      if (nav.path.includes('subpage')) {
         this.$store.commit('setIsOperationPage', { isOperationPage: true })
         //编辑操作页 -- 需要单独新开一个完整页面
       } else {
         this.$store.commit('setIsOperationPage', { isOperationPage: false })
       }
-      this.$router.push(nav.url)
+      if (nav.name === '编辑页') {
+        this.$router.push(
+          '/subpage/template/watermark/watermarkEditor?type=1&id=671&modes=1,2,3&activityId=&isTbWm=false'
+        )
+      } else {
+        this.$router.push(nav.path)
+      }
       this.hideSubmenu()
     },
     menuChange(item, index) {
@@ -119,7 +123,7 @@ export default {
     },
     // 系统设置
     sysSetting() {
-      this.$store.commit('SET_IS_OPEN_SYSCONFIG', true)
+      this.$store.commit('setting/SET_IS_OPEN_SYSCONFIG', true)
     }
   }
 }

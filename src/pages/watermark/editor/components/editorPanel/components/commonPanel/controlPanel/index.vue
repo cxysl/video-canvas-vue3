@@ -1,7 +1,7 @@
 <template>
   <div
     class="editor-sub-panel editor-control-panel"
-    v-if="!isTbWm || selection.length === 0"
+    v-if="selection.length === 0"
   >
     <el-popover
       ref="popover"
@@ -109,10 +109,7 @@ export default {
       'resetCanvasState',
       'isShowEditText',
       'selection'
-    ]),
-    isTbWm() {
-      return this.$route.query.isTbWm == 'true'
-    }
+    ])
   },
   methods: {
     copy() {
@@ -128,7 +125,7 @@ export default {
         this.selection.sort((a, b) => {
           return b - a
         })
-        this.selection.forEach(item => {
+        this.selection.forEach((item) => {
           this.chunks.splice(item, 1)
         })
         this.$store.commit({

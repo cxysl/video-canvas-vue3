@@ -2,7 +2,7 @@
  * @Author: chengsl
  * @Date: 2022-04-18 08:55:03
  * @LastEditors: chengsl
- * @LastEditTime: 2022-05-04 16:53:06
+ * @LastEditTime: 2022-05-10 16:16:49
  * @Description: main.js
  */
 import { createApp } from 'vue'
@@ -76,6 +76,27 @@ directives.keys().forEach((directivePath) => {
 /** ***** 添加原型属性 dayjs 指向 app *****/
 import dayjs from 'dayjs'
 vm.$dayjs = dayjs
+
+/**
+ * 复杂对象深拷贝
+ */
+vm.$deepCopyObj = function (obj) {
+  if (obj == null) {
+    return null
+  }
+  var result = Array.isArray(obj) ? [] : {}
+  for (let key in obj) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (obj.hasOwnProperty(key)) {
+      if (typeof obj[key] === 'object') {
+        result[key] = vm.$deepCopyObj(obj[key]) // 如果是对象，再次调用该方法自身
+      } else {
+        result[key] = obj[key]
+      }
+    }
+  }
+  return result
+}
 
 import { updateThemeColor } from '@/utils/updateThemeColor'
 vm.$updateThemeColor = updateThemeColor

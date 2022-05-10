@@ -23,7 +23,8 @@
       <top-nav></top-nav>
     </div>
     <div class="main">
-      <div width="200px" class="left-nav">左侧栏</div>
+      <!-- <div width="200px" class="left-nav">左侧栏</div> -->
+      <side-nav>左侧栏</side-nav>
       <div class="content">
         <router-view />
       </div>

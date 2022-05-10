@@ -127,7 +127,7 @@
           </i>
         </div>
         <!-- //官方的只有行高 没有行间距 -->
-        <div v-if="!isTbWm" class="icon-wrap" v-popover:hangju>
+        <div class="icon-wrap" v-popover:hangju>
           <i class="ebitor-icon">
             <svg class="bbt-icon">
               <use xlink:href="#bbt-zihangju"></use>
@@ -248,9 +248,6 @@ export default {
       set(val) {
         this.chunks[this.currentChunkIndex].yFontSpacing = val
       }
-    },
-    isTbWm() {
-      return this.$route.query.isTbWm == 'true'
     }
   },
   methods: {

@@ -1,7 +1,7 @@
 <template>
   <div
     class="edit-text"
-    style="display: inline-block; width: 130px; vertical-align: top; padding: 0;"
+    style="display: inline-block; width: 130px; vertical-align: top; padding: 0"
   >
     <el-select
       v-model="font"
@@ -14,10 +14,10 @@
         v-for="(item, index) in items"
         :key="index"
         :label="item.label"
-        :value="isTbWm ? item.tbValue : item.value"
+        :value="item.value"
       >
         <!-- <img :src="`${path}/${item.value}/${item.value}.png`" /> -->
-        <img :src="isTbWm ? item.tbPicUrl || item.picUrl : item.picUrl" />
+        <img :src="item.picUrl" />
       </el-option>
     </el-select>
   </div>
@@ -43,50 +43,33 @@ export default {
       items: []
     }
   },
-  computed: {
-    isTbWm() {
-      return this.$route.query.isTbWm == 'true'
-    }
-  },
+  computed: {},
   created() {
     /**
      * 千牛端字体上传到云存储，很多上传失败或者返回的地址不可以
      * 这里需要筛选一下
      * 另外官方字体和我们字体不一样 使用官方水印时 又是一套字体
      */
-    if (!this.$isQn) {
-      // this.items = this.isTbWm ? tbFonts : fonts
-      fonts.forEach(item => {
-        if (this.isTbWm && item.tbValue) {
-          this.items.push(item)
-        } else if (!this.isTbWm && item.value) {
-          this.items.push(item)
-        }
-      })
-    } else {
-      fonts.forEach(item => {
-        if (item.qnCanUse) {
-          if (this.isTbWm && item.tbValue) {
-            this.items.push(item)
-          } else if (!this.isTbWm && item.value) {
-            this.items.push(item)
-          }
-        }
-      })
-      // if (this.isTbWm) {
-      //   tbFonts.forEach(font => {
-      //     if (font.qnCanUse) {
-      //       this.items.push(font)
+    // if (!this.$isQn) {
+    // this.items = this.isTbWm ? tbFonts : fonts
+    fonts.forEach((item) => {
+      // if (this.isTbWm && item.tbValue) {
+      //   this.items.push(item)
+      // } else if (!this.isTbWm && item.value) {
+      this.items.push(item)
       //     }
-      //   })
-      // } else {
-      //   fonts.forEach(font => {
-      //     if (font.qnCanUse) {
-      //       this.items.push(font)
-      //     }
-      //   })
-      // }
-    }
+    })
+    // } else {
+    //   fonts.forEach(item => {
+    //     if (item.qnCanUse) {
+    //       if (this.isTbWm && item.tbValue) {
+    //         this.items.push(item)
+    //       } else if (!this.isTbWm && item.value) {
+    //         this.items.push(item)
+    //       }
+    //     }
+    //   })
+    // }
     this.font = this.name
   },
   methods: {

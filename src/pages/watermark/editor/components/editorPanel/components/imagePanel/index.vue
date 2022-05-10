@@ -8,7 +8,7 @@
       <el-button class="change-img" @click="openUpload">替换图片</el-button>
     </el-tooltip>
     <!-- <upload v-model:visible="isShowUpload" @add-img="addImg"></upload> -->
-    <div class="editor-sub-panel turn-img" v-if="!isTbWm">
+    <div class="editor-sub-panel turn-img">
       <div class="sub-panel-title">图片翻转</div>
       <el-button @click="turn('v')">水平翻转</el-button>
       <el-button @click="turn('h')">垂直翻转</el-button>
@@ -49,9 +49,6 @@ export default {
           isShowTransformTool
         })
       }
-    },
-    isTbWm() {
-      return this.$route.query.isTbWm == 'true'
     }
   },
   methods: {
