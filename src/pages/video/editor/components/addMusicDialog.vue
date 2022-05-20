@@ -47,7 +47,7 @@
 // import imageSpace from 'components/imageSpace'
 export default {
   name: 'addMusicDialog',
-  emits: ['add-musics'],
+  emits: ['add-musics', 'update:visible'],
 
   props: {
     visible: {

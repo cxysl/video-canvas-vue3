@@ -18,10 +18,10 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('video')
 export default {
   name: 'videoCanvas',
-  emits: ['is-play'],
+  emits: ['is-play', 'update:isPlaying'],
   props: {
     mode: {
-      type: String,
+      type: [String, Number],
       default: '-1'
     },
     videoStyle: {

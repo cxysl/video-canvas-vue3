@@ -38,6 +38,7 @@
 import { mapState } from 'vuex'
 import initAxios from './assets/js/axios'
 import topNav from '@/components/topNav'
+import sideNav from '@/components/sideNav'
 import userSetting from '@/components/user-setting'
 export default {
   name: 'app',
@@ -48,6 +49,7 @@ export default {
   },
   components: {
     topNav,
+    sideNav,
     userSetting
   },
   created() {

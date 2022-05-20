@@ -55,7 +55,7 @@
       <div class="sub-panel-title">样式</div>
       <div class="font-style-wrap">
         <el-tooltip
-          :content="item.label"
+          :content="item.label || ''"
           v-for="(item, index) in alignList"
           :enterable="false"
           placement="top"

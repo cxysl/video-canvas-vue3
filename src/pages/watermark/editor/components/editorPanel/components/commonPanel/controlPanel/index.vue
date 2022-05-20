@@ -32,7 +32,7 @@
     <el-tooltip
       v-for="icon in icons"
       :key="icon.value"
-      :content="icon.label"
+      :content="icon.label || ''"
       :open-delay="200"
       placement="top"
     >

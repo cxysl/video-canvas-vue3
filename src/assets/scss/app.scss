@@ -75,13 +75,18 @@
     --el-button-active-background-color: var(--theme-color);
     --el-button-active-border-color:  var(--theme-color);
   }
-
-
-.bbt-icon {
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.15em;
-  fill: currentColor;
-  overflow: hidden;
-}
+  .bbt-icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+  }
+  .dom-router, .dom-hover-router:hover {
+    transform: rotate(666turn);
+    transition-delay: 1s;
+    transition-property: all;
+    transition-duration: 59s;
+    transition-timing-function: cubic-bezier(.34,0,.84,1);
+  }
 }

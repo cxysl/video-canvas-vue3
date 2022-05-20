@@ -67,7 +67,7 @@ import addImagesDialog from './addImagesDialog'
 export default {
   name: 'imageBar',
   inject: ['limitCount'],
-  emits: ['videoReset'],
+  emits: ['videoReset', 'update:items', 'update:canvasChange'],
   props: {
     items: {
       type: Array,
@@ -118,9 +118,6 @@ export default {
       let item = copy[index]
       copy[index] = copy[target]
       copy[target] = item
-      // this.isIniting = true
-      // this.$emit('update:items', copy)
-      // this.$emit('move')
       setTimeout(() => {
         this.initComplete()
       }, 100)
@@ -311,7 +308,7 @@ export default {
           align-items: center;
           overflow: hidden;
           // color: #fff;
-          color: var(--theme-color);
+          color: var(--theme-weaken-color-7);
           line-height: 1.5;
           padding: 4px;
           margin: 0 auto;
@@ -323,7 +320,7 @@ export default {
           z-index: 3;
           i {
             // color: #fff;
-            color: var(--theme-color);
+            color: var(--theme-weaken-color-9);
             font-size: 18px;
             opacity: 0.7;
             transition: all 0.3s;

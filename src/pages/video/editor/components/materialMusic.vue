@@ -53,6 +53,13 @@
 import addMusicDialog from './addMusicDialog'
 export default {
   name: 'materialMusic',
+  emits: [
+    'change',
+    'videoReset',
+    'update:items',
+    'update:canvasChange',
+    'add-musics'
+  ],
   props: {
     items: {
       type: Array,

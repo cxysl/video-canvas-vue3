@@ -42,6 +42,7 @@ export default {
     watermarkmaps,
     price
   },
+  emits: ['addHotArea', 'onClose', 'update:activeBtn', 'add-text'],
   props: {
     activeBtn: {
       type: String,

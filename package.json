@@ -5,6 +5,7 @@
   "author": "shilin <463572181@qq.com>",
   "scripts": {
     "serve": "vue-cli-service serve --host 0.0.0.0",
+    "dev": "vue-cli-service serve",
     "build": "vue-cli-service build"
   },
   "dependencies": {

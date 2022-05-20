@@ -41,7 +41,7 @@ export default {
   name: 'watermarkEditorSlider',
   props: {
     mode: {
-      type: Number,
+      type: [String, Number],
       default: 1
     }
   },

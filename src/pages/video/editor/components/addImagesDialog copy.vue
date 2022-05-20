@@ -36,7 +36,7 @@
 // import imageSpace from 'components/imageSpace'
 export default {
   name: 'addImagesDialog',
-  emits: ['confirm'],
+  emits: ['confirm', 'update:visible'],
   components: {
     // imageSpace
   },

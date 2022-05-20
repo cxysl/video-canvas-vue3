@@ -36,29 +36,14 @@
             <span class="btn-label">{{ item.label }}</span>
           </li>
         </template>
-        <!-- <el-tooltip
-          class="item"
-          effect="dark"
-          content="价签最多一个"
-          placement="right"
-        >
-          <li @click="openPricePanel" v-if="feature === 'watermark'">
-            <i class="side-icon">
-              <svg class="bbt-icon">
-                <use xlink:href="#bbt-wenzi"></use>
-              </svg>
-            </i>
-            <p class="change-edit">价签</p>
-          </li>
-        </el-tooltip> -->
       </ul>
-      <collapse
+      <PosterCollapse
         v-model:activeBtn="activeBtn"
         v-model:firstShow="firstShow"
         @addHotArea="addHotArea"
         @onClose="onClose"
         @add-text="addText"
-      ></collapse>
+      ></PosterCollapse>
       <!-- <upload v-model:visible="isShowUpload" @add-img="addImg"></upload> -->
       <!-- <hot-areas ref="hotAreas" v-if="isShowHotAreas"></hot-areas> -->
     </div>
@@ -67,7 +52,7 @@
 
 <script>
 // import upload from 'pages/itemsManage/watermark/editor/upload'
-import collapse from './components/collapse'
+import PosterCollapse from './components/collapse'
 // import hotAreas from './components/hotAreas'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('poster')
@@ -75,7 +60,7 @@ export default {
   name: 'posterSidebar',
   components: {
     // upload,
-    collapse
+    PosterCollapse
     // hotAreas
   },
   data() {

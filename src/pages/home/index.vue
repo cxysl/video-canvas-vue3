@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="logo"></div>
+    <div class="logo dom-hover-router"></div>
   </div>
 </template>
 
