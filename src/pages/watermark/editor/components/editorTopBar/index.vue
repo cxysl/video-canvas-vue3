@@ -430,7 +430,9 @@ export default {
     editTitle() {
       this.isEditTitle = true
       this.$nextTick(() => {
-        this.$refs.posterTitle.$el.querySelector('.el-input__inner').focus()
+        this.$refs.posterTitle.$el.nextSibling
+          .querySelector('.el-input__inner')
+          .focus()
         // console.log(this.$refs.posterTitle.$el.querySelector('.el-input__inner'))
       })
     },

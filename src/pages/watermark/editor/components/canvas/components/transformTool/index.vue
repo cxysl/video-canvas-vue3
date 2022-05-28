@@ -431,7 +431,7 @@ export default {
         })
         this.$nextTick(() => {
           this.editTextElement =
-            this.$refs.editText.$el.querySelector('.edit-content')
+            this.$refs.editText.$el.nextSibling.querySelector('.edit-content')
           this.selectText(this.editTextElement)
         })
       }

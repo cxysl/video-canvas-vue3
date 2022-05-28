@@ -227,7 +227,10 @@ export default {
     },
     fontSize: {
       get() {
-        return this.chunks[this.currentChunkIndex].fontSize + ''
+        // console.log(this.currentChunkIndex, ' - ', this)
+        return this.currentChunkIndex
+          ? this.chunks[this.currentChunkIndex].fontSize + ''
+          : ''
       },
       set(val) {
         this.chunks[this.currentChunkIndex].fontSize = val

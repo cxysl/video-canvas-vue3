@@ -176,7 +176,7 @@ export default {
     }
   },
   mounted() {
-    document.body.append(this.$refs.canvasViewSize.$el)
+    document.body.append(this.$refs.canvasViewSize.$el.nextSibling)
   },
   computed: {
     ...mapState(['user']),

@@ -37,8 +37,8 @@ export default {
     currentChunkIndex(val) {
       try {
         // TODO 有error未处理
-        console.log('val', val, ' ,chunk: ', this.chunks[val])
-        this.opacity = this.chunks[val].opacity * 100
+        // console.log('val', val, ' ,chunk: ', this.chunks[val])
+        val && (this.opacity = this.chunks[val].opacity * 100)
       } catch (error) {
         console.log('error，', error)
       }

@@ -1009,7 +1009,9 @@ export default {
               let bounds = null
               try {
                 bounds =
-                  this.$refs[`chunk${item}`][0].$el.getBoundingClientRect()
+                  this.$refs[
+                    `chunk${item}`
+                  ][0].$el.nextSibling.getBoundingClientRect()
               } catch (error) {
                 bounds = document.querySelectorAll(
                   '.editor-canvas .canvas-chunk'
@@ -1153,7 +1155,8 @@ export default {
         if (i > this.active) {
           let targeBound = null
           try {
-            targeBound = this.$refs[`chunk${i}`][0].$el.getBoundingClientRect()
+            targeBound =
+              this.$refs[`chunk${i}`][0].$el.nextSibling.getBoundingClientRect()
           } catch (error) {
             targeBound = document.querySelectorAll(
               '.editor-canvas .canvas-chunk'

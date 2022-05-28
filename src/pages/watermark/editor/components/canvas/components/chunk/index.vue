@@ -26,7 +26,7 @@
     >
       <span
         :class="{ 'edit-content': isEdit }"
-        :style="`font-weight: inherit; font-size:${textWrapStyles.fontSize}px;`"
+        style="font-weight: inherit"
         :contenteditable="!chunk.priceTag && isEdit"
         v-html="chunk.textContent"
       ></span>
@@ -103,7 +103,8 @@ export default {
   },
   mounted() {
     if (this.isEdit) {
-      let editTextEl = this.$el.querySelector('.edit-content')
+      console.log('this.$el', this)
+      let editTextEl = this.$el.nextSibling.querySelector('.edit-content')
       editTextEl.addEventListener('blur', this.editTextBlur)
       editTextEl.addEventListener('focus', this.editTextFocus)
       editTextEl.addEventListener('input', this.editTextChange)
@@ -111,7 +112,7 @@ export default {
   },
   beforeUnmount() {
     if (this.isEdit) {
-      let editTextEl = this.$el.querySelector('.edit-content')
+      let editTextEl = this.$el.nextSibling.querySelector('.edit-content')
       editTextEl.removeEventListener('blur', this.editTextBlur)
       editTextEl.removeEventListener('input', this.editTextChange)
       editTextEl.removeEventListener('focus', this.editTextFocus)
@@ -143,7 +144,7 @@ export default {
     },
     editTextBlur() {
       let chunk = this.chunks[this.currentEditTextIndex]
-      let editTextEl = this.$el.querySelector('.edit-content')
+      let editTextEl = this.$el.nextSibling.querySelector('.edit-content')
       let value = editTextEl.innerHTML
       chunk.textContent = value
       this.$store.commit('poster/setStorageRecord')
