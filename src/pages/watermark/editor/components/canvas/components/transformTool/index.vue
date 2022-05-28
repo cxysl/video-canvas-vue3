@@ -58,6 +58,7 @@ export default {
   components: {
     chunk
   },
+  emits: ['transform', 'dragStart', 'transformHandleUp'],
   props: {
     isMultipleDrag: Boolean
   },
@@ -117,7 +118,7 @@ export default {
       editTextElement: {}
     }
   },
-  destroyed() {
+  unmounted() {
     this.$store.commit({
       type: 'poster/setIsShowEditText',
       isShow: false
@@ -335,13 +336,8 @@ export default {
         y: 1
       }
       let realScale = 1
-      let {
-        offsetWidth,
-        offsetHeight,
-        oppositeX,
-        oppositeY,
-        baseIndex
-      } = this.resizeMouseDownInfo
+      let { offsetWidth, offsetHeight, oppositeX, oppositeY, baseIndex } =
+        this.resizeMouseDownInfo
       // 判断是根据x方向的偏移量来计算缩放比还是y方向的来计算
       if (offsetWidth > offsetHeight) {
         realScale = Math.abs(nex - oppositeX) / offsetWidth
@@ -434,9 +430,8 @@ export default {
           isShow: true
         })
         this.$nextTick(() => {
-          this.editTextElement = this.$refs.editText.$el.querySelector(
-            '.edit-content'
-          )
+          this.editTextElement =
+            this.$refs.editText.$el.querySelector('.edit-content')
           this.selectText(this.editTextElement)
         })
       }

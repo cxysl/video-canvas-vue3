@@ -72,6 +72,7 @@ export default {
   name: 'peiceTag',
   // inject: ['openUpgrade', 'isLimitFeature'],
   components: { priceTagTip, priceTag },
+  emits: ['add-text'],
   props: {},
   data() {
     return {
@@ -150,7 +151,7 @@ export default {
     }
     this.checkDslPrice()
   },
-  destroyed() {
+  unmounted() {
     this.pollStatus = null
     clearTimeout(this.timeout)
     clearTimeout(this.timeout2)

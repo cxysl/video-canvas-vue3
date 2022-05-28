@@ -30,6 +30,7 @@ import fonts from './data'
 // import './styles.scss'
 export default {
   name: 'fonts',
+  emits: ['change', 'update:name'],
   props: {
     name: String,
     size: {

@@ -63,6 +63,7 @@ export default {
     PosterCollapse
     // hotAreas
   },
+  emits: ['setCanvasLockedState'],
   data() {
     return {
       btns: [
@@ -165,7 +166,7 @@ export default {
       }
       this.isShowHotAreas = item.icon === '#bbt-requ'
       this.$emit('setCanvasLockedState', this.isShowHotAreas)
-      this.activeBtn = item.icon
+      this.activeBtn = item.icon || ''
     },
     addImg(img) {
       let image = new Image()

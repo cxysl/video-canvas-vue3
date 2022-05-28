@@ -48,11 +48,14 @@
               :chunk="chunk"
               :index="index"
               v-for="(chunk, index) in chunks"
-              :class="{
-                drag: isDrag && index === active,
-                active: selection.indexOf(index) > -1,
-                editable: isLocked ? false : !chunk.locked
-              }"
+              :class="[
+                {
+                  drag: isDrag && index === active,
+                  active: selection.indexOf(index) > -1,
+                  editable: isLocked ? false : !chunk.locked
+                },
+                'canvas-chunk'
+              ]"
               v-show="
                 (['controlTextLine1', 'controlTextLine2'].indexOf(chunk.kind) ==
                   -1 ||
@@ -349,7 +352,7 @@ export default {
   mounted() {
     document.documentElement.addEventListener('mousedown', this.posterWrapDown)
   },
-  destroyed() {
+  unmounted() {
     window.removeEventListener('resize', this.onWindowResize)
     document.documentElement.addEventListener('mousemove', this.move)
     document.documentElement.addEventListener('mouseup', this.handleMouseUp)
@@ -1001,9 +1004,18 @@ export default {
           }
           if (this.isSelect) {
             this.rectCaches = {}
+            console.log('refs', this)
             this.selection.forEach((item) => {
-              let bounds =
-                this.$refs[`chunk${item}`][0].$el.getBoundingClientRect()
+              let bounds = null
+              try {
+                bounds =
+                  this.$refs[`chunk${item}`][0].$el.getBoundingClientRect()
+              } catch (error) {
+                bounds = document.querySelectorAll(
+                  '.editor-canvas .canvas-chunk'
+                )[item]
+              }
+
               position.width.push(bounds.width + bounds.left)
               position.height.push(bounds.height + bounds.top)
               position.top.push(bounds.top)
@@ -1136,10 +1148,17 @@ export default {
       let x = e.pageX
       let y = e.pageY
       let isFound = false
+      // console.log('refs --', this)
       for (let i = this.chunks.length - 1; i >= 0; i--) {
         if (i > this.active) {
-          let targeBound =
-            this.$refs[`chunk${i}`][0].$el.getBoundingClientRect()
+          let targeBound = null
+          try {
+            targeBound = this.$refs[`chunk${i}`][0].$el.getBoundingClientRect()
+          } catch (error) {
+            targeBound = document.querySelectorAll(
+              '.editor-canvas .canvas-chunk'
+            )[i]
+          }
           let { left, top, width, height } = targeBound
           if (left <= x && left + width >= x && top <= y && top + height >= y) {
             this.$store.commit({

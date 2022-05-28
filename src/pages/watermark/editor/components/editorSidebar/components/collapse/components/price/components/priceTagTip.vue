@@ -59,6 +59,7 @@
 export default {
   name: 'priceTagTip',
   components: {},
+  emits: ['update:visible'],
   props: {
     visible: {
       type: Boolean,

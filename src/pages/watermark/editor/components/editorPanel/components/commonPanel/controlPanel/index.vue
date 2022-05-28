@@ -30,30 +30,32 @@
       </div>
     </el-popover>
     <el-tooltip
-      v-for="icon in icons"
-      :key="icon.value"
+      v-for="(icon, index) in icons"
+      :key="index"
       :content="icon.label || ''"
       :open-delay="200"
       placement="top"
     >
-      <i
-        class="control-icon"
-        v-popover:popover
-        v-if="icon.value === 'bbt-tuceng' && selection.length === 0"
-      >
-        <svg class="bbt-icon">
-          <use :xlink:href="`#${icon.value}`"></use>
-        </svg>
-      </i>
-      <i
-        class="control-icon"
-        @click="handle(icon)"
-        v-if="icon.value === 'bbt-shanchu1'"
-      >
-        <svg class="bbt-icon">
-          <use :xlink:href="`#${icon.value}`"></use>
-        </svg>
-      </i>
+      <span>
+        <i
+          class="control-icon"
+          v-popover:popover
+          v-if="icon.value === 'bbt-tuceng' && selection.length === 0"
+        >
+          <svg class="bbt-icon">
+            <use :xlink:href="`#${icon.value}`"></use>
+          </svg>
+        </i>
+        <i
+          class="control-icon"
+          @click="handle(icon)"
+          v-if="icon.value === 'bbt-shanchu1'"
+        >
+          <svg class="bbt-icon">
+            <use :xlink:href="`#${icon.value}`"></use>
+          </svg>
+        </i>
+      </span>
     </el-tooltip>
   </div>
 </template>
@@ -98,7 +100,7 @@ export default {
       }
     })
   },
-  destroyed() {
+  unmounted() {
     hotkeys.unbind('backspace, delete, ctrl+c, ctrl+x')
   },
   computed: {
@@ -147,6 +149,7 @@ export default {
       this.$store.commit('poster/setStorageRecord')
     },
     sequenceChange(val) {
+      console.log('this --- ', this)
       let currentChunk = this.chunks[this.currentChunkIndex]
       let chunks = JSON.parse(JSON.stringify(this.chunks))
       chunks.splice(this.currentChunkIndex, 1)

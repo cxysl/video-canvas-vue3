@@ -13,7 +13,7 @@
       feature === 'watermark' ? 'position-top-side-collapse' : ''
     ]"
   >
-    <div class="collapse-arrow" @click="close" v-if="!isTbWm">
+    <div class="collapse-arrow" @click="close">
       <i class="el-icon-arrow-left"></i>
     </div>
     <!-- <keep-alive> -->
@@ -32,15 +32,15 @@
 </template>
 
 <script>
-import postermaps from './components/posterMaps/index.vue'
-import watermarkmaps from './components/watermarkMaps'
-import price from './components/price'
+import PosterMaps from './components/posterMaps'
+import Watermarkmaps from './components/watermarkMaps'
+import Price from './components/price'
 export default {
   name: 'posterCollapse',
   components: {
-    postermaps,
-    watermarkmaps,
-    price
+    PosterMaps,
+    Watermarkmaps,
+    Price
   },
   emits: ['addHotArea', 'onClose', 'update:activeBtn', 'add-text'],
   props: {

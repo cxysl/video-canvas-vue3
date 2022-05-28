@@ -26,7 +26,7 @@
     >
       <span
         :class="{ 'edit-content': isEdit }"
-        style="font-weight: inherit"
+        :style="`font-weight: inherit; font-size:${textWrapStyles.fontSize}px;`"
         :contenteditable="!chunk.priceTag && isEdit"
         v-html="chunk.textContent"
       ></span>
@@ -50,6 +50,7 @@ import debounce from 'lodash/debounce'
 const { mapState } = createNamespacedHelpers('poster')
 export default {
   name: 'imgChunk',
+  emits: ['textChange'],
   props: {
     chunk: {
       type: Object,
@@ -108,7 +109,7 @@ export default {
       editTextEl.addEventListener('input', this.editTextChange)
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     if (this.isEdit) {
       let editTextEl = this.$el.querySelector('.edit-content')
       editTextEl.removeEventListener('blur', this.editTextBlur)

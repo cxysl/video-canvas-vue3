@@ -87,11 +87,16 @@ export default {
     //   }
     // }
   },
-  destroyed() {
+  mounted() {
+    document.body.style.removeProperty('--font-size')
+  },
+  unmounted() {
+    document.body.style.setProperty('--font-size', this.fontSize + 'px')
     hotkeys.unbind('ctrl+z, command+z, ctrl+y, command+shift+z, ctrl+v')
   },
   computed: {
-    ...mapState(['currentChunkIndex', 'chunks', 'copyChunk'])
+    ...mapState(['currentChunkIndex', 'chunks', 'copyChunk']),
+    fontSize: (state) => state.setting.fontSize
   },
   methods: {
     /** fontsLoad(pageNo, pageSize) {

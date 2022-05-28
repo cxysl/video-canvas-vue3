@@ -163,6 +163,7 @@
 export default {
   name: 'priceTag',
   components: {},
+  emits: ['update-discount', 'update:visible'],
   props: {
     visible: {
       type: Boolean,

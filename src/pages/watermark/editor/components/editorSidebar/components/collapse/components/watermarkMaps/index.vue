@@ -39,6 +39,7 @@
 // import vueScrollbar from 'vue2-scrollbar'
 export default {
   name: 'watermarkEditorSlider',
+  emits: ['close'],
   props: {
     mode: {
       type: [String, Number],

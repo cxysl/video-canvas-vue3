@@ -27,6 +27,7 @@ export default {
   },
   methods: {
     opacityChange(val) {
+      console.log('opacity - this - ', this)
       this.opacity = val
       this.chunks[this.currentChunkIndex].opacity = val / 100
       this.$store.commit('poster/setStorageRecord')
@@ -34,9 +35,13 @@ export default {
   },
   watch: {
     currentChunkIndex(val) {
-      // TODO 有error未处理
-      console.log('val', val, ' ,chunk: ', this.chunks[val])
-      this.opacity = this.chunks[val].opacity * 100
+      try {
+        // TODO 有error未处理
+        console.log('val', val, ' ,chunk: ', this.chunks[val])
+        this.opacity = this.chunks[val].opacity * 100
+      } catch (error) {
+        console.log('error，', error)
+      }
     }
   }
 }

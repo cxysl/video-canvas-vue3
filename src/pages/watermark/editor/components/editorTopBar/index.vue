@@ -299,6 +299,7 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('poster')
 export default {
   name: 'posterEditorTopBar',
+  emits: ['toEdit'],
   props: {
     isShowHotAreas: Boolean
   },

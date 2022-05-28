@@ -65,7 +65,7 @@ export default {
     this.innerImg.addEventListener('mousedown', this.moveWrapDown)
     this.outImg.addEventListener('mousedown', this.moveWrapDown)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.innerImg.removeEventListener('mousedown', this.moveWrapDown)
     this.outImg.removeEventListener('mousedown', this.moveWrapDown)
   },
