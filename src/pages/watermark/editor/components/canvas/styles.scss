@@ -1,5 +1,6 @@
 .position-top-canvas-container-outer-ring {
-  top: 91px !important;
+  // top: 91px !important;
+  top: 61px !important;
   .poster-canvas-wrap {
     height: 800px;
   }
@@ -13,6 +14,8 @@
   bottom: 0;
   left: 80px;
   right: 280px;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
   background-color: #f9f9f9;
   .chunk-btn {
     text-align: center;

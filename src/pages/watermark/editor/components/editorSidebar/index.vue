@@ -123,11 +123,12 @@ export default {
   mounted() {
     if (this.feature == 'watermark') {
       this.firstShow = true
-      this.activeBtn = '#bbt-wenzi'
-      this.$store.commit({
-        type: 'poster/setIsCompatible',
-        isCompatible: true
-      })
+      // 默认不打开价签
+      // this.activeBtn = '#bbt-wenzi'
+      // this.$store.commit({
+      //   type: 'poster/setIsCompatible',
+      //   isCompatible: true
+      // })
     }
   },
   methods: {

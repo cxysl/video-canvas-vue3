@@ -201,3 +201,9 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.poster-editor {
+  position: relative;
+  height: 100%;
+}
+</style>

@@ -842,7 +842,8 @@ export default {
         selectorHeight = Math.abs(e.pageY - self.lastY)
       self.selectorStyles = {
         top: `${
-          self.feature === 'watermark' ? selectorTop - 31 : selectorTop
+          // self.feature === 'watermark' ? selectorTop - 31 : selectorTop
+          self.feature === 'watermark' ? selectorTop : selectorTop
         }px`, //watermark多了一个提示占了31px高度
         left: `${self.isCompatible ? selectorLeft - 280 : selectorLeft}px`,
         width: `${selectorWidth}px`,

@@ -1,6 +1,6 @@
 <template>
   <div class="editor-panel-content editor-text-panel">
-    <div
+    <!-- <div
       class="editor-sub-panel"
       v-if="
         chunks[currentChunkIndex].type == 'text' &&
@@ -15,7 +15,7 @@
           </i>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="editor-sub-panel">
       <div class="sub-panel-title">字体</div>
       <div class="fonts-wrap">
