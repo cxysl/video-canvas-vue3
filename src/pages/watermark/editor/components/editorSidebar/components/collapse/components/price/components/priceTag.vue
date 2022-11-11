@@ -1,30 +1,30 @@
 <template>
   <el-dialog
+    v-model="isShow"
     custom-class="price-tag-discount-edit"
     title="价签计算器"
-    v-model="isShow"
     append-to-body
     width="40%"
     top="15vh"
-    @update:visible="(val) => $emit('update:visible', val)"
     :close-on-press-escape="false"
+    @update:visible="(val) => $emit('update:visible', val)"
   >
     <div class="template-group">
       <div v-for="(temp, index) in templateArr" :key="'templateRadio' + index">
         <el-radio
           v-model="templateRadio"
           :label="index"
-          @click.native.prevent="templateClick(index)"
           border
+          @click.prevent="templateClick(index)"
         >
           <p class="name">{{ temp.name }}</p>
         </el-radio>
       </div>
-      <div class="edit-template-name" v-if="templateRadio != -1">
+      <div v-if="templateRadio != -1" class="edit-template-name">
         <span>模板名称：</span>
         <p
-          class="template-name-p"
           v-if="!templateArr[templateRadio].editing"
+          class="template-name-p"
           @dblclick="toEditByFont(templateRadio)"
         >
           {{ templateArr[templateRadio].name }}
@@ -32,12 +32,12 @@
         </p>
         <el-input
           v-else
+          v-model="templateArr[templateRadio].name"
           type="textarea"
           autosize
           placeholder="备注信息"
-          v-model="templateArr[templateRadio].name"
           @blur="editingByFont(templateRadio)"
-          @keyup.enter.native="editingByFont(templateRadio)"
+          @keyup.enter="editingByFont(templateRadio)"
         >
           {{ templateArr[templateRadio].name }}
         </el-input>
@@ -45,7 +45,7 @@
     </div>
     <el-form ref="priceTagForm">
       <el-form-item class="shop-outer">
-        <template slot="label">
+        <template #label>
           <el-checkbox v-model="shopOuter"></el-checkbox>
           <span style="margin: 0 6px">跨店铺优惠</span>
         </template>
@@ -54,9 +54,9 @@
             <p>每满</p>
             <div class="input">
               <el-input
+                v-model="discountArr[0].condition"
                 placeholder="请输入"
                 @input="checkDiscountArr"
-                v-model="discountArr[0].condition"
               ></el-input>
               <p class="input-suffix">元</p>
             </div>
@@ -65,9 +65,9 @@
             <p>减</p>
             <div class="input">
               <el-input
+                v-model="discountArr[0].discount"
                 placeholder="请输入"
                 @input="checkDiscountArr"
-                v-model="discountArr[0].discount"
               ></el-input>
               <p class="input-suffix">元</p>
             </div>
@@ -75,19 +75,19 @@
         </div>
       </el-form-item>
       <el-form-item class="shop-inner">
-        <template slot="label">
+        <template #label>
           <el-checkbox v-model="shopInner"></el-checkbox>
           <span style="margin: 0 6px">店铺内优惠</span>
         </template>
         <template v-for="(item, index) in discountArr">
-          <div :key="index" v-if="item.range == 1" class="row">
+          <div v-if="item.range == 1" :key="index" class="row">
             <div class="condition">
               <p>满</p>
               <div class="input">
                 <el-input
+                  v-model="item.condition"
                   placeholder="请输入"
                   @input="checkDiscountArr"
-                  v-model="item.condition"
                 ></el-input>
                 <p class="input-suffix">元</p>
               </div>
@@ -96,9 +96,9 @@
               <p>减</p>
               <div class="input">
                 <el-input
+                  v-model="item.discount"
                   placeholder="请输入"
                   @input="checkDiscountArr"
-                  v-model="item.discount"
                 ></el-input>
                 <p class="input-suffix">元</p>
               </div>
@@ -120,13 +120,13 @@
     </div>
 
     <div v-if="isToSave" class="template-name">
-      <el-input placeholder="请输入模板名称" v-model="templateName">
-        <template slot="append">
+      <el-input v-model="templateName" placeholder="请输入模板名称">
+        <template #append>
           <el-button @click="saveTemplate">确定</el-button>
         </template>
       </el-input>
     </div>
-    <div class="option-template" v-if="templateRadio != '-1'">
+    <div v-if="templateRadio != '-1'" class="option-template">
       <el-button
         :disabled="saveDisabled"
         class="update-template"
@@ -136,40 +136,42 @@
       </el-button>
       <el-button class="del-template" @click="delTemplate">删除模板</el-button>
     </div>
-    <span slot="footer" class="dialog-footer">
-      <el-tooltip
-        content="每位用户最多可存5个模板"
-        :disabled="templateArr.length < 5"
-        placement="top"
-        class="item"
-        effect="dark"
-      >
-        <el-button
-          v-if="templateRadio == '-1'"
-          :disabled="saveDisabled || templateArr.length >= 5"
-          class="save-discount"
-          @click="toSaveDiscount"
-        >
-          将此条件存为模板
-        </el-button>
-      </el-tooltip>
-      <el-button @click="() => $emit('update:visible', false)">取 消</el-button>
-      <el-button type="primary" @click="submit">确定</el-button>
-    </span>
+		<template #footer>
+			<span class="dialog-footer">
+				<el-tooltip
+					content="每位用户最多可存5个模板"
+					:disabled="templateArr.length < 5"
+					placement="top"
+					class="item"
+					effect="dark"
+				>
+					<el-button
+						v-if="templateRadio == '-1'"
+						:disabled="saveDisabled || templateArr.length >= 5"
+						class="save-discount"
+						@click="toSaveDiscount"
+					>
+						将此条件存为模板
+					</el-button>
+				</el-tooltip>
+				<el-button @click="() => $emit('update:visible', false)">取 消</el-button>
+				<el-button type="primary" @click="submit">确定</el-button>
+			</span>
+		</template>
   </el-dialog>
 </template>
 
 <script>
 export default {
-  name: 'priceTag',
+  name: 'PriceTag',
   components: {},
-  emits: ['update-discount', 'update:visible'],
   props: {
     visible: {
       type: Boolean,
       default: false
     }
   },
+  emits: ['update-discount', 'update:visible'],
   data() {
     return {
       isShow: false,

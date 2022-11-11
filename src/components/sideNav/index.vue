@@ -1,10 +1,10 @@
 <template>
   <div class="side-nav">
-    <div class="side-list" v-if="sideMenuList && sideMenuList.length">
+    <div v-if="sideMenuList && sideMenuList.length" class="side-list">
       <div
-        class="item"
         v-for="item in sideMenuList"
         :key="item.path"
+        class="item"
         :class="['item', checkPagePath === item.path ? 'item-active' : '']"
         @click="choicePage(item, index)"
       >
@@ -12,7 +12,7 @@
       </div>
     </div>
 
-    <div class="none-list" v-else>城南花未开，老程已不在;</div>
+    <div v-else class="none-list">城南花未开，老程已不在;</div>
   </div>
 </template>
 
@@ -20,7 +20,7 @@
 import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('setting')
 export default {
-  name: 'sideNav',
+  name: 'SideNav',
   components: {},
   props: {
     // sideMenuList: {
@@ -42,7 +42,7 @@ export default {
   methods: {
     choicePage(route) {
       this.checkPagePath = route.path
-      console.log(this.checkPagePath, '--', this.$router)
+      // console.log(this.checkPagePath, '--', this.$router)
       this.$router.push(route.path)
     }
   }

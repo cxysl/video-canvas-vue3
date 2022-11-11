@@ -39,11 +39,11 @@
               <span>{{ size }}%</span>
             </div>
             <el-tooltip
+              v-else
               class="item"
               effect="dark"
               content="实际大小"
               placement="bottom"
-              v-else
             >
               <div class="scale-value-wrap" @click="setSize(2)">
                 <span class="scale-value">{{ size }}%</span>
@@ -79,7 +79,7 @@
               ? '3:4尺寸'
               : ''
           }} -->
-          <div class="chunk-btn" v-if="feature === 'watermark'">
+          <div v-if="feature === 'watermark'" class="chunk-btn">
             <el-radio-group v-model="mode" @change="switchMode">
               <el-radio-button
                 v-for="(item, idx) in modeList"
@@ -132,8 +132,8 @@
           </el-button>
         </el-popover> -->
         <el-button
-          type="primary"
           v-loading.fullscreen.lock="loading"
+          type="primary"
           element-loading-text="正在保存"
           @click="save(wmType === '0' ? 2 : 1)"
         >
@@ -148,9 +148,9 @@
           }}
         </el-button>
         <el-button
+          v-if="feature === 'watermark' && wmType === '0' && !activityId"
           class="btn fr save mr20"
           @click="save(1)"
-          v-if="feature === 'watermark' && wmType === '0' && !activityId"
         >
           另存一份
         </el-button>
@@ -296,13 +296,14 @@
 // import unawailWords from '../../../../../itemsManage/watermark/editor/unavailWords'
 // import { convertToTbLayers } from '../canvas/components/convert/convert'
 import { createNamespacedHelpers } from 'vuex'
+import html2canvas from 'html2canvas'
 const { mapState } = createNamespacedHelpers('poster')
 export default {
-  name: 'posterEditorTopBar',
-  emits: ['toEdit'],
+  name: 'PosterEditorTopBar',
   props: {
     isShowHotAreas: Boolean
   },
+  emits: ['toEdit'],
   data() {
     return {
       isEditTitle: false,
@@ -325,40 +326,6 @@ export default {
       wmType: '',
       wmID: '',
       tbPreview: ''
-    }
-  },
-  created() {
-    this.activityId = this.$route.query.activityId
-    this.wmType = this.$route.query.type
-    this.wmID = this.$route.query.id
-    if (this.feature === 'watermark') {
-      this.modes = this.$route.query.modes.split(',')
-      this.modes.forEach((mode) => {
-        if (mode == 1) {
-          this.modeList.push({
-            type: 1,
-            name: '1:1主图',
-            width: 800,
-            height: 800
-          })
-        }
-        if (mode == 2) {
-          this.modeList.push({
-            type: 2,
-            name: '3:4主图',
-            width: 750,
-            height: 1000
-          })
-        }
-        if (mode == 3) {
-          this.modeList.push({
-            type: 3,
-            name: '宝贝长图',
-            width: 800,
-            height: 1200
-          })
-        }
-      })
     }
   },
   computed: {
@@ -403,6 +370,40 @@ export default {
     },
     isReplace() {
       return this.$route.query.activityId
+    }
+  },
+  created() {
+    this.activityId = this.$route.query.activityId
+    this.wmType = this.$route.query.type
+    this.wmID = this.$route.query.id
+    if (this.feature === 'watermark') {
+      this.modes = this.$route.query.modes.split(',')
+      this.modes.forEach((mode) => {
+        if (mode == 1) {
+          this.modeList.push({
+            type: 1,
+            name: '1:1主图',
+            width: 800,
+            height: 800
+          })
+        }
+        if (mode == 2) {
+          this.modeList.push({
+            type: 2,
+            name: '3:4主图',
+            width: 750,
+            height: 1000
+          })
+        }
+        if (mode == 3) {
+          this.modeList.push({
+            type: 3,
+            name: '宝贝长图',
+            width: 800,
+            height: 1200
+          })
+        }
+      })
     }
   },
   methods: {
@@ -540,6 +541,45 @@ export default {
     },
     save(type) {
       console.log('保存', type)
+      const rect = document
+        .querySelector('.editor-canvas')
+        .getBoundingClientRect()
+      html2canvas(document.querySelector('.editor-canvas'), {
+        width: rect.width,
+        height: rect.height
+      }).then(function (canvas) {
+        setTimeout(() => {
+          const pageData = canvas.toDataURL('image/jpeg', 1.0)
+          const imgData = pageData.replace('image/jpeg', 'image/octet-stream')
+          const imgName = '生成图片.jpg'
+          const save_link = document.createElementNS(
+            'http://www.w3.org/1999/xhtml',
+            'a'
+          )
+          save_link.href = imgData
+          save_link.download = imgName
+          const event = document.createEvent('MouseEvents')
+          event.initMouseEvent(
+            'click',
+            true,
+            false,
+            window,
+            0,
+            0,
+            0,
+            0,
+            0,
+            false,
+            false,
+            false,
+            false,
+            0,
+            null
+          )
+          save_link.dispatchEvent(event)
+        }, 5000)
+      })
+
       // if (this.feature === 'poster') {
       //   this.savePoster()
       // } else if (this.feature === 'watermark') {

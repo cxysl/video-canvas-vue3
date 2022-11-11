@@ -12,8 +12,8 @@
     <image-panel v-else-if="panelType === 'img'"></image-panel>
     <text-panel v-else-if="panelType === 'text'"></text-panel>
     <common-panel
-      :panel-type="panelType"
       v-if="panelType !== 'global' || selection.length > 0"
+      :panel-type="panelType"
     ></common-panel>
   </div>
 </template>
@@ -24,7 +24,7 @@ import imagePanel from './components/imagePanel'
 import textPanel from './components/textPanel'
 import commonPanel from './components/commonPanel'
 export default {
-  name: 'editorPanel',
+  name: 'EditorPanel',
   components: {
     globalPanel,
     imagePanel,

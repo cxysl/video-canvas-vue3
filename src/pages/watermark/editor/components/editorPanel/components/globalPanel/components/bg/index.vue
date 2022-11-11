@@ -3,15 +3,15 @@
     <div class="sub-panel-title">
       画布背景
       <el-button
-        size="small"
         v-if="originalBg && originalBg.img"
-        @click="restoreBg"
+        size="small"
         type="text"
+        @click="restoreBg"
       >
         恢复原图
       </el-button>
     </div>
-    <div class="bg-wrap" v-if="bg && bg.img">
+    <div v-if="bg && bg.img" class="bg-wrap">
       <div
         class="bg-preview-wrap"
         :style="{
@@ -32,11 +32,11 @@
         />
       </div>
     </div>
-    <div class="bgc-wrap" v-else>
+    <div v-else class="bgc-wrap">
       <div class="sub-panel-title">背景颜色</div>
       <el-color-picker v-model="bgc" :class="{ empty: !bgc }"></el-color-picker>
     </div>
-    <div class="handler-wrap" v-if="bg && bg.img">
+    <div v-if="bg && bg.img" class="handler-wrap">
       <el-row :gutter="20">
         <el-col :span="12">
           <el-button class="full-btn" @click="turn('v')">水平翻转</el-button>
@@ -58,8 +58,8 @@
         <el-col :span="12">
           <el-button
             :disabled="isShowClipBg"
-            @click="delBgImg"
             class="full-btn"
+            @click="delBgImg"
           >
             删除
           </el-button>
@@ -86,7 +86,7 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('poster')
 // import imgUpload from 'pages/itemsManage/watermark/editor/upload'
 export default {
-  name: 'editorBg',
+  name: 'EditorBg',
   components: {
     // imgUpload
   },

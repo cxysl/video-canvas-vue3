@@ -1,13 +1,13 @@
 <template>
   <el-dialog
+    v-model="isShow"
     custom-class="tip"
     title="价格规则说明"
-    v-model="isShow"
     append-to-body
     width="45%"
     top="20vh"
-    @update:visible="(val) => $emit('update:visible', val)"
     :close-on-press-escape="false"
+    @update:visible="(val) => $emit('update:visible', val)"
   >
     <div>
       <p>
@@ -47,25 +47,27 @@
         </p>
       </div>
     </div>
-    <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="() => $emit('update:visible', false)">
-        我知道了
-      </el-button>
-    </span>
+		<template #footer>
+			<span class="dialog-footer">
+				<el-button type="primary" @click="() => $emit('update:visible', false)">
+					我知道了
+				</el-button>
+			</span>
+		</template>
   </el-dialog>
 </template>
 
 <script>
 export default {
-  name: 'priceTagTip',
+  name: 'PriceTagTip',
   components: {},
-  emits: ['update:visible'],
   props: {
     visible: {
       type: Boolean,
       default: false
     }
   },
+  emits: ['update:visible'],
   data() {
     return { isShow: false }
   },

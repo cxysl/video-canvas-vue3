@@ -1,7 +1,7 @@
 <template>
   <div
-    class="editor-panel-content editor-global-panel"
     v-if="feature === 'poster'"
+    class="editor-panel-content editor-global-panel"
   >
     <size></size>
     <bg v-if="isShowBgPanel && feature === 'poster'"></bg>
@@ -12,7 +12,7 @@
 import size from './components/canvasView'
 import bg from './components/bg'
 export default {
-  name: 'globalPanel',
+  name: 'GlobalPanel',
   components: {
     size,
     bg

@@ -9,13 +9,16 @@
 import controlPanel from './controlPanel'
 import opacityPanel from './opacityPanel'
 export default {
-  name: 'commonPanel',
-  props: {
-    panelType: String
-  },
+  name: 'CommonPanel',
   components: {
     controlPanel,
     opacityPanel
+  },
+  props: {
+    panelType: {
+			type: String,
+			default: ''
+		}
   },
   computed: {
     selection() {

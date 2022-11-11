@@ -1,10 +1,10 @@
 <template>
-  <div class="end-story">城南花已开，老程已不在; --- endStory</div>
+  <el-cascader class="ud-cascader" />
 </template>
 
 <script>
 export default {
-  name: 'EndStory',
+  name: 'UdCascader',
   components: {},
   props: {},
   data() {
@@ -17,6 +17,4 @@ export default {
   methods: {}
 }
 </script>
-<style lang="scss">
-@import './styles';
-</style>
+<style lang="scss" scoped></style>

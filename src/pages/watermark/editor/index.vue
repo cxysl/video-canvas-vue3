@@ -3,12 +3,12 @@
     <top-bar
       ref="topBar"
       :is-show-hot-areas="isShowHotAreas"
-      @toEdit="toEdit"
+      @to-edit="toEdit"
     ></top-bar>
     <!-- 上 -->
     <sidebar
-      @setCanvasLockedState="setCanvasLockedState"
       ref="sidebar"
+      @set-canvas-locked-state="setCanvasLockedState"
     ></sidebar>
     <!-- 左 -->
     <poster-canvas
@@ -34,7 +34,7 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('poster')
 
 export default {
-  name: 'posterEditor',
+  name: 'PosterEditor',
   components: {
     topBar,
     sidebar,
@@ -53,6 +53,10 @@ export default {
       isShowHotAreas: false,
       fontsUrl: ''
     }
+  },
+  computed: {
+    ...mapState(['currentChunkIndex', 'chunks', 'copyChunk']),
+    fontSize: (state) => state.setting.fontSize
   },
   created() {
     hotkeys(
@@ -93,10 +97,6 @@ export default {
   unmounted() {
     document.body.style.setProperty('--font-size', this.fontSize + 'px')
     hotkeys.unbind('ctrl+z, command+z, ctrl+y, command+shift+z, ctrl+v')
-  },
-  computed: {
-    ...mapState(['currentChunkIndex', 'chunks', 'copyChunk']),
-    fontSize: (state) => state.setting.fontSize
   },
   methods: {
     /** fontsLoad(pageNo, pageSize) {

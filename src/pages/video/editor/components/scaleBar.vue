@@ -7,13 +7,13 @@
           <span class="num">0</span>
         </i>
         <i
-          class="unit"
           v-for="item in duration * 10"
           :key="item"
+          class="unit"
           :class="[{ long: item % 10 === 0 }, { medium: item % 10 === 5 }]"
           :style="{ width: `${frame}%` }"
         >
-          <span class="num" v-if="item % 10 === 0">
+          <span v-if="item % 10 === 0" class="num">
             {{ Math.floor(item / 10) }}
           </span>
           <s v-else></s>
@@ -37,7 +37,7 @@
 import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('video')
 export default {
-  name: 'scaleBar',
+  name: 'ScaleBar',
   props: {
     duration: {
       type: Number,
@@ -46,6 +46,12 @@ export default {
     musicUrl: {
       type: String,
       default: ''
+    }
+  },
+  data() {
+    return {
+      active: 0,
+      interval: null
     }
   },
   computed: {
@@ -58,12 +64,6 @@ export default {
       return {
         left: `${this.active * this.frame}%`
       }
-    }
-  },
-  data() {
-    return {
-      active: 0,
-      interval: null
     }
   },
   watch: {

@@ -33,7 +33,7 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('poster')
 import throttle from 'lodash/throttle'
 export default {
-  name: 'clipEditorBg',
+  name: 'ClipEditorBg',
   props: {
     clipWrapStyles: {
       type: Object,
@@ -55,19 +55,6 @@ export default {
       innerImg: {},
       currentBg: {}
     }
-  },
-  created() {
-    this.reset()
-  },
-  mounted() {
-    this.innerImg = document.querySelector('.bg-preview-img-light')
-    this.outImg = document.querySelector('.bg-preview-img')
-    this.innerImg.addEventListener('mousedown', this.moveWrapDown)
-    this.outImg.addEventListener('mousedown', this.moveWrapDown)
-  },
-  beforeUnmount() {
-    this.innerImg.removeEventListener('mousedown', this.moveWrapDown)
-    this.outImg.removeEventListener('mousedown', this.moveWrapDown)
   },
   computed: {
     ...mapState([
@@ -92,6 +79,19 @@ export default {
         transform: `matrix(${this.bg.transformX}, 0, 0, ${this.bg.transformY}, 0, 0)`
       }
     }
+  },
+  created() {
+    this.reset()
+  },
+  mounted() {
+    this.innerImg = document.querySelector('.bg-preview-img-light')
+    this.outImg = document.querySelector('.bg-preview-img')
+    this.innerImg.addEventListener('mousedown', this.moveWrapDown)
+    this.outImg.addEventListener('mousedown', this.moveWrapDown)
+  },
+  beforeUnmount() {
+    this.innerImg.removeEventListener('mousedown', this.moveWrapDown)
+    this.outImg.removeEventListener('mousedown', this.moveWrapDown)
   },
   methods: {
     formatTooltip(val) {

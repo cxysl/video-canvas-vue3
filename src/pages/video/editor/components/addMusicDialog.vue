@@ -1,12 +1,12 @@
 <template>
   <el-dialog
-    title="上传音乐"
     v-model="isShow"
-    @update:visible="(val) => $emit('update:visible', val)"
+    title="上传音乐"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     custom-class="video-add-musics-dialog"
     width="30%"
+    @update:visible="(val) => $emit('update:visible', val)"
   >
     <el-tabs v-model="activeName">
       <!-- <el-tab-pane label="本地上传" name="local"> -->
@@ -25,13 +25,14 @@
           将文件拖到此处，或
           <em>点击上传</em>
         </div>
-        <div
-          class="el-upload__tip"
-          slot="tip"
-          :style="`margin-top:${qnfileName ? '30px' : ''}`"
-        >
-          仅支持Mp3格式，建议大小在2Mb以内，时长9～60秒。
-        </div>
+				<template #tip>
+					<div
+						class="el-upload__tip"
+						:style="`margin-top:${qnfileName ? '30px' : ''}`"
+					>
+						仅支持Mp3格式，建议大小在2Mb以内，时长9～60秒。
+					</div>
+				</template>
       </el-upload>
       <div class="upload-confirm-bar">
         <ul class="tips">
@@ -46,8 +47,8 @@
 <script>
 // import imageSpace from 'components/imageSpace'
 export default {
-  name: 'addMusicDialog',
-  emits: ['add-musics', 'update:visible'],
+  name: 'AddMusicDialog',
+  components: {},
 
   props: {
     visible: {
@@ -61,7 +62,7 @@ export default {
       }
     }
   },
-  components: {},
+  emits: ['add-musics', 'update:visible'],
   data() {
     return {
       isShow: false,
@@ -79,6 +80,21 @@ export default {
   computed: {
     bbtApi() {
       return this.$store.state.bbtApi
+    }
+  },
+
+  watch: {
+    visible: {
+      handler(val) {
+        this.isShow = val
+        if (val && this.$isQn) {
+          this.initQnParams()
+        }
+      },
+      immediate: true
+    },
+    playTime: function () {
+      this.option(this.file2)
     }
   },
   methods: {
@@ -148,21 +164,6 @@ export default {
 
     onFocus(event) {
       event.target.select()
-    }
-  },
-
-  watch: {
-    visible: {
-      handler(val) {
-        this.isShow = val
-        if (val && this.$isQn) {
-          this.initQnParams()
-        }
-      },
-      immediate: true
-    },
-    playTime: function () {
-      this.option(this.file2)
     }
   }
 }

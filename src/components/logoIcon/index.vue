@@ -28,7 +28,7 @@ export default {
   name: 'LogoIcon',
   components: {},
   props: {
-    style: {
+    customStyle: {
       type: Object,
       default: () => {}
     }
@@ -45,7 +45,7 @@ export default {
         fill: 'currentColor',
         overflow: 'hidden'
       }
-      return Object.assign(defaultStyle, this.style)
+      return Object.assign(defaultStyle, this.customStyle)
     }
   }
   // watch: {},

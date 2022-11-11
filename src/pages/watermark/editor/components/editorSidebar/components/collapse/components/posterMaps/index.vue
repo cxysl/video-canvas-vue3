@@ -1,12 +1,12 @@
 <template>
   <div>
     <el-input
-      placeholder="输入关键字搜索"
       v-model="content"
+      placeholder="输入关键字搜索"
       icon="search"
       @change="searchPoster"
       @blur="searchPoster"
-      @keyup.native.enter="searchPoster"
+      @keyup.enter="searchPoster"
     ></el-input>
     <!-- <el-select
       v-model="templatetype"
@@ -45,8 +45,8 @@
             />
           </li>
         </ul> -->
-        <div class="text-content" v-if="loading" v-loading="loading"></div>
-        <div class="text-content" v-if="!list.length && !loading">
+        <div v-if="loading" v-loading="loading" class="text-content"></div>
+        <div v-if="!list.length && !loading" class="text-content">
           暂无更多数据
         </div>
         <!-- </vue-scrollbar> -->
@@ -59,6 +59,9 @@
 import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('poster')
 export default {
+  components: {
+    // vueScrollbar
+  },
   props: {},
   data() {
     return {
@@ -94,13 +97,13 @@ export default {
       templatetype: ''
     }
   },
+  computed: {
+    ...mapState(['resetCanvasState', 'chunks'])
+  },
   created() {
     let params = this.getUrlData()
     this.templatetype = params.type
     // this.getPoster()
-  },
-  computed: {
-    ...mapState(['resetCanvasState', 'chunks'])
   },
   methods: {
     getUrlData() {
@@ -218,9 +221,6 @@ export default {
     //       console.log(err)
     //     })
     // }
-  },
-  components: {
-    // vueScrollbar
   }
 }
 </script>

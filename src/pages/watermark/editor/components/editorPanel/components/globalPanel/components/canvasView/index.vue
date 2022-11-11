@@ -21,10 +21,10 @@
       </el-col>
     </el-row>
     <el-dialog
+      ref="canvasViewSize"
       v-model:visible="isShowDialog"
       custom-class="canvas-view-size-options"
       :close-on-click-modal="false"
-      ref="canvasViewSize"
     >
       <div class="canvas-preview">
         <div
@@ -35,10 +35,10 @@
           }"
         ></div>
         <canvas-preview
+          v-if="isShowDialog"
           :default-locked-state="true"
           :is-show-original-size="true"
           :default-chunks="chunks"
-          v-if="isShowDialog"
           :style="previewStyles"
         ></canvas-preview>
         <div
@@ -56,9 +56,9 @@
         </div>
         <ul class="size-select-wrap">
           <li
-            :class="{ active: currentSize === index }"
             v-for="(item, index) in sizeOptions"
             :key="index"
+            :class="{ active: currentSize === index }"
           >
             <div @click="sizeChange(index)">
               {{ item.label }} {{ `${item.width}px × ${item.height}px` }}
@@ -68,12 +68,12 @@
         <div class="custom-size">
           <span class="custom-size-label">自定义尺寸</span>
           <el-input
-            :class="{ error: isError }"
             v-model.number="customSizeWidth"
+            :class="{ error: isError }"
             @change="customSizeChange(customSizeWidth, 'width')"
             @blur="customSizeValidate(customSizeWidth, 'width')"
           >
-            <template slot="append">宽</template>
+            <template #append>宽</template>
           </el-input>
           <el-tooltip
             :content="isLockWithHeight ? '锁定宽高比例' : '自定义宽高'"
@@ -81,8 +81,8 @@
           >
             <span
               class="lock-icon"
-              @click="switchWidthHeightPattern"
               :class="{ locked: isLockWithHeight }"
+              @click="switchWidthHeightPattern"
             >
               <svg class="bbt-icon">
                 <use
@@ -94,14 +94,14 @@
             </span>
           </el-tooltip>
           <el-input
-            :class="{ error: isError }"
             v-model.number="customSizeHeight"
+            :class="{ error: isError }"
             @change="customSizeChange(customSizeHeight, 'height')"
             @blur="customSizeValidate(customSizeHeight, 'height')"
           >
-            <template slot="append">高</template>
+            <template #append>高</template>
           </el-input>
-          <div class="error-msg" v-if="isError">{{ errorMsg }}</div>
+          <div v-if="isError" class="error-msg">{{ errorMsg }}</div>
         </div>
         <el-button
           class="confirm-btn"
@@ -121,7 +121,7 @@ import canvasPreview from '../../../../../canvas'
 import debounce from 'lodash/debounce'
 import { mapState } from 'vuex'
 export default {
-  name: 'sizePanel',
+  name: 'SizePanel',
   components: {
     canvasPreview
   },
@@ -169,15 +169,6 @@ export default {
       errorMsg: ''
     }
   },
-  created() {
-    if (this.user.isTmall) {
-      this.sizeOptions[0].width = 790
-      this.sizeOptions[3].width = 990
-    }
-  },
-  mounted() {
-    document.body.append(this.$refs.canvasViewSize.$el.nextSibling)
-  },
   computed: {
     ...mapState(['user']),
     width() {
@@ -224,6 +215,15 @@ export default {
       }
       return result
     }
+  },
+  created() {
+    if (this.user.isTmall) {
+      this.sizeOptions[0].width = 790
+      this.sizeOptions[3].width = 990
+    }
+  },
+  mounted() {
+    document.body.append(this.$refs.canvasViewSize.$el.nextSibling)
   },
   methods: {
     selectSize() {

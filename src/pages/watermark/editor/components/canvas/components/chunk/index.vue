@@ -2,9 +2,9 @@
   <div class="editor-el" :style="wrapStyles">
     <!-- <div> -->
     <div
+      v-if="chunk.type === 'img'"
       class="editor-el-img"
       :style="imgWrapStyles"
-      v-if="chunk.type === 'img'"
     >
       <img
         :src="chunk.src"
@@ -17,12 +17,12 @@
       />
     </div>
     <div
+      v-else
       class="editor-el-text"
       :class="{
         'editor-el-text-editing': isShowEditText && index === currentChunkIndex
       }"
       :style="textWrapStyles"
-      v-else
     >
       <span
         :class="{ 'edit-content': isEdit }"
@@ -49,8 +49,7 @@ import { createNamespacedHelpers } from 'vuex'
 import debounce from 'lodash/debounce'
 const { mapState } = createNamespacedHelpers('poster')
 export default {
-  name: 'imgChunk',
-  emits: ['textChange'],
+  name: 'ImgChunk',
   props: {
     chunk: {
       type: Object,
@@ -67,6 +66,7 @@ export default {
       default: false
     }
   },
+  emits: ['textChange'],
   data() {
     return {
       wrapStyles: {},
@@ -89,78 +89,11 @@ export default {
       currentEditTextIndex: 0
     }
   },
-  created() {
-    let { chunk, scale } = this
-    this.wrapStyles = {
-      width: `${chunk.width * scale}px`,
-      height: `${chunk.height * scale}px`,
-      left: `${chunk.left * scale}px`,
-      top: `${chunk.top * scale}px`,
-      opacity: chunk.opacity,
-      transform: `rotate(${chunk.rotate}deg)`,
-      index: this.index + 1
-    }
-  },
-  mounted() {
-    if (this.isEdit) {
-      console.log('this.$el', this)
-      let editTextEl = this.$el.nextSibling.querySelector('.edit-content')
-      editTextEl.addEventListener('blur', this.editTextBlur)
-      editTextEl.addEventListener('focus', this.editTextFocus)
-      editTextEl.addEventListener('input', this.editTextChange)
-    }
-  },
-  beforeUnmount() {
-    if (this.isEdit) {
-      let editTextEl = this.$el.nextSibling.querySelector('.edit-content')
-      editTextEl.removeEventListener('blur', this.editTextBlur)
-      editTextEl.removeEventListener('input', this.editTextChange)
-      editTextEl.removeEventListener('focus', this.editTextFocus)
-    }
-  },
   computed: {
     ...mapState(['size', 'chunks', 'currentChunkIndex', 'isShowEditText']),
     scale() {
       return this.size / 100
     }
-  },
-  methods: {
-    // eslint-disable-next-line
-    setWrapStyles(size) {
-      let { chunk, scale } = this
-      this.wrapStyles = {
-        width: `${chunk.width * scale}px`,
-        height: `${chunk.height * scale}px`,
-        left: `${chunk.left * scale}px`,
-        top: `${chunk.top * scale}px`,
-        opacity: chunk.opacity,
-        transform: `rotate(${chunk.rotate}deg)`,
-        index: this.index + 1
-      }
-    },
-    editTextFocus() {
-      // fouce的时候存下当前的index值，以防切换元素是index指向变了
-      this.currentEditTextIndex = this.currentChunkIndex
-    },
-    editTextBlur() {
-      let chunk = this.chunks[this.currentEditTextIndex]
-      let editTextEl = this.$el.nextSibling.querySelector('.edit-content')
-      let value = editTextEl.innerHTML
-      chunk.textContent = value
-      this.$store.commit('poster/setStorageRecord')
-    },
-    editTextChange(e) {
-      this.textChange(e, this)
-    },
-    textChange: debounce((e, self) => {
-      let target = e.target
-      let width = target.offsetWidth
-      let height = target.offsetHeight
-      let chunk = self.chunks[self.currentChunkIndex]
-      chunk.width = width
-      chunk.height = height
-      self.$emit('textChange', width, height)
-    }, 200)
   },
   watch: {
     index(val) {
@@ -226,7 +159,74 @@ export default {
         this.textWrapStyles.transform = `scale(${this.size / 100})`
       }
     }
-  }
+  },
+  created() {
+    let { chunk, scale } = this
+    this.wrapStyles = {
+      width: `${chunk.width * scale}px`,
+      height: `${chunk.height * scale}px`,
+      left: `${chunk.left * scale}px`,
+      top: `${chunk.top * scale}px`,
+      opacity: chunk.opacity,
+      transform: `rotate(${chunk.rotate}deg)`,
+      index: this.index + 1
+    }
+  },
+  mounted() {
+    if (this.isEdit) {
+      console.log('this.$el', this)
+      let editTextEl = this.$el.nextSibling.querySelector('.edit-content')
+      editTextEl.addEventListener('blur', this.editTextBlur)
+      editTextEl.addEventListener('focus', this.editTextFocus)
+      editTextEl.addEventListener('input', this.editTextChange)
+    }
+  },
+  beforeUnmount() {
+    if (this.isEdit) {
+      let editTextEl = this.$el.nextSibling.querySelector('.edit-content')
+      editTextEl.removeEventListener('blur', this.editTextBlur)
+      editTextEl.removeEventListener('input', this.editTextChange)
+      editTextEl.removeEventListener('focus', this.editTextFocus)
+    }
+  },
+  methods: {
+    // eslint-disable-next-line
+    setWrapStyles(size) {
+      let { chunk, scale } = this
+      this.wrapStyles = {
+        width: `${chunk.width * scale}px`,
+        height: `${chunk.height * scale}px`,
+        left: `${chunk.left * scale}px`,
+        top: `${chunk.top * scale}px`,
+        opacity: chunk.opacity,
+        transform: `rotate(${chunk.rotate}deg)`,
+        index: this.index + 1
+      }
+    },
+    editTextFocus() {
+      // fouce的时候存下当前的index值，以防切换元素是index指向变了
+      this.currentEditTextIndex = this.currentChunkIndex
+    },
+    editTextBlur() {
+      let chunk = this.chunks[this.currentEditTextIndex]
+      let editTextEl = this.$el.nextSibling.querySelector('.edit-content')
+      let value = editTextEl.innerHTML
+      chunk.textContent = value
+      this.$store.commit('poster/setStorageRecord')
+    },
+    editTextChange(e) {
+      this.textChange(e, this)
+    },
+    textChange: debounce((e, self) => {
+      let target = e.target
+      let width = target.offsetWidth
+      let height = target.offsetHeight
+      let chunk = self.chunks[self.currentChunkIndex]
+      chunk.width = width
+      chunk.height = height
+      self.$emit('textChange', width, height)
+    }, 200)
+  },
 }
 </script>
 <style lang="scss">

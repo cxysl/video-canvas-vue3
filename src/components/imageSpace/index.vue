@@ -1,7 +1,7 @@
 <template>
   <div class="image-space">
     <el-row :gutter="20">
-      <el-col :span="6" v-loading="categoryLoading">
+      <el-col v-loading="categoryLoading" :span="6">
         <div class="search-bar">
           <el-autocomplete
             v-model="title"
@@ -30,8 +30,8 @@
       </el-col>
       <el-col :span="18">
         <div
-          class="img-list-wrap"
           v-infinite-scroll="getIamges"
+          class="img-list-wrap"
           infinite-scroll-disabled="busy"
           infinite-scroll-distance="10"
         >
@@ -54,8 +54,8 @@
               </div>
             </li>
           </ul>
-          <div class="loading-text" v-if="loading">正在加载...</div>
-          <div class="loading-text" v-else-if="images.length === 0">
+          <div v-if="loading" class="loading-text">正在加载...</div>
+          <div v-else-if="images.length === 0" class="loading-text">
             暂无图片
           </div>
         </div>
@@ -64,7 +64,7 @@
     <div class="storage-tips">
       温馨提示：如果您在图片空间新增了某条目录，那么需要您等待一小时左右才能看到新增的目录
     </div>
-    <ul class="selected-bar" v-if="selection.length > 0">
+    <ul v-if="selection.length > 0" class="selected-bar">
       <li v-for="(item, index) in selection" :key="'image' + index">
         <div class="selected-img">
           <img :src="`${item.picturePath}_100x100.jpg`" />
@@ -75,7 +75,7 @@
       </li>
     </ul>
     <div class="confirm-bar">
-      <div class="selection-mount" v-if="selection.length > 0">
+      <div v-if="selection.length > 0" class="selection-mount">
         <span>
           已选{{ selection.length
           }}{{ limit && limit > 0 ? `/${limit}` : '' }}张图片
@@ -97,13 +97,14 @@
 
 <script>
 export default {
-  name: 'imageSpace',
+  name: 'ImageSpace',
   props: {
     limit: {
       type: [Number, String],
       default: ''
     }
   },
+	emits: ['confirm'],
   data() {
     return {
       defaultProps: {
@@ -124,15 +125,15 @@ export default {
       currentKey: '0'
     }
   },
-  created() {
-    this.getCategories()
-  },
   computed: {
     selectionIds() {
       return this.selection.map((item) => {
         return item.pictureId
       })
     }
+  },
+  created() {
+    this.getCategories()
   },
   methods: {
     init() {

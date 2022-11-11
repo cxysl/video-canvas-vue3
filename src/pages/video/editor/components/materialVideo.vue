@@ -5,8 +5,8 @@
     <!--  遍历默认的音乐或特效 -->
     <li
       v-for="item in items"
-      :class="{ active: item.id === active, small: size === 'small' }"
       :key="item.id"
+      :class="{ active: item.id === active, small: size === 'small' }"
       @click="handler(item)"
     >
       <div class="item-wrap">
@@ -22,8 +22,7 @@
 
 <script>
 export default {
-  name: 'materialVideo',
-  emits: ['change', 'update:canvasChange'],
+  name: 'MaterialVideo',
   props: {
     items: {
       type: Array,
@@ -31,7 +30,10 @@ export default {
         return []
       }
     },
-    type: String,
+    type: {
+      type: String,
+      default: ''
+    },
     size: {
       type: String,
       default: 'normal'
@@ -41,6 +43,7 @@ export default {
       default: false
     }
   },
+  emits: ['change', 'update:canvasChange'],
   data() {
     return {
       active: 1,

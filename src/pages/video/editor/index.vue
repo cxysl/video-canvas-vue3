@@ -5,7 +5,7 @@
         <!-- <div class="logo" @click="goToVideo"></div> -->
 
         <logo-icon
-          :style="{ background: '#fff', borderRadius: '50%' }"
+          :custom-style="{ background: '#fff', borderRadius: '50%' }"
           @click="goToVideo"
         ></logo-icon>
         <div class="title">图片模拟视频编辑器</div>
@@ -27,10 +27,10 @@
         <el-tabs v-model="active" type="border-card" class="tabs">
           <el-tab-pane label="视频效果模板" name="1">
             <materialVideo
-              :items="styles"
-              v-model:canvasChange="canvasChange"
-              type="video"
               ref="video"
+              v-model:canvasChange="canvasChange"
+              :items="styles"
+              type="video"
               @change="videoReset"
             ></materialVideo>
             <!-- <material :items="styles" type="video" ref="video" @change="videoReset"></material> -->
@@ -38,11 +38,11 @@
           <el-tab-pane label="背景音乐" name="2">
             <!-- <material :items="musics" type="music" ref="music" @change="musicChange"></material>   @musics="getMusicsUp"   -->
             <materialMusic
-              :musics="musics"
-              v-model:canvasChange="canvasChange"
-              @add-musics="addMusics"
-              type="music"
               ref="music"
+              v-model:canvasChange="canvasChange"
+              v-model:musics="musics"
+              type="music"
+              @add-musics="addMusics"
               @change="musicChange"
             ></materialMusic>
           </el-tab-pane>
@@ -57,13 +57,13 @@
           element-loading-text="拼命加载中"
         ></div> -->
         <bbt-canvas
-          :mode="mode"
-          :images="images"
-          :videoStyle="videoStyle"
-          v-model:isPlaying="isPlaying"
-          @is-play="play()"
           v-if="!canvasChange"
           ref="bbtCanvas"
+          v-model:isPlaying="isPlaying"
+          :mode="mode"
+          :images="images"
+          :video-style="videoStyle"
+          @is-play="play()"
         ></bbt-canvas>
         <div
           :class="['canvas-control-btn', 'hide', isPlaying ? 'stop' : 'play']"
@@ -81,21 +81,21 @@
       <scale-bar
         ref="scaleBar"
         :duration="duration"
-        :musicUrl="nowMusicUrl"
+        :music-url="nowMusicUrl"
       ></scale-bar>
       <text-bar></text-bar>
       <image-bar
+        ref="imageBar"
         v-model:items="images"
         v-model:canvasChange="canvasChange"
         @move="videoReset"
-        @videoReset="videoReset"
-        ref="imageBar"
+        @video-reset="videoReset"
       ></image-bar>
       <music-bar
-        :musics="musics"
         ref="musicBar"
-        @handlerMusic="handlerMusic"
-        @volumeControl="volumeControl"
+        :musics="musics"
+        @handler-music="handlerMusic"
+        @volume-control="volumeControl"
       ></music-bar>
     </div>
     <ul class="video-editor-tips">
@@ -127,7 +127,16 @@ import bbtCanvas from './canvas'
 import { mapState } from 'vuex'
 import { video, musics } from './data'
 export default {
-  name: 'videoEditor',
+  name: 'VideoEditor',
+  components: {
+    materialMusic,
+    materialVideo,
+    scaleBar,
+    musicBar,
+    textBar,
+    imageBar,
+    bbtCanvas
+  },
   provide: {
     limitCount: 26
   },
@@ -189,7 +198,7 @@ export default {
     this.getImages()
   },
 
-  destroyed() {
+  unmounted() {
     document.body.style.backgroundColor = ''
   },
   methods: {
@@ -378,15 +387,6 @@ export default {
       this.$refs.imageBar.initComplete()
       console.log(`回调参数：${params}`)
     }
-  },
-  components: {
-    materialMusic,
-    materialVideo,
-    scaleBar,
-    musicBar,
-    textBar,
-    imageBar,
-    bbtCanvas
   }
 }
 </script>

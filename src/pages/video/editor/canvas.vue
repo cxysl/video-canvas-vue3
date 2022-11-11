@@ -17,8 +17,7 @@
 import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('video')
 export default {
-  name: 'videoCanvas',
-  emits: ['is-play', 'update:isPlaying'],
+  name: 'VideoCanvas',
   props: {
     mode: {
       type: [String, Number],
@@ -39,21 +38,7 @@ export default {
       }
     }
   },
-  watch: {
-    images() {
-      this.loadImg()
-    },
-    videoStyle() {
-      this.specialCanvas()
-    },
-    isPlaying(newVal, oldVal) {
-      if ((newVal && (this.isStart || this.isProcess)) || this.isEnd) {
-        this.specialCanvas()
-      } else if (oldVal && this.isProcess) {
-        this.isHold = true
-      }
-    }
-  },
+  emits: ['is-play', 'update:isPlaying'],
 
   data() {
     return {
@@ -78,11 +63,26 @@ export default {
       return this.mode == 1 ? 400 : this.mode == 2 ? 300 : 400
     }
   },
+  watch: {
+    images() {
+      this.loadImg()
+    },
+    videoStyle() {
+      this.specialCanvas()
+    },
+    isPlaying(newVal, oldVal) {
+      if ((newVal && (this.isStart || this.isProcess)) || this.isEnd) {
+        this.specialCanvas()
+      } else if (oldVal && this.isProcess) {
+        this.isHold = true
+      }
+    }
+  },
   created() {},
   mounted() {
     this.loadImg()
   },
-  destroyed() {
+  unmounted() {
     clearTimeout(this.oneTimeOut)
     clearTimeout(this.twoTimeOut)
   },

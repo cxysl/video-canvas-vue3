@@ -1,12 +1,12 @@
 <template>
   <div class="wm-maps">
     <el-input
-      placeholder="输入关键字搜索"
       v-model="content"
+      placeholder="输入关键字搜索"
       icon="search"
       @change="searchWaterMark"
       @blur="searchWaterMark"
-      @keyup.native.enter="searchWaterMark"
+      @keyup.enter="searchWaterMark"
     ></el-input>
     <div class="contain-box">
       <div class="contain">
@@ -26,8 +26,8 @@
             <img v-lazy="getImg(item)" />
           </li>
         </ul> -->
-        <div class="text-content" v-if="loading" v-loading="loading"></div>
-        <div class="text-content" v-if="!maps.length && !loading">
+        <div v-if="loading" v-loading="loading" class="text-content"></div>
+        <div v-if="!maps.length && !loading" class="text-content">
           暂无更多数据
         </div>
       </div>
@@ -38,14 +38,18 @@
 <script>
 // import vueScrollbar from 'vue2-scrollbar'
 export default {
-  name: 'watermarkEditorSlider',
-  emits: ['close'],
+  name: 'WatermarkEditorSlider',
+  components: {
+    // eslint-disable-next-line
+    // vueScrollbar
+  },
   props: {
     mode: {
       type: [String, Number],
       default: 1
     }
   },
+  emits: ['close'],
   data() {
     return {
       content: '',
@@ -56,10 +60,6 @@ export default {
       pageSize: 20,
       modes: []
     }
-  },
-  created() {
-    this.modes = this.$route.query.modes.split(',')
-    // this.getItems()
   },
   computed: {
     watermarkMode: {
@@ -84,6 +84,10 @@ export default {
         })
       }
     }
+  },
+  created() {
+    this.modes = this.$route.query.modes.split(',')
+    // this.getItems()
   },
   methods: {
     // addEditorEl(item) {
@@ -215,10 +219,6 @@ export default {
         return item.img
       }
     }
-  },
-  components: {
-    // eslint-disable-next-line
-    // vueScrollbar
   }
 }
 </script>

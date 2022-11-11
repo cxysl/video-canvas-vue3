@@ -18,12 +18,22 @@
  * @prop { String} color 图表的字体颜色
  */
 export default {
-  name: 'laochengIcon',
+  name: 'LaochengIcon',
   props: {
-    icon: String,
-    color: String,
-    size: [Number, String]
+    icon: {
+			type: String,
+			default: ''
+		},
+    color: {
+			type: String,
+			default: ''
+		},
+    size: {
+			type: [Number, String],
+			default: ''
+		}
   },
+	emits: ['click'],
   methods: {
     handleClick() {
       this.$emit('click')

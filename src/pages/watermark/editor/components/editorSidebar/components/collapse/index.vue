@@ -36,13 +36,12 @@ import PosterMaps from './components/posterMaps'
 import Watermarkmaps from './components/watermarkMaps'
 import Price from './components/price'
 export default {
-  name: 'posterCollapse',
+  name: 'PosterCollapse',
   components: {
     PosterMaps,
     Watermarkmaps,
     Price
   },
-  emits: ['addHotArea', 'onClose', 'update:activeBtn', 'add-text'],
   props: {
     activeBtn: {
       type: String,
@@ -51,6 +50,14 @@ export default {
     firstShow: {
       type: Boolean,
       default: false
+    }
+  },
+  emits: ['addHotArea', 'onClose', 'update:activeBtn', 'add-text'],
+  data() {
+    return {
+      isShow: '',
+      activeIcon: 'festival',
+      activeCollapse: ''
     }
   },
   computed: {
@@ -91,13 +98,6 @@ export default {
         }
         this.isShow = val
       }
-    }
-  },
-  data() {
-    return {
-      isShow: '',
-      activeIcon: 'festival',
-      activeCollapse: ''
     }
   },
   methods: {

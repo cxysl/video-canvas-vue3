@@ -4,7 +4,7 @@
       图片
       <div>（{{ items.length }}/{{ limitCount }}）</div>
     </div>
-    <div class="content" v-loading="isIniting">
+    <div v-loading="isIniting" class="content">
       <ul class="image-list">
         <li
           v-for="(item, index) in items"
@@ -53,10 +53,10 @@
       添加图片
     </div>
     <add-images-dialog
+      ref="addImagesDialog"
       v-model:visible="isShowAddImagesDialog"
       :count="items.length"
       @confirm="confirmAddImages"
-      ref="addImagesDialog"
     ></add-images-dialog>
   </div>
 </template>
@@ -65,9 +65,11 @@
 import { mapState } from 'vuex'
 import addImagesDialog from './addImagesDialog'
 export default {
-  name: 'imageBar',
+  name: 'ImageBar',
+  components: {
+    addImagesDialog
+  },
   inject: ['limitCount'],
-  emits: ['videoReset', 'update:items', 'update:canvasChange'],
   props: {
     items: {
       type: Array,
@@ -80,6 +82,7 @@ export default {
       default: false
     }
   },
+  emits: ['videoReset', 'update:items', 'update:canvasChange'],
   data() {
     return {
       active: '',
@@ -171,17 +174,18 @@ export default {
 
     //  监听添加图片弹窗的确定事件
     confirmAddImages(newItems) {
+			const currentItems = JSON.parse(JSON.stringify(items))
       if (Array.isArray(newItems)) {
         newItems.forEach((item) => {
-          this.items.push(item)
+          currentItems.push(item)
         })
       }
       this.isShowAddImagesDialog = false
       if (typeof newItems === 'string') {
-        this.items.push(newItems)
+        currentItems.push(newItems)
       }
       this.isShowAddImagesDialog = false
-      this.$emit('update:items', [...this.items])
+      this.$emit('update:items', [...currentItems])
       this.$emit('update:canvasChange', true)
       this.$emit('videoReset')
     },
@@ -204,9 +208,6 @@ export default {
       this.$refs.addImagesDialog.addTblmageLoading = false
       this.isIniting = false
     }
-  },
-  components: {
-    addImagesDialog
   }
 }
 </script>

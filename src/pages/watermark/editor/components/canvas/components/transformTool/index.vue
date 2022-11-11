@@ -13,17 +13,17 @@
   >
     <template v-for="(handler, index) in handlers">
       <i
-        :class="['ed-handle', `handle-${handler.type}`]"
-        :key="handler.type"
-        @mousedown="handleDown($event, handler.type)"
         v-if="
           isMultipleDrag
             ? ['lt', 'rt', 'lb', 'rb'].indexOf(handler.type) > -1
             : true
         "
+        :key="handler.type"
+        :class="['ed-handle', `handle-${handler.type}`]"
         :style="{
           cursor: cursorStyleArray[index]
         }"
+        @mousedown="handleDown($event, handler.type)"
       ></i>
     </template>
     <i
@@ -42,7 +42,7 @@
       :is-edit="true"
       :chunk="chunks[currentChunkIndex]"
       :index="currentChunkIndex"
-      @textChange="editTextChange"
+      @text-change="editTextChange"
     ></chunk>
   </div>
 </template>
@@ -54,14 +54,14 @@ import { transform, getPointAndOpposite, getNewRect } from './utils'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('poster')
 export default {
-  name: 'transformTool',
+  name: 'TransformTool',
   components: {
     chunk
   },
-  emits: ['transform', 'dragStart', 'transformHandleUp'],
   props: {
     isMultipleDrag: Boolean
   },
+  emits: ['transform', 'dragStart', 'transformHandleUp'],
   data() {
     return {
       handlers: [
@@ -118,12 +118,6 @@ export default {
       editTextElement: {}
     }
   },
-  unmounted() {
-    this.$store.commit({
-      type: 'poster/setIsShowEditText',
-      isShow: false
-    })
-  },
   computed: {
     ...mapState([
       'chunks',
@@ -132,6 +126,29 @@ export default {
       'isShowEditText',
       'size'
     ])
+  },
+  watch: {
+    // currentChunkIndex() {
+    //   this.$store.commit({
+    //     type: 'poster/setIsShowEditText',
+    //     isShow: false
+    //   })
+    //   this.$store.commit({
+    //     type: 'poster/setEditTextByicon',
+    //     editTextByicon: false
+    //   })
+    // },
+    editTextByicon(val) {
+      if (val && this.currentChunkIndex != '') {
+        this.editText()
+      }
+    }
+  },
+  unmounted() {
+    this.$store.commit({
+      type: 'poster/setIsShowEditText',
+      isShow: false
+    })
   },
   methods: {
     setStyles(styles) {
@@ -466,23 +483,6 @@ export default {
     editTextChange(width, height) {
       this.styles.width = width * (this.size / 100)
       this.styles.height = height * (this.size / 100)
-    }
-  },
-  watch: {
-    // currentChunkIndex() {
-    //   this.$store.commit({
-    //     type: 'poster/setIsShowEditText',
-    //     isShow: false
-    //   })
-    //   this.$store.commit({
-    //     type: 'poster/setEditTextByicon',
-    //     editTextByicon: false
-    //   })
-    // },
-    editTextByicon(val) {
-      if (val && this.currentChunkIndex != '') {
-        this.editText()
-      }
     }
   }
 }

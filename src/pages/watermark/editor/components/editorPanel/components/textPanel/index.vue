@@ -25,20 +25,20 @@
           style="width: 100%"
         ></fonts>
         <el-autocomplete
-          class="inline-input"
           v-model.number="fontSize"
+          class="inline-input"
           :fetch-suggestions="suggestions"
           size="large"
           placeholder="请输入内容"
           @select="handleSelect"
         >
-          <template slot="prepend">
+          <template #prepend>
             <i
               class="handle-size-btn el-icon-minus"
               @click="stepFontSize(0)"
             ></i>
           </template>
-          <template slot="append">
+          <template #append>
             <i
               class="handle-size-btn el-icon-plus"
               @click="stepFontSize(1)"
@@ -55,15 +55,14 @@
       <div class="sub-panel-title">样式</div>
       <div class="font-style-wrap">
         <el-tooltip
-          :content="item.label || ''"
           v-for="(item, index) in alignList"
+          :key="item.value"
+          :content="item.label || ''"
           :enterable="false"
           placement="top"
-          :key="item.value"
         >
           <div
             class="icon-wrap"
-            @click="handleFontStyle(item)"
             :class="[
               {
                 active:
@@ -74,6 +73,7 @@
                 'no-border': index === 4
               }
             ]"
+            @click="handleFontStyle(item)"
           >
             <i class="ebitor-icon">
               <svg class="bbt-icon">
@@ -86,16 +86,16 @@
           ref="jianju"
           placement="bottom"
           popper-class="zi-jian-hang-ju-popover"
-          @hide="onHandlerBarHide"
           trigger="hover"
+          @hide="onHandlerBarHide"
         >
           <div class="popover-handler-bar">
             <span class="label-wrap">字间距</span>
             <el-slider
-              @change="isFontSpaceChange = true"
+              v-model="xFontSpacing"
               :min="-40"
               :max="50"
-              v-model="xFontSpacing"
+              @change="isFontSpaceChange = true"
             ></el-slider>
             <span class="vaule-wrap">{{ xFontSpacing }}px</span>
           </div>
@@ -104,22 +104,22 @@
           ref="hangju"
           placement="bottom"
           popper-class="zi-jian-hang-ju-popover"
-          @hide="onHandlerBarHide"
           trigger="hover"
+          @hide="onHandlerBarHide"
         >
           <div class="popover-handler-bar">
             <span class="label-wrap">字行距</span>
             <el-slider
-              @change="isFontSpaceChange = true"
+              v-model="yFontSpacing"
               :step="0.02"
               :min="0.5"
               :max="2.5"
-              v-model="yFontSpacing"
+              @change="isFontSpaceChange = true"
             ></el-slider>
             <span class="vaule-wrap">{{ yFontSpacing }}</span>
           </div>
         </el-popover>
-        <div class="icon-wrap" v-popover:jianju>
+        <div v-popover:jianju class="icon-wrap">
           <i class="ebitor-icon">
             <svg class="bbt-icon">
               <use xlink:href="#bbt-zijianju"></use>
@@ -127,7 +127,7 @@
           </i>
         </div>
         <!-- //官方的只有行高 没有行间距 -->
-        <div class="icon-wrap" v-popover:hangju>
+        <div v-popover:hangju class="icon-wrap">
           <i class="ebitor-icon">
             <svg class="bbt-icon">
               <use xlink:href="#bbt-zihangju"></use>
@@ -146,7 +146,7 @@ import { createNamespacedHelpers } from 'vuex'
 import debounce from 'lodash/debounce'
 const { mapState } = createNamespacedHelpers('poster')
 export default {
-  name: 'textPanel',
+  name: 'TextPanel',
   components: {
     fonts
   },
@@ -253,6 +253,13 @@ export default {
       }
     }
   },
+  watch: {
+    fontSize: {
+      handler: debounce(function () {
+        this.$store.commit('poster/setStorageRecord')
+      }, 500)
+    }
+  },
   methods: {
     editText() {
       this.$store.commit({
@@ -303,13 +310,6 @@ export default {
         this.$store.commit('poster/setStorageRecord')
       }
       this.isFontSpaceChange = false
-    }
-  },
-  watch: {
-    fontSize: {
-      handler: debounce(function () {
-        this.$store.commit('poster/setStorageRecord')
-      }, 500)
     }
   }
 }

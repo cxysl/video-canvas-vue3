@@ -2,17 +2,18 @@
   <!-- v-el-dialog-drag
     draggable -->
   <el-dialog
-    title="上传图片"
     v-model="isShow"
+    title="上传图片"
+    custom-class="video-add-images-dialog"
     @close="
       () => {
         $emit('update:visible', false)
       }
     "
-    custom-class="video-add-images-dialog"
   >
     <div class="dialog-body">
       <el-upload
+        ref="upload"
         action="#"
         accept=".jpg,.jpeg,.png"
         :on-change="handlerChange"
@@ -22,7 +23,6 @@
         :auto-upload="false"
         :file-list="fileList"
         multiple
-        ref="upload"
       >
         <!-- :show-file-list="true"
       :with-credentials="true"
@@ -49,8 +49,7 @@
 <script>
 // import imageSpace from 'components/imageSpace'
 export default {
-  name: 'addImagesDialog',
-  emits: ['confirm', 'update:visible'],
+  name: 'AddImagesDialog',
   components: {
     // imageSpace
   },
@@ -61,8 +60,12 @@ export default {
       default: false
     },
     //  当前已添加的图片数量
-    count: Number
+    count: {
+			type: Number,
+			default: 0
+		}
   },
+  emits: ['confirm', 'update:visible'],
   data() {
     return {
       isShow: false,
@@ -78,6 +81,26 @@ export default {
   computed: {
     bbtApi() {
       return this.$store.state.bbtApi
+    }
+  },
+  watch: {
+    visible: {
+      handler(val) {
+        this.isShow = val
+        if (val) {
+          this.$nextTick(() => {
+            window.VM.$getDialogHeight('video-add-images-dialog', 250)
+          })
+        } else {
+          this.fileList = []
+        }
+      },
+      immediate: true
+    },
+    dialogVisible(val) {
+      if (!val) {
+        this.dialogImageUrl = ''
+      }
     }
   },
   created() {
@@ -123,26 +146,6 @@ export default {
 
     onFocus(event) {
       event.target.select()
-    }
-  },
-  watch: {
-    visible: {
-      handler(val) {
-        this.isShow = val
-        if (val) {
-          this.$nextTick(() => {
-            window.VM.$getDialogHeight('video-add-images-dialog', 250)
-          })
-        } else {
-          this.fileList = []
-        }
-      },
-      immediate: true
-    },
-    dialogVisible(val) {
-      if (!val) {
-        this.dialogImageUrl = ''
-      }
     }
   }
 }

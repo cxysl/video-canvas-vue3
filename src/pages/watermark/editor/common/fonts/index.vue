@@ -7,8 +7,8 @@
       v-model="font"
       :size="size"
       placeholder="请选择字体"
-      @change="fontChange"
       popper-class="editor-fonts-selector"
+      @change="fontChange"
     >
       <el-option
         v-for="(item, index) in items"
@@ -29,15 +29,18 @@ import fonts from './data'
 // 现在字体地址再云存储，地址会变，后台返回 再组件 poster/editor/index.vue
 // import './styles.scss'
 export default {
-  name: 'fonts',
-  emits: ['change', 'update:name'],
+  name: 'Fonts',
   props: {
-    name: String,
+    name: {
+      type: String,
+      default: ''
+    },
     size: {
       type: String,
       default: 'small'
     }
   },
+  emits: ['change', 'update:name'],
   data() {
     return {
       font: '思源黑体',
@@ -45,6 +48,11 @@ export default {
     }
   },
   computed: {},
+  watch: {
+    name(val) {
+      this.font = val
+    }
+  },
   created() {
     /**
      * 千牛端字体上传到云存储，很多上传失败或者返回的地址不可以
@@ -77,11 +85,6 @@ export default {
     fontChange(value) {
       this.$emit('change', value)
       this.$emit('update:name', value)
-    }
-  },
-  watch: {
-    name(val) {
-      this.font = val
     }
   }
 }

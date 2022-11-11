@@ -11,9 +11,9 @@
       <el-col :span="15">
         <el-row class="nav-list">
           <el-col
-            :span="6"
             v-for="(nav, index) in navList"
             :key="index"
+            :span="6"
             :class="[
               'nav-item',
               {
@@ -63,7 +63,7 @@
 import { routes } from '../../router/index'
 import navList from '../../router/navList'
 export default {
-  name: 'topNav',
+  name: 'TopNav',
   // components: { logoIcon },
   props: {},
   data() {

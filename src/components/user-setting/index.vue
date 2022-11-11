@@ -1,7 +1,7 @@
 <!--
  * @Author: Nahco.Huang
  * @Date: 2020-09-28 14:26:53
- * @LastEditTime: 2022-05-10 14:05:17
+ * @LastEditTime: 2022-10-31 08:42:51
  * @LastEditors: chengsl
  * @Description: 个性化设置
 -->
@@ -30,7 +30,7 @@
                 :key="item.code"
                 :select="item.code === settingForm.themeCode"
                 :color="item.color"
-                @click.native="onSelectColorTheme(item)"
+                @click="onSelectColorTheme(item)"
               />
             </div>
             <div class="color-input">
@@ -38,7 +38,7 @@
                 v-model="customColor"
                 placeholder="输入自定义颜色"
                 clearable
-                @keyup.native.enter="onSelectColorTheme(customColor, true)"
+                @keyup.enter="onSelectColorTheme(customColor, true)"
               ></el-input>
               <el-button
                 type="primary"
@@ -149,7 +149,7 @@ export default {
 
   mounted() {},
 
-  destroyed() {},
+  unmounted() {},
 
   methods: {
     // 更换字体大小

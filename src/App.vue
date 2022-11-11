@@ -1,11 +1,11 @@
 <template>
-  <div class="page-loading" v-if="!showMain">正在加载....</div>
-  <div class="page-subpage" v-else-if="isOperationPage">
+  <div v-if="!showMain" class="page-loading">正在加载....</div>
+  <div v-else-if="isOperationPage" class="page-subpage">
     <router-view name="subpage"></router-view>
     <!-- 个性化设置 -->
     <user-setting />
   </div>
-  <div class="page-all" v-else>
+  <div v-else class="page-all">
     <!-- <el-container>
       <el-header class="page-header">
         <top-nav></top-nav>
@@ -19,17 +19,18 @@
       <el-footer class="page-footer">————世林出品</el-footer>
     </el-container> -->
 
-    <div class="header">
+    <div v-if="!onlyShowMain" class="app-header">
       <top-nav></top-nav>
     </div>
-    <div class="main">
+    <div :class="['main', onlyShowMain ? 'only-main' : '']">
       <!-- <div width="200px" class="left-nav">左侧栏</div> -->
-      <side-nav>左侧栏</side-nav>
+      <side-nav v-if="!onlyShowMain">左侧栏</side-nav>
       <div class="content">
+        <div class="csl-watermark"></div>
         <router-view />
       </div>
     </div>
-    <div class="footer">————世林出品</div>
+    <div v-if="!onlyShowMain" class="footer">————世林出品</div>
     <!-- 个性化设置 -->
     <user-setting />
   </div>
@@ -41,16 +42,19 @@ import topNav from '@/components/topNav'
 import sideNav from '@/components/sideNav'
 import userSetting from '@/components/user-setting'
 export default {
-  name: 'app',
+  name: 'App',
+  components: {
+    topNav,
+    sideNav,
+    userSetting
+  },
   data() {
     return {
       showMain: false
     }
   },
-  components: {
-    topNav,
-    sideNav,
-    userSetting
+  computed: {
+    ...mapState(['isOperationPage', 'onlyShowMain'])
   },
   created() {
     window.axios = initAxios(this)
@@ -76,9 +80,6 @@ export default {
     setTimeout(() => {
       this.showMain = true
     }, 500)
-  },
-  computed: {
-    ...mapState(['isOperationPage'])
   },
   methods: {}
 }

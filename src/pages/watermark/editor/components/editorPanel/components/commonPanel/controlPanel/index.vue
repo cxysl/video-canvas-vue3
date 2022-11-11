@@ -1,15 +1,15 @@
 <template>
   <div
-    class="editor-sub-panel editor-control-panel"
     v-if="selection.length === 0"
+    class="editor-sub-panel editor-control-panel"
   >
     <el-popover
       ref="popover"
       placement="top"
       popper-class="editor-chunk-sequence-popper"
-      @show="popoverShow"
       width="80"
       trigger="click"
+      @show="popoverShow"
     >
       <div class="sequence-handle-wrap">
         <div class="sequence-btn handle-up" @click="handleOffset('up')">
@@ -21,8 +21,8 @@
           show-stops
           :show-tooltip="false"
           :max="chunks.length - 1"
-          @change="sequenceChange"
           height="200px"
+          @change="sequenceChange"
         ></el-slider>
         <div class="sequence-btn handle-down" @click="handleOffset('down')">
           下移
@@ -38,18 +38,18 @@
     >
       <span>
         <i
-          class="control-icon"
-          v-popover:popover
           v-if="icon.value === 'bbt-tuceng' && selection.length === 0"
+          v-popover:popover
+          class="control-icon"
         >
           <svg class="bbt-icon">
             <use :xlink:href="`#${icon.value}`"></use>
           </svg>
         </i>
         <i
+          v-if="icon.value === 'bbt-shanchu1'"
           class="control-icon"
           @click="handle(icon)"
-          v-if="icon.value === 'bbt-shanchu1'"
         >
           <svg class="bbt-icon">
             <use :xlink:href="`#${icon.value}`"></use>
@@ -65,7 +65,7 @@ import { createNamespacedHelpers } from 'vuex'
 import hotkeys from 'hotkeys-js'
 const { mapState } = createNamespacedHelpers('poster')
 export default {
-  name: 'controlPanel',
+  name: 'ControlPanel',
 
   data() {
     return {
@@ -83,6 +83,16 @@ export default {
       chunkIndex: 0,
       isDisabledRecord: false
     }
+  },
+  computed: {
+    ...mapState([
+      'currentChunkIndex',
+      'chunks',
+      'copyChunk',
+      'resetCanvasState',
+      'isShowEditText',
+      'selection'
+    ])
   },
   created() {
     // eslint-disable-next-line
@@ -102,16 +112,6 @@ export default {
   },
   unmounted() {
     hotkeys.unbind('backspace, delete, ctrl+c, ctrl+x')
-  },
-  computed: {
-    ...mapState([
-      'currentChunkIndex',
-      'chunks',
-      'copyChunk',
-      'resetCanvasState',
-      'isShowEditText',
-      'selection'
-    ])
   },
   methods: {
     copy() {

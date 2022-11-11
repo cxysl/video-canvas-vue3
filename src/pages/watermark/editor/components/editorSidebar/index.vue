@@ -17,15 +17,15 @@
       <ul class="side-btns">
         <template v-for="item in btns">
           <li
-            :key="item.icon"
-            :class="{ active: item.icon === activeBtn }"
-            @click="onSidebarClick(item)"
             v-if="
               (feature === 'watermark' &&
                 item.type !== 'poster' &&
                 (item.label != '贴图' || !isTbWm)) ||
               (feature === 'poster' && item.type !== 'watermark')
             "
+            :key="item.icon"
+            :class="{ active: item.icon === activeBtn }"
+            @click="onSidebarClick(item)"
           >
             <!-- v-if="!(feature === 'watermark' && item.icon === '#bbt-requ')" -->
             <i class="side-icon">
@@ -40,8 +40,8 @@
       <PosterCollapse
         v-model:activeBtn="activeBtn"
         v-model:firstShow="firstShow"
-        @addHotArea="addHotArea"
-        @onClose="onClose"
+        @add-hot-area="addHotArea"
+        @on-close="onClose"
         @add-text="addText"
       ></PosterCollapse>
       <!-- <upload v-model:visible="isShowUpload" @add-img="addImg"></upload> -->
@@ -57,7 +57,7 @@ import PosterCollapse from './components/collapse'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('poster')
 export default {
-  name: 'posterSidebar',
+  name: 'PosterSidebar',
   components: {
     // upload,
     PosterCollapse

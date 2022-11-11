@@ -5,24 +5,24 @@
       <div v-else class="tb">
         官方自动价签
         <p class="question" @click="openTips">?</p>
-        <span @click="openTbTip" class="tb-tip">查看详细解释</span>
+        <span class="tb-tip" @click="openTbTip">查看详细解释</span>
       </div>
     </div>
     <div class="content">
-      <div class="bbt-price" v-if="!isTbWm">
+      <div v-if="!isTbWm" class="bbt-price">
         <div class="price-group">
           <div
             :class="[priceRadio == '1' ? 'is-checked' : '', 'pointer']"
-            @click="automaticPriceTag"
             border
+            @click="automaticPriceTag"
           >
             <p class="title">智能价签</p>
             <p class="tip">自动获取宝贝活动最低价</p>
           </div>
           <div
             :class="[priceRadio == '2' ? 'is-checked' : '', 'pointer']"
-            @click="openPriceTag"
             border
+            @click="openPriceTag"
           >
             <p class="title">价签计算器</p>
             <p class="tip">针对跨店满减，优惠券等计算价格</p>
@@ -36,9 +36,9 @@
        -->
     <!-- <div class="wm-price-change-tip"> -->
     <el-dialog
+      v-model="showPriceTip"
       custom-class="wm-price-change-tip"
       title="价格规则切换说明"
-      v-model="showPriceTip"
       append-to-body
       width="30%"
       top="25vh"
@@ -51,11 +51,13 @@
       <p>3.当前商品无可用优惠时，表达活动报名价</p>
       <p>4.商品当前有前n优惠时，表达单件优惠价（劵后价）</p>
       <p>5.优惠变更时，系统会重新计算价格</p>
-      <span slot="footer" style="text-align: left">
+			<template #footer>
+      <span style="text-align: left">
         <el-button type="primary" @click="() => (showPriceTip = false)">
           我知道了
         </el-button>
       </span>
+		</template>
     </el-dialog>
     <!-- </div> -->
     <price-tag-tip v-model:visible="showTip"></price-tag-tip>
@@ -69,11 +71,11 @@ import priceTag from './components/priceTag.vue'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('poster')
 export default {
-  name: 'peiceTag',
+  name: 'PeiceTag',
   // inject: ['openUpgrade', 'isLimitFeature'],
   components: { priceTagTip, priceTag },
-  emits: ['add-text'],
   props: {},
+  emits: ['add-text'],
   data() {
     return {
       showTip: false,

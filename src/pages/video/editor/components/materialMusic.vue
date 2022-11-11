@@ -13,17 +13,17 @@
 
     <!-- 上传音乐弹窗 -->
     <add-music-dialog
+      ref="addMusicDialog"
+      v-model:visible="isShowAddMusicDialog"
       :musics="musics"
       @add-musics="addMusics"
-      v-model:visible="isShowAddMusicDialog"
-      ref="addMusicDialog"
     ></add-music-dialog>
 
     <!-- 遍历之前上传的音乐 -->
     <li
       v-for="(item, index) in musics"
-      :class="{ active: index === active, small: size === 'small' }"
       :key="index"
+      :class="{ active: index === active, small: size === 'small' }"
       @click="handler(index)"
       @mouseenter="ente(index)"
       @mouseleave="leave(index)"
@@ -52,14 +52,10 @@
 <script>
 import addMusicDialog from './addMusicDialog'
 export default {
-  name: 'materialMusic',
-  emits: [
-    'change',
-    'videoReset',
-    'update:items',
-    'update:canvasChange',
-    'add-musics'
-  ],
+  name: 'MaterialMusic',
+  components: {
+    addMusicDialog
+  },
   props: {
     items: {
       type: Array,
@@ -73,7 +69,10 @@ export default {
         return []
       }
     },
-    type: String,
+    type: {
+			type: String,
+			default: ''
+		},
     size: {
       type: String,
       default: 'normal'
@@ -83,6 +82,14 @@ export default {
       default: false
     }
   },
+  emits: [
+    'change',
+    'videoReset',
+    'update:items',
+    'update:canvasChange',
+		'update:musics',
+    'add-musics'
+  ],
   data() {
     return {
       active: 1,
@@ -92,6 +99,18 @@ export default {
       isShowAddMusicDialog: false,
       musicTitle: '',
       adminCount: 0
+    }
+  },
+  watch: {
+    musics: function (newVal) {
+      let count = 0
+      if (newVal != null) {
+        for (let i of newVal) {
+          //算出默认音乐有多少首
+          if (i.nick == 'admin') count++
+        }
+      }
+      this.adminCount = count
     }
   },
   created() {
@@ -130,7 +149,10 @@ export default {
       // this.isShowAddMusicDialog = true
     },
     del(index) {
-      this.musics.splice(index, 1) //  界面上删除这家伙
+      // this.musics.splice(index, 1) //  界面上删除这家伙
+			const musicsTemp = JSON.parse(JSON.stringify(this.musics))
+			musicsTemp.splice(index, 1)
+			this.$emit('update:musics', musicsTemp)
       this.$message.success('删除成功,刷新后恢复')
       //  删除该音乐
       // axios
@@ -154,36 +176,24 @@ export default {
 
     //  监听添加图片弹窗的确定事件
     confirmAddMusics(newItems) {
+			const currentItems = JSON.parse(JSON.stringify(items))
       if (Array.isArray(newItems)) {
         newItems.forEach((item) => {
-          this.items.push(item)
+          // this.items.push(item)
+          currentItems.push(item)
         })
       }
       if (typeof newItems === 'string') {
-        this.items.push(newItems)
+        // this.items.push(newItems)
+          currentItems.push(item)
       }
-      this.$emit('update:items', [...this.items])
+      this.$emit('update:items', [...currentItems])
       this.$emit('videoReset')
     },
     //  swf参数初始化完成的回调
     initComplete() {
       this.$refs.addMusicDialog.addTblmageLoading = false
       this.isIniting = false
-    }
-  },
-  components: {
-    addMusicDialog
-  },
-  watch: {
-    musics: function (newVal) {
-      let count = 0
-      if (newVal != null) {
-        for (let i of newVal) {
-          //算出默认音乐有多少首
-          if (i.nick == 'admin') count++
-        }
-      }
-      this.adminCount = count
     }
   }
 }

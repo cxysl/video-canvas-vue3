@@ -13,25 +13,14 @@
 import { createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('poster')
 export default {
-  name: 'opacitySubpanel',
+  name: 'OpacitySubpanel',
   data() {
     return {
       opacity: 100
     }
   },
-  mounted() {
-    this.opacity = this.chunks[this.currentChunkIndex].opacity * 100
-  },
   computed: {
     ...mapState(['currentChunkIndex', 'chunks'])
-  },
-  methods: {
-    opacityChange(val) {
-      console.log('opacity - this - ', this)
-      this.opacity = val
-      this.chunks[this.currentChunkIndex].opacity = val / 100
-      this.$store.commit('poster/setStorageRecord')
-    }
   },
   watch: {
     currentChunkIndex(val) {
@@ -42,6 +31,17 @@ export default {
       } catch (error) {
         console.log('error，', error)
       }
+    }
+  },
+  mounted() {
+    this.opacity = this.chunks[this.currentChunkIndex].opacity * 100
+  },
+  methods: {
+    opacityChange(val) {
+      console.log('opacity - this - ', this)
+      this.opacity = val
+      this.chunks[this.currentChunkIndex].opacity = val / 100
+      this.$store.commit('poster/setStorageRecord')
     }
   }
 }

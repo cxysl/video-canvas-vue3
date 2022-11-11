@@ -1,3 +1,4 @@
 public/**
 release/**
+# src/pages/home/views/*
 !.eslintrc.js

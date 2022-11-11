@@ -7,9 +7,9 @@
     ]"
   >
     <div
+      v-loading="loading"
       class="poster-canvas-wrap"
       :style="{ paddingTop: `${feature === 'watermark' ? 0 : paddingTop}px` }"
-      v-loading="loading"
     >
       <div
         :class="
@@ -25,37 +25,27 @@
             <div
               class="editor-bg"
               :class="{ active: isShowBgPanel }"
-              @click="showBgPanel"
               :style="{
                 backgroundColor:
                   feature === 'poster' ? bgc || 'transparent' : 'transparent'
               }"
+              @click="showBgPanel"
             >
               <img
-                :class="['bg-img', 'whh']"
                 v-if="feature === 'watermark' && editorBg !== ''"
+                :class="['bg-img', 'whh']"
                 :src="editorBg"
                 :style="styles"
               />
               <img
-                class="bg-img"
                 v-else-if="feature === 'poster' && bg && bg.img"
+                class="bg-img"
                 :src="bg.img"
                 :style="bgStyles"
               />
             </div>
             <chunk
-              :chunk="chunk"
-              :index="index"
               v-for="(chunk, index) in chunks"
-              :class="[
-                {
-                  drag: isDrag && index === active,
-                  active: selection.indexOf(index) > -1,
-                  editable: isLocked ? false : !chunk.locked
-                },
-                'canvas-chunk'
-              ]"
               v-show="
                 (['controlTextLine1', 'controlTextLine2'].indexOf(chunk.kind) ==
                   -1 ||
@@ -64,12 +54,22 @@
               "
               :key="'chunk' + index"
               :ref="`chunk${index}`"
-              @mousedown.native="chunkMousedown($event, index, true)"
+              :chunk="chunk"
+              :index="index"
+              :class="[
+                {
+                  drag: isDrag && index === active,
+                  active: selection.indexOf(index) > -1,
+                  editable: isLocked ? false : !chunk.locked
+                },
+                'canvas-chunk'
+              ]"
+              @mousedown="chunkMousedown($event, index, true)"
             ></chunk>
             <span
               v-for="item in vLine"
-              :key="'vline' + item.id"
               v-show="item.display"
+              :key="'vline' + item.id"
               class="ref-line v-line"
               :style="{
                 left: item.position,
@@ -79,8 +79,8 @@
             />
             <span
               v-for="item in hLine"
-              :key="'hline' + item.id"
               v-show="item.display"
+              :key="'hline' + item.id"
               class="ref-line h-line"
               :style="{
                 top: item.position,
@@ -119,14 +119,14 @@
             </div>
             <!-- 智能价签提示 -->
             <div
+              v-if="isShowPriceTagTips"
+              v-cloak
               class="tooltip left"
               role="tooltip"
-              v-if="isShowPriceTagTips"
               :style="{
                 top: priceTagTipsStyle.top + 'px',
                 left: priceTagTipsStyle.left + 'px'
               }"
-              v-cloak
             >
               <div class="tooltip-arrow"></div>
               <div class="tooltip-inner">
@@ -140,15 +140,15 @@
             v-if="isShowTransformTool"
             ref="transform"
             :is-multiple-drag="isMultipleDrag"
-            @dragStart="transFormDragStart"
+            @drag-start="transFormDragStart"
             @transform="transform"
-            @transformHandleUp="transformHandleUp"
+            @transform-handle-up="transformHandleUp"
           ></transform-tool>
-          <clip-bg :clip-wrap-styles="styles" v-if="isShowClipBg"></clip-bg>
+          <clip-bg v-if="isShowClipBg" :clip-wrap-styles="styles"></clip-bg>
         </div>
       </div>
       <!-- 底部操作按钮 -->
-      <div class="inset-item-img" v-if="feature === 'watermark'">
+      <div v-if="feature === 'watermark'" class="inset-item-img">
         <el-button class="clear-editor-bg" @click="clearEditorBg">
           清除预览图
         </el-button>
@@ -191,7 +191,7 @@ import { createNamespacedHelpers } from 'vuex'
 import hotkeys from 'hotkeys-js'
 const { mapState } = createNamespacedHelpers('poster')
 export default {
-  name: 'posterCanvas',
+  name: 'PosterCanvas',
   components: {
     chunk,
     transformTool,
@@ -272,98 +272,6 @@ export default {
       vBlock: [],
       hBlock: []
     }
-  },
-  created() {
-    this.isLocked = this.defaultLockedState
-    if (this.feature === 'poster') {
-      if (this.defaultChunks.length > 0) {
-        this.chunks = JSON.parse(JSON.stringify(this.defaultChunks))
-        this.$store.commit({
-          type: 'poster/setCurrentCanvasSize', // 设置可见区域的画布大小
-          width: this.originalWidth,
-          height: this.originalHeight
-        })
-      } else {
-        window.addEventListener('resize', this.onWindowResize)
-        this.$store.commit({
-          type: 'poster/setResetCanvasState', //重置画布状态
-          fn: this.setCanvasSize
-        })
-        this.setDefaultSize(this)
-        // eslint-disable-next-line
-        this.subscribeMutation = this.$store.subscribe((mutation, state) => {
-          if (mutation.type === 'poster/setCanvasSize') {
-            this.setDefaultSize(this)
-          }
-        })
-        this.getChunks()
-      }
-      this.$store.commit({
-        type: 'poster/switchBgPanel', // 切换背景编辑面板
-        value: false
-      })
-      this.$store.commit({
-        type: 'poster/setEditorCanvasInstance', // 设置画布的组件实例，有些地方会用到
-        instance: this
-      })
-    } else if (this.feature === 'watermark') {
-      this.wmID = this.$route.query.id
-      this.wmType = this.$route.query.type
-      this.modes = this.$route.query.modes
-      let modes = this.modes.split(',')
-      this.activityId = this.$route.query.activityId
-      modes.forEach((mode) => {
-        if (mode == 1) {
-          this.modeList.push({
-            type: 1,
-            name: '1:1主图',
-            width: 800,
-            height: 800
-          })
-        }
-        if (mode == 2) {
-          this.modeList.push({
-            type: 2,
-            name: '3:4主图',
-            width: 750,
-            height: 1000
-          })
-        }
-        if (mode == 3) {
-          this.modeList.push({
-            type: 3,
-            name: '宝贝长图',
-            width: 800,
-            height: 1200
-          })
-        }
-      })
-      this.$store.commit({
-        type: 'poster/setWatermarkMode',
-        watermarkMode: this.modes[0] - 1
-      })
-      this.$store.commit({
-        type: 'poster/setSize',
-        size: 80
-      })
-      this.initWaterMark()
-    }
-  },
-  mounted() {
-    document.documentElement.addEventListener('mousedown', this.posterWrapDown)
-  },
-  unmounted() {
-    window.removeEventListener('resize', this.onWindowResize)
-    document.documentElement.addEventListener('mousemove', this.move)
-    document.documentElement.addEventListener('mouseup', this.handleMouseUp)
-    document.documentElement.removeEventListener(
-      'mousedown',
-      this.posterWrapDown
-    )
-    if (this.subscribeMutation) {
-      this.subscribeMutation()
-    }
-    hotkeys.unbind('up, down, left, right')
   },
   computed: {
     styles() {
@@ -483,6 +391,127 @@ export default {
         return this.$store.state.poster.size
       }
     }
+  },
+  watch: {
+    size(val) {
+      this.setCanvasSize(val)
+    },
+    changeWmMode(val) {
+      this.switchMode(val)
+    },
+    active(val) {
+      let that = this
+      if (val === '') {
+        this.isShowPriceTagTips = false
+        console.log('解除按键绑定')
+        hotkeys.unbind('up, down, left, right')
+        if (this.selection.length >= 2) {
+          that.bingKey()
+        }
+      } else {
+        that.bingKey()
+      }
+      this.$store.commit({
+        type: 'poster/setIsShowEditText',
+        isShow: false
+      })
+      this.$store.commit({
+        type: 'poster/setEditTextByicon',
+        editTextByicon: false
+      })
+    }
+  },
+  created() {
+    this.isLocked = this.defaultLockedState
+    if (this.feature === 'poster') {
+      if (this.defaultChunks.length > 0) {
+        this.chunks = JSON.parse(JSON.stringify(this.defaultChunks))
+        this.$store.commit({
+          type: 'poster/setCurrentCanvasSize', // 设置可见区域的画布大小
+          width: this.originalWidth,
+          height: this.originalHeight
+        })
+      } else {
+        window.addEventListener('resize', this.onWindowResize)
+        this.$store.commit({
+          type: 'poster/setResetCanvasState', //重置画布状态
+          fn: this.setCanvasSize
+        })
+        this.setDefaultSize(this)
+        // eslint-disable-next-line
+        this.subscribeMutation = this.$store.subscribe((mutation, state) => {
+          if (mutation.type === 'poster/setCanvasSize') {
+            this.setDefaultSize(this)
+          }
+        })
+        this.getChunks()
+      }
+      this.$store.commit({
+        type: 'poster/switchBgPanel', // 切换背景编辑面板
+        value: false
+      })
+      this.$store.commit({
+        type: 'poster/setEditorCanvasInstance', // 设置画布的组件实例，有些地方会用到
+        instance: this
+      })
+    } else if (this.feature === 'watermark') {
+      this.wmID = this.$route.query.id
+      this.wmType = this.$route.query.type
+      this.modes = this.$route.query.modes
+      let modes = this.modes.split(',')
+      this.activityId = this.$route.query.activityId
+      modes.forEach((mode) => {
+        if (mode == 1) {
+          this.modeList.push({
+            type: 1,
+            name: '1:1主图',
+            width: 800,
+            height: 800
+          })
+        }
+        if (mode == 2) {
+          this.modeList.push({
+            type: 2,
+            name: '3:4主图',
+            width: 750,
+            height: 1000
+          })
+        }
+        if (mode == 3) {
+          this.modeList.push({
+            type: 3,
+            name: '宝贝长图',
+            width: 800,
+            height: 1200
+          })
+        }
+      })
+      this.$store.commit({
+        type: 'poster/setWatermarkMode',
+        watermarkMode: this.modes[0] - 1
+      })
+      this.$store.commit({
+        type: 'poster/setSize',
+        size: 80
+      })
+      this.initWaterMark()
+    }
+  },
+  mounted() {
+    document.documentElement.addEventListener('mousedown', this.posterWrapDown)
+  },
+  unmounted() {
+    window.removeEventListener('resize', this.onWindowResize)
+    document.documentElement.addEventListener('mousemove', this.move)
+    document.documentElement.addEventListener('mouseup', this.handleMouseUp)
+    document.documentElement.removeEventListener(
+      'mousedown',
+      this.posterWrapDown
+    )
+    if (this.subscribeMutation) {
+      this.subscribeMutation()
+    }
+    hotkeys.unbind('up, down, left, right')
   },
   methods: {
     //  计算智能价签的定位
@@ -1534,35 +1563,6 @@ export default {
           default:
           // console.log('you pressed other! ', event)
         }
-      })
-    }
-  },
-  watch: {
-    size(val) {
-      this.setCanvasSize(val)
-    },
-    changeWmMode(val) {
-      this.switchMode(val)
-    },
-    active(val) {
-      let that = this
-      if (val === '') {
-        this.isShowPriceTagTips = false
-        console.log('解除按键绑定')
-        hotkeys.unbind('up, down, left, right')
-        if (this.selection.length >= 2) {
-          that.bingKey()
-        }
-      } else {
-        that.bingKey()
-      }
-      this.$store.commit({
-        type: 'poster/setIsShowEditText',
-        isShow: false
-      })
-      this.$store.commit({
-        type: 'poster/setEditTextByicon',
-        editTextByicon: false
       })
     }
   }

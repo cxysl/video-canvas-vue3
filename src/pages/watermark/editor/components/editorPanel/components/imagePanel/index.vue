@@ -21,15 +21,15 @@ import { createNamespacedHelpers } from 'vuex'
 // import upload from 'pages/itemsManage/watermark/editor/upload'
 const { mapState } = createNamespacedHelpers('poster')
 export default {
-  name: 'imagePanel',
+  name: 'ImagePanel',
+  components: {
+    // upload
+  },
   data() {
     return {
       loading: false,
       isShowUpload: false
     }
-  },
-  components: {
-    // upload
   },
   computed: {
     ...mapState([
