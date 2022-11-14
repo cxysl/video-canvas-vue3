@@ -1,4 +1,4 @@
-# video-canvas-vue3
+# video-canvas-vue3 / laocheng-project-vue3
 
 ## Project setup
 
